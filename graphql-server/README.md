@@ -16,3 +16,4 @@
     }
     ```
 * Now you will be able to see schema and docs of any query and thus be able to execute any.
+* Changing schema and redeploying prisma might throw error if there already is data stored in postgreSQL. TO fix that all data must be deleted for that model and then redeployment of prisma should happen. Or migrate data.
