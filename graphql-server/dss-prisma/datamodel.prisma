@@ -8,19 +8,14 @@ type User {
   id: ID! @id
   updatedAt: DateTime! @updatedAt
   createdAt: DateTime! @createdAt
-  // User could be of two types - own user, purely added by 3rd party.
   isOwnUser: Boolean!
   ownUser: OwnUser
   primaryAuthProvider: AuthProviderUser
-  // For 3rd party logins - the first auth provider a user uses to access our UI will be primary auth token to identify user.
-  // Other auth tokens aquired would be treated as secondary, and stored in ordered array based on time.
-  // If the primary one is exipred then the first one in the array will be considered as that user
   otherAuthProviders: [AuthProviderUser]
   roles: [OwnUserRole]
   tags: [Tag]!
 }
 
-// If DSS has created user then roles could be - basic admin, development admin, finance admin(and scalable to many more)
 type OwnUser {
   id: ID! @id
   username: String!
@@ -28,8 +23,8 @@ type OwnUser {
   phone: String
   address: String
   coordinates: String
-  pic: String // photo url
-  otherDetails: String // we have noted down name, email, phone, address, etc. But we may want to know more. This is the json string for that
+  pic: String
+  otherDetails: String
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
   tags: [Tag]!
@@ -55,14 +50,13 @@ type AuthProviderUser {
   phone: String
   address: String
   coordinates: String
-  pic: String // photo url
-  otherDetails: String // we have noted down name, email, phone, address, etc. But we may want to know more. This is the json string for that
+  pic: String
+  otherDetails: String
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
   tags: [Tag]!
 }
 
-// This will limit the number of 3rd party auths that can be required for social websites. Ex. - Google, Fb & twitter
 type AuthProvider {
   id: ID! @id
   name: String!
@@ -79,8 +73,8 @@ type Remote {
   tags: [Tag]!
   name: String!
   link: String
-  query: String //a json string
-  queryResolution: String // link to an external document telling ways to resolve query
+  query: String
+  queryResolution: String
 }
 
 type Resource {
