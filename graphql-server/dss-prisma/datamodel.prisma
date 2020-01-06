@@ -19,3 +19,108 @@ type Tag {
   name: String!
   createdAt: DateTime! @createdAt
 }
+
+type InfoTypes {
+  id: ID! @id
+  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt
+  name: String @unique
+}
+
+type Remote {
+  id: ID! @id
+  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt
+  tags: [Tag]!
+  name: String!
+  link: String
+  query: String //a json string
+  queryResolution: String // link to an external document telling ways to resolve query
+  // authProvider: AuthProvider
+}
+
+type Resource {
+  id: ID! @id
+  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt
+  tags: [Tag]!
+  info: Info
+  interaction: Interaction
+  media: Media
+  link: String
+}
+
+type Info {
+  id: ID! @id
+  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt
+  tags: [Tag]!
+  title: String!
+  description: String!
+  descriptionSmall: String!
+  remotePrimary: Remote!
+  remotes: [Remote]!
+  infoType: InfoType!
+  resources: [Resource]!
+  resourcePrimary: Resource!
+}
+
+type Interaction {
+  id: ID! @id
+  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt
+  tags: [Tag]!
+  interactionType: InteractionType!
+  remote: Remote
+  publicUser: User
+  publicEntity: PublicEntity
+}
+
+type InteractionType {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  tags: [Tag]!
+  name: String!
+}
+
+type PublicEntityType {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  tags: [Tag]!
+  name: String!
+}
+
+type PublicEntity {
+  id: ID! @id
+  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt
+  tags: [Tag]!
+  entityType: PublicEntityType!
+  remote: Remote!
+}
+
+type Media {
+  id: ID! @id
+  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt
+  tags: [Tag]!
+  title: String!
+  description: String!
+  descriptionSmall: String!
+  remote: Remote!
+}
+
+type Initiative {
+  id: ID! @id
+  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt
+  tags: [Tag]!
+  name: String!
+  infoPrimary: Info!
+  description: String!
+  descriptionSmall: String!
+  media: [Media!]
+  mediaPrimary: Media
+  resources: [Resource!]
+  childInitiatives: [Initiative!]
+}
