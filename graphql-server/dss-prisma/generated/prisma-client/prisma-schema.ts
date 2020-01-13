@@ -2,12 +2,1207 @@
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-export const typeDefs = /* GraphQL */ `type AggregateTag {
+export const typeDefs = /* GraphQL */ `type ActionScope {
+  id: ID!
+  createdAt: DateTime!
+  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
+  name: String!
+  guestActions(where: GuestActionInstanceWhereInput, orderBy: GuestActionInstanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [GuestActionInstance!]
+  userActions(where: UserActionInstanceWhereInput, orderBy: UserActionInstanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserActionInstance!]
+}
+
+type ActionScopeConnection {
+  pageInfo: PageInfo!
+  edges: [ActionScopeEdge]!
+  aggregate: AggregateActionScope!
+}
+
+input ActionScopeCreateInput {
+  id: ID
+  tags: TagCreateManyInput
+  name: String!
+  guestActions: GuestActionInstanceCreateManyWithoutActionInput
+  userActions: UserActionInstanceCreateManyWithoutActionScopeInput
+}
+
+input ActionScopeCreateManyInput {
+  create: [ActionScopeCreateInput!]
+  connect: [ActionScopeWhereUniqueInput!]
+}
+
+input ActionScopeCreateOneWithoutGuestActionsInput {
+  create: ActionScopeCreateWithoutGuestActionsInput
+  connect: ActionScopeWhereUniqueInput
+}
+
+input ActionScopeCreateOneWithoutUserActionsInput {
+  create: ActionScopeCreateWithoutUserActionsInput
+  connect: ActionScopeWhereUniqueInput
+}
+
+input ActionScopeCreateWithoutGuestActionsInput {
+  id: ID
+  tags: TagCreateManyInput
+  name: String!
+  userActions: UserActionInstanceCreateManyWithoutActionScopeInput
+}
+
+input ActionScopeCreateWithoutUserActionsInput {
+  id: ID
+  tags: TagCreateManyInput
+  name: String!
+  guestActions: GuestActionInstanceCreateManyWithoutActionInput
+}
+
+type ActionScopeEdge {
+  node: ActionScope!
+  cursor: String!
+}
+
+enum ActionScopeOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  name_ASC
+  name_DESC
+}
+
+type ActionScopePreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  name: String!
+}
+
+input ActionScopeScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  AND: [ActionScopeScalarWhereInput!]
+  OR: [ActionScopeScalarWhereInput!]
+  NOT: [ActionScopeScalarWhereInput!]
+}
+
+type ActionScopeSubscriptionPayload {
+  mutation: MutationType!
+  node: ActionScope
+  updatedFields: [String!]
+  previousValues: ActionScopePreviousValues
+}
+
+input ActionScopeSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ActionScopeWhereInput
+  AND: [ActionScopeSubscriptionWhereInput!]
+  OR: [ActionScopeSubscriptionWhereInput!]
+  NOT: [ActionScopeSubscriptionWhereInput!]
+}
+
+input ActionScopeUpdateDataInput {
+  tags: TagUpdateManyInput
+  name: String
+  guestActions: GuestActionInstanceUpdateManyWithoutActionInput
+  userActions: UserActionInstanceUpdateManyWithoutActionScopeInput
+}
+
+input ActionScopeUpdateInput {
+  tags: TagUpdateManyInput
+  name: String
+  guestActions: GuestActionInstanceUpdateManyWithoutActionInput
+  userActions: UserActionInstanceUpdateManyWithoutActionScopeInput
+}
+
+input ActionScopeUpdateManyDataInput {
+  name: String
+}
+
+input ActionScopeUpdateManyInput {
+  create: [ActionScopeCreateInput!]
+  update: [ActionScopeUpdateWithWhereUniqueNestedInput!]
+  upsert: [ActionScopeUpsertWithWhereUniqueNestedInput!]
+  delete: [ActionScopeWhereUniqueInput!]
+  connect: [ActionScopeWhereUniqueInput!]
+  set: [ActionScopeWhereUniqueInput!]
+  disconnect: [ActionScopeWhereUniqueInput!]
+  deleteMany: [ActionScopeScalarWhereInput!]
+  updateMany: [ActionScopeUpdateManyWithWhereNestedInput!]
+}
+
+input ActionScopeUpdateManyMutationInput {
+  name: String
+}
+
+input ActionScopeUpdateManyWithWhereNestedInput {
+  where: ActionScopeScalarWhereInput!
+  data: ActionScopeUpdateManyDataInput!
+}
+
+input ActionScopeUpdateOneRequiredWithoutGuestActionsInput {
+  create: ActionScopeCreateWithoutGuestActionsInput
+  update: ActionScopeUpdateWithoutGuestActionsDataInput
+  upsert: ActionScopeUpsertWithoutGuestActionsInput
+  connect: ActionScopeWhereUniqueInput
+}
+
+input ActionScopeUpdateOneRequiredWithoutUserActionsInput {
+  create: ActionScopeCreateWithoutUserActionsInput
+  update: ActionScopeUpdateWithoutUserActionsDataInput
+  upsert: ActionScopeUpsertWithoutUserActionsInput
+  connect: ActionScopeWhereUniqueInput
+}
+
+input ActionScopeUpdateWithoutGuestActionsDataInput {
+  tags: TagUpdateManyInput
+  name: String
+  userActions: UserActionInstanceUpdateManyWithoutActionScopeInput
+}
+
+input ActionScopeUpdateWithoutUserActionsDataInput {
+  tags: TagUpdateManyInput
+  name: String
+  guestActions: GuestActionInstanceUpdateManyWithoutActionInput
+}
+
+input ActionScopeUpdateWithWhereUniqueNestedInput {
+  where: ActionScopeWhereUniqueInput!
+  data: ActionScopeUpdateDataInput!
+}
+
+input ActionScopeUpsertWithoutGuestActionsInput {
+  update: ActionScopeUpdateWithoutGuestActionsDataInput!
+  create: ActionScopeCreateWithoutGuestActionsInput!
+}
+
+input ActionScopeUpsertWithoutUserActionsInput {
+  update: ActionScopeUpdateWithoutUserActionsDataInput!
+  create: ActionScopeCreateWithoutUserActionsInput!
+}
+
+input ActionScopeUpsertWithWhereUniqueNestedInput {
+  where: ActionScopeWhereUniqueInput!
+  update: ActionScopeUpdateDataInput!
+  create: ActionScopeCreateInput!
+}
+
+input ActionScopeWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  tags_every: TagWhereInput
+  tags_some: TagWhereInput
+  tags_none: TagWhereInput
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  guestActions_every: GuestActionInstanceWhereInput
+  guestActions_some: GuestActionInstanceWhereInput
+  guestActions_none: GuestActionInstanceWhereInput
+  userActions_every: UserActionInstanceWhereInput
+  userActions_some: UserActionInstanceWhereInput
+  userActions_none: UserActionInstanceWhereInput
+  AND: [ActionScopeWhereInput!]
+  OR: [ActionScopeWhereInput!]
+  NOT: [ActionScopeWhereInput!]
+}
+
+input ActionScopeWhereUniqueInput {
+  id: ID
+}
+
+type AggregateActionScope {
+  count: Int!
+}
+
+type AggregateAuthProvider {
+  count: Int!
+}
+
+type AggregateAuthProviderUser {
+  count: Int!
+}
+
+type AggregateGuestActionInstance {
+  count: Int!
+}
+
+type AggregateInfo {
+  count: Int!
+}
+
+type AggregateInfoType {
+  count: Int!
+}
+
+type AggregateInitiative {
+  count: Int!
+}
+
+type AggregateInteraction {
+  count: Int!
+}
+
+type AggregateInteractionType {
+  count: Int!
+}
+
+type AggregateMedia {
+  count: Int!
+}
+
+type AggregateOwnUser {
+  count: Int!
+}
+
+type AggregatePublicEntity {
+  count: Int!
+}
+
+type AggregatePublicEntityType {
+  count: Int!
+}
+
+type AggregateRemote {
+  count: Int!
+}
+
+type AggregateResource {
+  count: Int!
+}
+
+type AggregateTag {
   count: Int!
 }
 
 type AggregateUser {
   count: Int!
+}
+
+type AggregateUserActionInstance {
+  count: Int!
+}
+
+type AggregateUserRole {
+  count: Int!
+}
+
+type AuthProvider {
+  id: ID!
+  name: String!
+  createdAt: DateTime!
+  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
+}
+
+type AuthProviderConnection {
+  pageInfo: PageInfo!
+  edges: [AuthProviderEdge]!
+  aggregate: AggregateAuthProvider!
+}
+
+input AuthProviderCreateInput {
+  id: ID
+  name: String!
+  tags: TagCreateManyInput
+}
+
+input AuthProviderCreateOneInput {
+  create: AuthProviderCreateInput
+  connect: AuthProviderWhereUniqueInput
+}
+
+type AuthProviderEdge {
+  node: AuthProvider!
+  cursor: String!
+}
+
+enum AuthProviderOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type AuthProviderPreviousValues {
+  id: ID!
+  name: String!
+  createdAt: DateTime!
+}
+
+type AuthProviderSubscriptionPayload {
+  mutation: MutationType!
+  node: AuthProvider
+  updatedFields: [String!]
+  previousValues: AuthProviderPreviousValues
+}
+
+input AuthProviderSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: AuthProviderWhereInput
+  AND: [AuthProviderSubscriptionWhereInput!]
+  OR: [AuthProviderSubscriptionWhereInput!]
+  NOT: [AuthProviderSubscriptionWhereInput!]
+}
+
+input AuthProviderUpdateDataInput {
+  name: String
+  tags: TagUpdateManyInput
+}
+
+input AuthProviderUpdateInput {
+  name: String
+  tags: TagUpdateManyInput
+}
+
+input AuthProviderUpdateManyMutationInput {
+  name: String
+}
+
+input AuthProviderUpdateOneRequiredInput {
+  create: AuthProviderCreateInput
+  update: AuthProviderUpdateDataInput
+  upsert: AuthProviderUpsertNestedInput
+  connect: AuthProviderWhereUniqueInput
+}
+
+input AuthProviderUpsertNestedInput {
+  update: AuthProviderUpdateDataInput!
+  create: AuthProviderCreateInput!
+}
+
+type AuthProviderUser {
+  id: UUID!
+  authProvider: AuthProvider!
+  authToken: String!
+  refreshToken: String
+  expiryTime: DateTime
+  username: String
+  firstName: String!
+  middleName: String
+  lastName: String!
+  email: String
+  phone: String
+  address: String
+  coordinates: String
+  pic: String
+  otherDetails: String
+  user: User!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
+}
+
+type AuthProviderUserConnection {
+  pageInfo: PageInfo!
+  edges: [AuthProviderUserEdge]!
+  aggregate: AggregateAuthProviderUser!
+}
+
+input AuthProviderUserCreateInput {
+  id: UUID
+  authProvider: AuthProviderCreateOneInput!
+  authToken: String!
+  refreshToken: String
+  expiryTime: DateTime
+  username: String
+  firstName: String!
+  middleName: String
+  lastName: String!
+  email: String
+  phone: String
+  address: String
+  coordinates: String
+  pic: String
+  otherDetails: String
+  user: UserCreateOneWithoutAuthProvidersInput!
+  tags: TagCreateManyInput
+}
+
+input AuthProviderUserCreateManyWithoutUserInput {
+  create: [AuthProviderUserCreateWithoutUserInput!]
+  connect: [AuthProviderUserWhereUniqueInput!]
+}
+
+input AuthProviderUserCreateOneInput {
+  create: AuthProviderUserCreateInput
+  connect: AuthProviderUserWhereUniqueInput
+}
+
+input AuthProviderUserCreateWithoutUserInput {
+  id: UUID
+  authProvider: AuthProviderCreateOneInput!
+  authToken: String!
+  refreshToken: String
+  expiryTime: DateTime
+  username: String
+  firstName: String!
+  middleName: String
+  lastName: String!
+  email: String
+  phone: String
+  address: String
+  coordinates: String
+  pic: String
+  otherDetails: String
+  tags: TagCreateManyInput
+}
+
+type AuthProviderUserEdge {
+  node: AuthProviderUser!
+  cursor: String!
+}
+
+enum AuthProviderUserOrderByInput {
+  id_ASC
+  id_DESC
+  authToken_ASC
+  authToken_DESC
+  refreshToken_ASC
+  refreshToken_DESC
+  expiryTime_ASC
+  expiryTime_DESC
+  username_ASC
+  username_DESC
+  firstName_ASC
+  firstName_DESC
+  middleName_ASC
+  middleName_DESC
+  lastName_ASC
+  lastName_DESC
+  email_ASC
+  email_DESC
+  phone_ASC
+  phone_DESC
+  address_ASC
+  address_DESC
+  coordinates_ASC
+  coordinates_DESC
+  pic_ASC
+  pic_DESC
+  otherDetails_ASC
+  otherDetails_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type AuthProviderUserPreviousValues {
+  id: UUID!
+  authToken: String!
+  refreshToken: String
+  expiryTime: DateTime
+  username: String
+  firstName: String!
+  middleName: String
+  lastName: String!
+  email: String
+  phone: String
+  address: String
+  coordinates: String
+  pic: String
+  otherDetails: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input AuthProviderUserScalarWhereInput {
+  id: UUID
+  id_not: UUID
+  id_in: [UUID!]
+  id_not_in: [UUID!]
+  id_lt: UUID
+  id_lte: UUID
+  id_gt: UUID
+  id_gte: UUID
+  id_contains: UUID
+  id_not_contains: UUID
+  id_starts_with: UUID
+  id_not_starts_with: UUID
+  id_ends_with: UUID
+  id_not_ends_with: UUID
+  authToken: String
+  authToken_not: String
+  authToken_in: [String!]
+  authToken_not_in: [String!]
+  authToken_lt: String
+  authToken_lte: String
+  authToken_gt: String
+  authToken_gte: String
+  authToken_contains: String
+  authToken_not_contains: String
+  authToken_starts_with: String
+  authToken_not_starts_with: String
+  authToken_ends_with: String
+  authToken_not_ends_with: String
+  refreshToken: String
+  refreshToken_not: String
+  refreshToken_in: [String!]
+  refreshToken_not_in: [String!]
+  refreshToken_lt: String
+  refreshToken_lte: String
+  refreshToken_gt: String
+  refreshToken_gte: String
+  refreshToken_contains: String
+  refreshToken_not_contains: String
+  refreshToken_starts_with: String
+  refreshToken_not_starts_with: String
+  refreshToken_ends_with: String
+  refreshToken_not_ends_with: String
+  expiryTime: DateTime
+  expiryTime_not: DateTime
+  expiryTime_in: [DateTime!]
+  expiryTime_not_in: [DateTime!]
+  expiryTime_lt: DateTime
+  expiryTime_lte: DateTime
+  expiryTime_gt: DateTime
+  expiryTime_gte: DateTime
+  username: String
+  username_not: String
+  username_in: [String!]
+  username_not_in: [String!]
+  username_lt: String
+  username_lte: String
+  username_gt: String
+  username_gte: String
+  username_contains: String
+  username_not_contains: String
+  username_starts_with: String
+  username_not_starts_with: String
+  username_ends_with: String
+  username_not_ends_with: String
+  firstName: String
+  firstName_not: String
+  firstName_in: [String!]
+  firstName_not_in: [String!]
+  firstName_lt: String
+  firstName_lte: String
+  firstName_gt: String
+  firstName_gte: String
+  firstName_contains: String
+  firstName_not_contains: String
+  firstName_starts_with: String
+  firstName_not_starts_with: String
+  firstName_ends_with: String
+  firstName_not_ends_with: String
+  middleName: String
+  middleName_not: String
+  middleName_in: [String!]
+  middleName_not_in: [String!]
+  middleName_lt: String
+  middleName_lte: String
+  middleName_gt: String
+  middleName_gte: String
+  middleName_contains: String
+  middleName_not_contains: String
+  middleName_starts_with: String
+  middleName_not_starts_with: String
+  middleName_ends_with: String
+  middleName_not_ends_with: String
+  lastName: String
+  lastName_not: String
+  lastName_in: [String!]
+  lastName_not_in: [String!]
+  lastName_lt: String
+  lastName_lte: String
+  lastName_gt: String
+  lastName_gte: String
+  lastName_contains: String
+  lastName_not_contains: String
+  lastName_starts_with: String
+  lastName_not_starts_with: String
+  lastName_ends_with: String
+  lastName_not_ends_with: String
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
+  phone: String
+  phone_not: String
+  phone_in: [String!]
+  phone_not_in: [String!]
+  phone_lt: String
+  phone_lte: String
+  phone_gt: String
+  phone_gte: String
+  phone_contains: String
+  phone_not_contains: String
+  phone_starts_with: String
+  phone_not_starts_with: String
+  phone_ends_with: String
+  phone_not_ends_with: String
+  address: String
+  address_not: String
+  address_in: [String!]
+  address_not_in: [String!]
+  address_lt: String
+  address_lte: String
+  address_gt: String
+  address_gte: String
+  address_contains: String
+  address_not_contains: String
+  address_starts_with: String
+  address_not_starts_with: String
+  address_ends_with: String
+  address_not_ends_with: String
+  coordinates: String
+  coordinates_not: String
+  coordinates_in: [String!]
+  coordinates_not_in: [String!]
+  coordinates_lt: String
+  coordinates_lte: String
+  coordinates_gt: String
+  coordinates_gte: String
+  coordinates_contains: String
+  coordinates_not_contains: String
+  coordinates_starts_with: String
+  coordinates_not_starts_with: String
+  coordinates_ends_with: String
+  coordinates_not_ends_with: String
+  pic: String
+  pic_not: String
+  pic_in: [String!]
+  pic_not_in: [String!]
+  pic_lt: String
+  pic_lte: String
+  pic_gt: String
+  pic_gte: String
+  pic_contains: String
+  pic_not_contains: String
+  pic_starts_with: String
+  pic_not_starts_with: String
+  pic_ends_with: String
+  pic_not_ends_with: String
+  otherDetails: String
+  otherDetails_not: String
+  otherDetails_in: [String!]
+  otherDetails_not_in: [String!]
+  otherDetails_lt: String
+  otherDetails_lte: String
+  otherDetails_gt: String
+  otherDetails_gte: String
+  otherDetails_contains: String
+  otherDetails_not_contains: String
+  otherDetails_starts_with: String
+  otherDetails_not_starts_with: String
+  otherDetails_ends_with: String
+  otherDetails_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [AuthProviderUserScalarWhereInput!]
+  OR: [AuthProviderUserScalarWhereInput!]
+  NOT: [AuthProviderUserScalarWhereInput!]
+}
+
+type AuthProviderUserSubscriptionPayload {
+  mutation: MutationType!
+  node: AuthProviderUser
+  updatedFields: [String!]
+  previousValues: AuthProviderUserPreviousValues
+}
+
+input AuthProviderUserSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: AuthProviderUserWhereInput
+  AND: [AuthProviderUserSubscriptionWhereInput!]
+  OR: [AuthProviderUserSubscriptionWhereInput!]
+  NOT: [AuthProviderUserSubscriptionWhereInput!]
+}
+
+input AuthProviderUserUpdateDataInput {
+  authProvider: AuthProviderUpdateOneRequiredInput
+  authToken: String
+  refreshToken: String
+  expiryTime: DateTime
+  username: String
+  firstName: String
+  middleName: String
+  lastName: String
+  email: String
+  phone: String
+  address: String
+  coordinates: String
+  pic: String
+  otherDetails: String
+  user: UserUpdateOneRequiredWithoutAuthProvidersInput
+  tags: TagUpdateManyInput
+}
+
+input AuthProviderUserUpdateInput {
+  authProvider: AuthProviderUpdateOneRequiredInput
+  authToken: String
+  refreshToken: String
+  expiryTime: DateTime
+  username: String
+  firstName: String
+  middleName: String
+  lastName: String
+  email: String
+  phone: String
+  address: String
+  coordinates: String
+  pic: String
+  otherDetails: String
+  user: UserUpdateOneRequiredWithoutAuthProvidersInput
+  tags: TagUpdateManyInput
+}
+
+input AuthProviderUserUpdateManyDataInput {
+  authToken: String
+  refreshToken: String
+  expiryTime: DateTime
+  username: String
+  firstName: String
+  middleName: String
+  lastName: String
+  email: String
+  phone: String
+  address: String
+  coordinates: String
+  pic: String
+  otherDetails: String
+}
+
+input AuthProviderUserUpdateManyMutationInput {
+  authToken: String
+  refreshToken: String
+  expiryTime: DateTime
+  username: String
+  firstName: String
+  middleName: String
+  lastName: String
+  email: String
+  phone: String
+  address: String
+  coordinates: String
+  pic: String
+  otherDetails: String
+}
+
+input AuthProviderUserUpdateManyWithoutUserInput {
+  create: [AuthProviderUserCreateWithoutUserInput!]
+  delete: [AuthProviderUserWhereUniqueInput!]
+  connect: [AuthProviderUserWhereUniqueInput!]
+  set: [AuthProviderUserWhereUniqueInput!]
+  disconnect: [AuthProviderUserWhereUniqueInput!]
+  update: [AuthProviderUserUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [AuthProviderUserUpsertWithWhereUniqueWithoutUserInput!]
+  deleteMany: [AuthProviderUserScalarWhereInput!]
+  updateMany: [AuthProviderUserUpdateManyWithWhereNestedInput!]
+}
+
+input AuthProviderUserUpdateManyWithWhereNestedInput {
+  where: AuthProviderUserScalarWhereInput!
+  data: AuthProviderUserUpdateManyDataInput!
+}
+
+input AuthProviderUserUpdateOneInput {
+  create: AuthProviderUserCreateInput
+  update: AuthProviderUserUpdateDataInput
+  upsert: AuthProviderUserUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: AuthProviderUserWhereUniqueInput
+}
+
+input AuthProviderUserUpdateWithoutUserDataInput {
+  authProvider: AuthProviderUpdateOneRequiredInput
+  authToken: String
+  refreshToken: String
+  expiryTime: DateTime
+  username: String
+  firstName: String
+  middleName: String
+  lastName: String
+  email: String
+  phone: String
+  address: String
+  coordinates: String
+  pic: String
+  otherDetails: String
+  tags: TagUpdateManyInput
+}
+
+input AuthProviderUserUpdateWithWhereUniqueWithoutUserInput {
+  where: AuthProviderUserWhereUniqueInput!
+  data: AuthProviderUserUpdateWithoutUserDataInput!
+}
+
+input AuthProviderUserUpsertNestedInput {
+  update: AuthProviderUserUpdateDataInput!
+  create: AuthProviderUserCreateInput!
+}
+
+input AuthProviderUserUpsertWithWhereUniqueWithoutUserInput {
+  where: AuthProviderUserWhereUniqueInput!
+  update: AuthProviderUserUpdateWithoutUserDataInput!
+  create: AuthProviderUserCreateWithoutUserInput!
+}
+
+input AuthProviderUserWhereInput {
+  id: UUID
+  id_not: UUID
+  id_in: [UUID!]
+  id_not_in: [UUID!]
+  id_lt: UUID
+  id_lte: UUID
+  id_gt: UUID
+  id_gte: UUID
+  id_contains: UUID
+  id_not_contains: UUID
+  id_starts_with: UUID
+  id_not_starts_with: UUID
+  id_ends_with: UUID
+  id_not_ends_with: UUID
+  authProvider: AuthProviderWhereInput
+  authToken: String
+  authToken_not: String
+  authToken_in: [String!]
+  authToken_not_in: [String!]
+  authToken_lt: String
+  authToken_lte: String
+  authToken_gt: String
+  authToken_gte: String
+  authToken_contains: String
+  authToken_not_contains: String
+  authToken_starts_with: String
+  authToken_not_starts_with: String
+  authToken_ends_with: String
+  authToken_not_ends_with: String
+  refreshToken: String
+  refreshToken_not: String
+  refreshToken_in: [String!]
+  refreshToken_not_in: [String!]
+  refreshToken_lt: String
+  refreshToken_lte: String
+  refreshToken_gt: String
+  refreshToken_gte: String
+  refreshToken_contains: String
+  refreshToken_not_contains: String
+  refreshToken_starts_with: String
+  refreshToken_not_starts_with: String
+  refreshToken_ends_with: String
+  refreshToken_not_ends_with: String
+  expiryTime: DateTime
+  expiryTime_not: DateTime
+  expiryTime_in: [DateTime!]
+  expiryTime_not_in: [DateTime!]
+  expiryTime_lt: DateTime
+  expiryTime_lte: DateTime
+  expiryTime_gt: DateTime
+  expiryTime_gte: DateTime
+  username: String
+  username_not: String
+  username_in: [String!]
+  username_not_in: [String!]
+  username_lt: String
+  username_lte: String
+  username_gt: String
+  username_gte: String
+  username_contains: String
+  username_not_contains: String
+  username_starts_with: String
+  username_not_starts_with: String
+  username_ends_with: String
+  username_not_ends_with: String
+  firstName: String
+  firstName_not: String
+  firstName_in: [String!]
+  firstName_not_in: [String!]
+  firstName_lt: String
+  firstName_lte: String
+  firstName_gt: String
+  firstName_gte: String
+  firstName_contains: String
+  firstName_not_contains: String
+  firstName_starts_with: String
+  firstName_not_starts_with: String
+  firstName_ends_with: String
+  firstName_not_ends_with: String
+  middleName: String
+  middleName_not: String
+  middleName_in: [String!]
+  middleName_not_in: [String!]
+  middleName_lt: String
+  middleName_lte: String
+  middleName_gt: String
+  middleName_gte: String
+  middleName_contains: String
+  middleName_not_contains: String
+  middleName_starts_with: String
+  middleName_not_starts_with: String
+  middleName_ends_with: String
+  middleName_not_ends_with: String
+  lastName: String
+  lastName_not: String
+  lastName_in: [String!]
+  lastName_not_in: [String!]
+  lastName_lt: String
+  lastName_lte: String
+  lastName_gt: String
+  lastName_gte: String
+  lastName_contains: String
+  lastName_not_contains: String
+  lastName_starts_with: String
+  lastName_not_starts_with: String
+  lastName_ends_with: String
+  lastName_not_ends_with: String
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
+  phone: String
+  phone_not: String
+  phone_in: [String!]
+  phone_not_in: [String!]
+  phone_lt: String
+  phone_lte: String
+  phone_gt: String
+  phone_gte: String
+  phone_contains: String
+  phone_not_contains: String
+  phone_starts_with: String
+  phone_not_starts_with: String
+  phone_ends_with: String
+  phone_not_ends_with: String
+  address: String
+  address_not: String
+  address_in: [String!]
+  address_not_in: [String!]
+  address_lt: String
+  address_lte: String
+  address_gt: String
+  address_gte: String
+  address_contains: String
+  address_not_contains: String
+  address_starts_with: String
+  address_not_starts_with: String
+  address_ends_with: String
+  address_not_ends_with: String
+  coordinates: String
+  coordinates_not: String
+  coordinates_in: [String!]
+  coordinates_not_in: [String!]
+  coordinates_lt: String
+  coordinates_lte: String
+  coordinates_gt: String
+  coordinates_gte: String
+  coordinates_contains: String
+  coordinates_not_contains: String
+  coordinates_starts_with: String
+  coordinates_not_starts_with: String
+  coordinates_ends_with: String
+  coordinates_not_ends_with: String
+  pic: String
+  pic_not: String
+  pic_in: [String!]
+  pic_not_in: [String!]
+  pic_lt: String
+  pic_lte: String
+  pic_gt: String
+  pic_gte: String
+  pic_contains: String
+  pic_not_contains: String
+  pic_starts_with: String
+  pic_not_starts_with: String
+  pic_ends_with: String
+  pic_not_ends_with: String
+  otherDetails: String
+  otherDetails_not: String
+  otherDetails_in: [String!]
+  otherDetails_not_in: [String!]
+  otherDetails_lt: String
+  otherDetails_lte: String
+  otherDetails_gt: String
+  otherDetails_gte: String
+  otherDetails_contains: String
+  otherDetails_not_contains: String
+  otherDetails_starts_with: String
+  otherDetails_not_starts_with: String
+  otherDetails_ends_with: String
+  otherDetails_not_ends_with: String
+  user: UserWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  tags_every: TagWhereInput
+  tags_some: TagWhereInput
+  tags_none: TagWhereInput
+  AND: [AuthProviderUserWhereInput!]
+  OR: [AuthProviderUserWhereInput!]
+  NOT: [AuthProviderUserWhereInput!]
+}
+
+input AuthProviderUserWhereUniqueInput {
+  id: UUID
+}
+
+input AuthProviderWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  tags_every: TagWhereInput
+  tags_some: TagWhereInput
+  tags_none: TagWhereInput
+  AND: [AuthProviderWhereInput!]
+  OR: [AuthProviderWhereInput!]
+  NOT: [AuthProviderWhereInput!]
+}
+
+input AuthProviderWhereUniqueInput {
+  id: ID
 }
 
 type BatchPayload {
@@ -16,9 +1211,1784 @@ type BatchPayload {
 
 scalar DateTime
 
+type GuestActionInstance {
+  id: UUID!
+  createdAt: DateTime!
+  firstName: String!
+  middleName: String
+  lastName: String!
+  phone: String!
+  email: String!
+  address: String!
+  action: ActionScope!
+}
+
+type GuestActionInstanceConnection {
+  pageInfo: PageInfo!
+  edges: [GuestActionInstanceEdge]!
+  aggregate: AggregateGuestActionInstance!
+}
+
+input GuestActionInstanceCreateInput {
+  id: UUID
+  firstName: String!
+  middleName: String
+  lastName: String!
+  phone: String!
+  email: String!
+  address: String!
+  action: ActionScopeCreateOneWithoutGuestActionsInput!
+}
+
+input GuestActionInstanceCreateManyWithoutActionInput {
+  create: [GuestActionInstanceCreateWithoutActionInput!]
+  connect: [GuestActionInstanceWhereUniqueInput!]
+}
+
+input GuestActionInstanceCreateWithoutActionInput {
+  id: UUID
+  firstName: String!
+  middleName: String
+  lastName: String!
+  phone: String!
+  email: String!
+  address: String!
+}
+
+type GuestActionInstanceEdge {
+  node: GuestActionInstance!
+  cursor: String!
+}
+
+enum GuestActionInstanceOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  firstName_ASC
+  firstName_DESC
+  middleName_ASC
+  middleName_DESC
+  lastName_ASC
+  lastName_DESC
+  phone_ASC
+  phone_DESC
+  email_ASC
+  email_DESC
+  address_ASC
+  address_DESC
+}
+
+type GuestActionInstancePreviousValues {
+  id: UUID!
+  createdAt: DateTime!
+  firstName: String!
+  middleName: String
+  lastName: String!
+  phone: String!
+  email: String!
+  address: String!
+}
+
+input GuestActionInstanceScalarWhereInput {
+  id: UUID
+  id_not: UUID
+  id_in: [UUID!]
+  id_not_in: [UUID!]
+  id_lt: UUID
+  id_lte: UUID
+  id_gt: UUID
+  id_gte: UUID
+  id_contains: UUID
+  id_not_contains: UUID
+  id_starts_with: UUID
+  id_not_starts_with: UUID
+  id_ends_with: UUID
+  id_not_ends_with: UUID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  firstName: String
+  firstName_not: String
+  firstName_in: [String!]
+  firstName_not_in: [String!]
+  firstName_lt: String
+  firstName_lte: String
+  firstName_gt: String
+  firstName_gte: String
+  firstName_contains: String
+  firstName_not_contains: String
+  firstName_starts_with: String
+  firstName_not_starts_with: String
+  firstName_ends_with: String
+  firstName_not_ends_with: String
+  middleName: String
+  middleName_not: String
+  middleName_in: [String!]
+  middleName_not_in: [String!]
+  middleName_lt: String
+  middleName_lte: String
+  middleName_gt: String
+  middleName_gte: String
+  middleName_contains: String
+  middleName_not_contains: String
+  middleName_starts_with: String
+  middleName_not_starts_with: String
+  middleName_ends_with: String
+  middleName_not_ends_with: String
+  lastName: String
+  lastName_not: String
+  lastName_in: [String!]
+  lastName_not_in: [String!]
+  lastName_lt: String
+  lastName_lte: String
+  lastName_gt: String
+  lastName_gte: String
+  lastName_contains: String
+  lastName_not_contains: String
+  lastName_starts_with: String
+  lastName_not_starts_with: String
+  lastName_ends_with: String
+  lastName_not_ends_with: String
+  phone: String
+  phone_not: String
+  phone_in: [String!]
+  phone_not_in: [String!]
+  phone_lt: String
+  phone_lte: String
+  phone_gt: String
+  phone_gte: String
+  phone_contains: String
+  phone_not_contains: String
+  phone_starts_with: String
+  phone_not_starts_with: String
+  phone_ends_with: String
+  phone_not_ends_with: String
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
+  address: String
+  address_not: String
+  address_in: [String!]
+  address_not_in: [String!]
+  address_lt: String
+  address_lte: String
+  address_gt: String
+  address_gte: String
+  address_contains: String
+  address_not_contains: String
+  address_starts_with: String
+  address_not_starts_with: String
+  address_ends_with: String
+  address_not_ends_with: String
+  AND: [GuestActionInstanceScalarWhereInput!]
+  OR: [GuestActionInstanceScalarWhereInput!]
+  NOT: [GuestActionInstanceScalarWhereInput!]
+}
+
+type GuestActionInstanceSubscriptionPayload {
+  mutation: MutationType!
+  node: GuestActionInstance
+  updatedFields: [String!]
+  previousValues: GuestActionInstancePreviousValues
+}
+
+input GuestActionInstanceSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: GuestActionInstanceWhereInput
+  AND: [GuestActionInstanceSubscriptionWhereInput!]
+  OR: [GuestActionInstanceSubscriptionWhereInput!]
+  NOT: [GuestActionInstanceSubscriptionWhereInput!]
+}
+
+input GuestActionInstanceUpdateInput {
+  firstName: String
+  middleName: String
+  lastName: String
+  phone: String
+  email: String
+  address: String
+  action: ActionScopeUpdateOneRequiredWithoutGuestActionsInput
+}
+
+input GuestActionInstanceUpdateManyDataInput {
+  firstName: String
+  middleName: String
+  lastName: String
+  phone: String
+  email: String
+  address: String
+}
+
+input GuestActionInstanceUpdateManyMutationInput {
+  firstName: String
+  middleName: String
+  lastName: String
+  phone: String
+  email: String
+  address: String
+}
+
+input GuestActionInstanceUpdateManyWithoutActionInput {
+  create: [GuestActionInstanceCreateWithoutActionInput!]
+  delete: [GuestActionInstanceWhereUniqueInput!]
+  connect: [GuestActionInstanceWhereUniqueInput!]
+  set: [GuestActionInstanceWhereUniqueInput!]
+  disconnect: [GuestActionInstanceWhereUniqueInput!]
+  update: [GuestActionInstanceUpdateWithWhereUniqueWithoutActionInput!]
+  upsert: [GuestActionInstanceUpsertWithWhereUniqueWithoutActionInput!]
+  deleteMany: [GuestActionInstanceScalarWhereInput!]
+  updateMany: [GuestActionInstanceUpdateManyWithWhereNestedInput!]
+}
+
+input GuestActionInstanceUpdateManyWithWhereNestedInput {
+  where: GuestActionInstanceScalarWhereInput!
+  data: GuestActionInstanceUpdateManyDataInput!
+}
+
+input GuestActionInstanceUpdateWithoutActionDataInput {
+  firstName: String
+  middleName: String
+  lastName: String
+  phone: String
+  email: String
+  address: String
+}
+
+input GuestActionInstanceUpdateWithWhereUniqueWithoutActionInput {
+  where: GuestActionInstanceWhereUniqueInput!
+  data: GuestActionInstanceUpdateWithoutActionDataInput!
+}
+
+input GuestActionInstanceUpsertWithWhereUniqueWithoutActionInput {
+  where: GuestActionInstanceWhereUniqueInput!
+  update: GuestActionInstanceUpdateWithoutActionDataInput!
+  create: GuestActionInstanceCreateWithoutActionInput!
+}
+
+input GuestActionInstanceWhereInput {
+  id: UUID
+  id_not: UUID
+  id_in: [UUID!]
+  id_not_in: [UUID!]
+  id_lt: UUID
+  id_lte: UUID
+  id_gt: UUID
+  id_gte: UUID
+  id_contains: UUID
+  id_not_contains: UUID
+  id_starts_with: UUID
+  id_not_starts_with: UUID
+  id_ends_with: UUID
+  id_not_ends_with: UUID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  firstName: String
+  firstName_not: String
+  firstName_in: [String!]
+  firstName_not_in: [String!]
+  firstName_lt: String
+  firstName_lte: String
+  firstName_gt: String
+  firstName_gte: String
+  firstName_contains: String
+  firstName_not_contains: String
+  firstName_starts_with: String
+  firstName_not_starts_with: String
+  firstName_ends_with: String
+  firstName_not_ends_with: String
+  middleName: String
+  middleName_not: String
+  middleName_in: [String!]
+  middleName_not_in: [String!]
+  middleName_lt: String
+  middleName_lte: String
+  middleName_gt: String
+  middleName_gte: String
+  middleName_contains: String
+  middleName_not_contains: String
+  middleName_starts_with: String
+  middleName_not_starts_with: String
+  middleName_ends_with: String
+  middleName_not_ends_with: String
+  lastName: String
+  lastName_not: String
+  lastName_in: [String!]
+  lastName_not_in: [String!]
+  lastName_lt: String
+  lastName_lte: String
+  lastName_gt: String
+  lastName_gte: String
+  lastName_contains: String
+  lastName_not_contains: String
+  lastName_starts_with: String
+  lastName_not_starts_with: String
+  lastName_ends_with: String
+  lastName_not_ends_with: String
+  phone: String
+  phone_not: String
+  phone_in: [String!]
+  phone_not_in: [String!]
+  phone_lt: String
+  phone_lte: String
+  phone_gt: String
+  phone_gte: String
+  phone_contains: String
+  phone_not_contains: String
+  phone_starts_with: String
+  phone_not_starts_with: String
+  phone_ends_with: String
+  phone_not_ends_with: String
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
+  address: String
+  address_not: String
+  address_in: [String!]
+  address_not_in: [String!]
+  address_lt: String
+  address_lte: String
+  address_gt: String
+  address_gte: String
+  address_contains: String
+  address_not_contains: String
+  address_starts_with: String
+  address_not_starts_with: String
+  address_ends_with: String
+  address_not_ends_with: String
+  action: ActionScopeWhereInput
+  AND: [GuestActionInstanceWhereInput!]
+  OR: [GuestActionInstanceWhereInput!]
+  NOT: [GuestActionInstanceWhereInput!]
+}
+
+input GuestActionInstanceWhereUniqueInput {
+  id: UUID
+}
+
+type Info {
+  id: ID!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
+  title: String!
+  description: String!
+  descriptionSmall: String!
+  remotePrimary: Remote
+  remotes(where: RemoteWhereInput, orderBy: RemoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Remote!]
+  infoType: InfoType!
+  resources(where: ResourceWhereInput, orderBy: ResourceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Resource!]
+  resourcePrimary: Resource
+}
+
+type InfoConnection {
+  pageInfo: PageInfo!
+  edges: [InfoEdge]!
+  aggregate: AggregateInfo!
+}
+
+input InfoCreateInput {
+  id: ID
+  tags: TagCreateManyInput
+  title: String!
+  description: String!
+  descriptionSmall: String!
+  remotePrimary: RemoteCreateOneInput
+  remotes: RemoteCreateManyInput
+  infoType: InfoTypeCreateOneInput!
+  resources: ResourceCreateManyInput
+  resourcePrimary: ResourceCreateOneInput
+}
+
+input InfoCreateOneInput {
+  create: InfoCreateInput
+  connect: InfoWhereUniqueInput
+}
+
+type InfoEdge {
+  node: Info!
+  cursor: String!
+}
+
+enum InfoOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+  title_ASC
+  title_DESC
+  description_ASC
+  description_DESC
+  descriptionSmall_ASC
+  descriptionSmall_DESC
+}
+
+type InfoPreviousValues {
+  id: ID!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+  title: String!
+  description: String!
+  descriptionSmall: String!
+}
+
+type InfoSubscriptionPayload {
+  mutation: MutationType!
+  node: Info
+  updatedFields: [String!]
+  previousValues: InfoPreviousValues
+}
+
+input InfoSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: InfoWhereInput
+  AND: [InfoSubscriptionWhereInput!]
+  OR: [InfoSubscriptionWhereInput!]
+  NOT: [InfoSubscriptionWhereInput!]
+}
+
+type InfoType {
+  id: ID!
+  createdAt: DateTime!
+  name: String
+  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
+}
+
+type InfoTypeConnection {
+  pageInfo: PageInfo!
+  edges: [InfoTypeEdge]!
+  aggregate: AggregateInfoType!
+}
+
+input InfoTypeCreateInput {
+  id: ID
+  name: String
+  tags: TagCreateManyInput
+}
+
+input InfoTypeCreateOneInput {
+  create: InfoTypeCreateInput
+  connect: InfoTypeWhereUniqueInput
+}
+
+type InfoTypeEdge {
+  node: InfoType!
+  cursor: String!
+}
+
+enum InfoTypeOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  name_ASC
+  name_DESC
+}
+
+type InfoTypePreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  name: String
+}
+
+type InfoTypeSubscriptionPayload {
+  mutation: MutationType!
+  node: InfoType
+  updatedFields: [String!]
+  previousValues: InfoTypePreviousValues
+}
+
+input InfoTypeSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: InfoTypeWhereInput
+  AND: [InfoTypeSubscriptionWhereInput!]
+  OR: [InfoTypeSubscriptionWhereInput!]
+  NOT: [InfoTypeSubscriptionWhereInput!]
+}
+
+input InfoTypeUpdateDataInput {
+  name: String
+  tags: TagUpdateManyInput
+}
+
+input InfoTypeUpdateInput {
+  name: String
+  tags: TagUpdateManyInput
+}
+
+input InfoTypeUpdateManyMutationInput {
+  name: String
+}
+
+input InfoTypeUpdateOneRequiredInput {
+  create: InfoTypeCreateInput
+  update: InfoTypeUpdateDataInput
+  upsert: InfoTypeUpsertNestedInput
+  connect: InfoTypeWhereUniqueInput
+}
+
+input InfoTypeUpsertNestedInput {
+  update: InfoTypeUpdateDataInput!
+  create: InfoTypeCreateInput!
+}
+
+input InfoTypeWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  tags_every: TagWhereInput
+  tags_some: TagWhereInput
+  tags_none: TagWhereInput
+  AND: [InfoTypeWhereInput!]
+  OR: [InfoTypeWhereInput!]
+  NOT: [InfoTypeWhereInput!]
+}
+
+input InfoTypeWhereUniqueInput {
+  id: ID
+  name: String
+}
+
+input InfoUpdateDataInput {
+  tags: TagUpdateManyInput
+  title: String
+  description: String
+  descriptionSmall: String
+  remotePrimary: RemoteUpdateOneInput
+  remotes: RemoteUpdateManyInput
+  infoType: InfoTypeUpdateOneRequiredInput
+  resources: ResourceUpdateManyInput
+  resourcePrimary: ResourceUpdateOneInput
+}
+
+input InfoUpdateInput {
+  tags: TagUpdateManyInput
+  title: String
+  description: String
+  descriptionSmall: String
+  remotePrimary: RemoteUpdateOneInput
+  remotes: RemoteUpdateManyInput
+  infoType: InfoTypeUpdateOneRequiredInput
+  resources: ResourceUpdateManyInput
+  resourcePrimary: ResourceUpdateOneInput
+}
+
+input InfoUpdateManyMutationInput {
+  title: String
+  description: String
+  descriptionSmall: String
+}
+
+input InfoUpdateOneRequiredInput {
+  create: InfoCreateInput
+  update: InfoUpdateDataInput
+  upsert: InfoUpsertNestedInput
+  connect: InfoWhereUniqueInput
+}
+
+input InfoUpsertNestedInput {
+  update: InfoUpdateDataInput!
+  create: InfoCreateInput!
+}
+
+input InfoWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  tags_every: TagWhereInput
+  tags_some: TagWhereInput
+  tags_none: TagWhereInput
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  descriptionSmall: String
+  descriptionSmall_not: String
+  descriptionSmall_in: [String!]
+  descriptionSmall_not_in: [String!]
+  descriptionSmall_lt: String
+  descriptionSmall_lte: String
+  descriptionSmall_gt: String
+  descriptionSmall_gte: String
+  descriptionSmall_contains: String
+  descriptionSmall_not_contains: String
+  descriptionSmall_starts_with: String
+  descriptionSmall_not_starts_with: String
+  descriptionSmall_ends_with: String
+  descriptionSmall_not_ends_with: String
+  remotePrimary: RemoteWhereInput
+  remotes_every: RemoteWhereInput
+  remotes_some: RemoteWhereInput
+  remotes_none: RemoteWhereInput
+  infoType: InfoTypeWhereInput
+  resources_every: ResourceWhereInput
+  resources_some: ResourceWhereInput
+  resources_none: ResourceWhereInput
+  resourcePrimary: ResourceWhereInput
+  AND: [InfoWhereInput!]
+  OR: [InfoWhereInput!]
+  NOT: [InfoWhereInput!]
+}
+
+input InfoWhereUniqueInput {
+  id: ID
+}
+
+type Initiative {
+  id: ID!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
+  name: String!
+  infoPrimary: Info!
+  description: String!
+  descriptionSmall: String!
+  media(where: MediaWhereInput, orderBy: MediaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Media!]
+  mediaPrimary: Media
+  resources(where: ResourceWhereInput, orderBy: ResourceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Resource!]
+  childInitiatives(where: InitiativeWhereInput, orderBy: InitiativeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Initiative!]
+}
+
+type InitiativeConnection {
+  pageInfo: PageInfo!
+  edges: [InitiativeEdge]!
+  aggregate: AggregateInitiative!
+}
+
+input InitiativeCreateInput {
+  id: ID
+  tags: TagCreateManyInput
+  name: String!
+  infoPrimary: InfoCreateOneInput!
+  description: String!
+  descriptionSmall: String!
+  media: MediaCreateManyInput
+  mediaPrimary: MediaCreateOneInput
+  resources: ResourceCreateManyInput
+  childInitiatives: InitiativeCreateManyWithoutChildInitiativesInput
+}
+
+input InitiativeCreateManyWithoutChildInitiativesInput {
+  create: [InitiativeCreateWithoutChildInitiativesInput!]
+  connect: [InitiativeWhereUniqueInput!]
+}
+
+input InitiativeCreateWithoutChildInitiativesInput {
+  id: ID
+  tags: TagCreateManyInput
+  name: String!
+  infoPrimary: InfoCreateOneInput!
+  description: String!
+  descriptionSmall: String!
+  media: MediaCreateManyInput
+  mediaPrimary: MediaCreateOneInput
+  resources: ResourceCreateManyInput
+}
+
+type InitiativeEdge {
+  node: Initiative!
+  cursor: String!
+}
+
+enum InitiativeOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+  descriptionSmall_ASC
+  descriptionSmall_DESC
+}
+
+type InitiativePreviousValues {
+  id: ID!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+  name: String!
+  description: String!
+  descriptionSmall: String!
+}
+
+input InitiativeScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  descriptionSmall: String
+  descriptionSmall_not: String
+  descriptionSmall_in: [String!]
+  descriptionSmall_not_in: [String!]
+  descriptionSmall_lt: String
+  descriptionSmall_lte: String
+  descriptionSmall_gt: String
+  descriptionSmall_gte: String
+  descriptionSmall_contains: String
+  descriptionSmall_not_contains: String
+  descriptionSmall_starts_with: String
+  descriptionSmall_not_starts_with: String
+  descriptionSmall_ends_with: String
+  descriptionSmall_not_ends_with: String
+  AND: [InitiativeScalarWhereInput!]
+  OR: [InitiativeScalarWhereInput!]
+  NOT: [InitiativeScalarWhereInput!]
+}
+
+type InitiativeSubscriptionPayload {
+  mutation: MutationType!
+  node: Initiative
+  updatedFields: [String!]
+  previousValues: InitiativePreviousValues
+}
+
+input InitiativeSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: InitiativeWhereInput
+  AND: [InitiativeSubscriptionWhereInput!]
+  OR: [InitiativeSubscriptionWhereInput!]
+  NOT: [InitiativeSubscriptionWhereInput!]
+}
+
+input InitiativeUpdateInput {
+  tags: TagUpdateManyInput
+  name: String
+  infoPrimary: InfoUpdateOneRequiredInput
+  description: String
+  descriptionSmall: String
+  media: MediaUpdateManyInput
+  mediaPrimary: MediaUpdateOneInput
+  resources: ResourceUpdateManyInput
+  childInitiatives: InitiativeUpdateManyWithoutChildInitiativesInput
+}
+
+input InitiativeUpdateManyDataInput {
+  name: String
+  description: String
+  descriptionSmall: String
+}
+
+input InitiativeUpdateManyMutationInput {
+  name: String
+  description: String
+  descriptionSmall: String
+}
+
+input InitiativeUpdateManyWithoutChildInitiativesInput {
+  create: [InitiativeCreateWithoutChildInitiativesInput!]
+  delete: [InitiativeWhereUniqueInput!]
+  connect: [InitiativeWhereUniqueInput!]
+  set: [InitiativeWhereUniqueInput!]
+  disconnect: [InitiativeWhereUniqueInput!]
+  update: [InitiativeUpdateWithWhereUniqueWithoutChildInitiativesInput!]
+  upsert: [InitiativeUpsertWithWhereUniqueWithoutChildInitiativesInput!]
+  deleteMany: [InitiativeScalarWhereInput!]
+  updateMany: [InitiativeUpdateManyWithWhereNestedInput!]
+}
+
+input InitiativeUpdateManyWithWhereNestedInput {
+  where: InitiativeScalarWhereInput!
+  data: InitiativeUpdateManyDataInput!
+}
+
+input InitiativeUpdateWithoutChildInitiativesDataInput {
+  tags: TagUpdateManyInput
+  name: String
+  infoPrimary: InfoUpdateOneRequiredInput
+  description: String
+  descriptionSmall: String
+  media: MediaUpdateManyInput
+  mediaPrimary: MediaUpdateOneInput
+  resources: ResourceUpdateManyInput
+}
+
+input InitiativeUpdateWithWhereUniqueWithoutChildInitiativesInput {
+  where: InitiativeWhereUniqueInput!
+  data: InitiativeUpdateWithoutChildInitiativesDataInput!
+}
+
+input InitiativeUpsertWithWhereUniqueWithoutChildInitiativesInput {
+  where: InitiativeWhereUniqueInput!
+  update: InitiativeUpdateWithoutChildInitiativesDataInput!
+  create: InitiativeCreateWithoutChildInitiativesInput!
+}
+
+input InitiativeWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  tags_every: TagWhereInput
+  tags_some: TagWhereInput
+  tags_none: TagWhereInput
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  infoPrimary: InfoWhereInput
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  descriptionSmall: String
+  descriptionSmall_not: String
+  descriptionSmall_in: [String!]
+  descriptionSmall_not_in: [String!]
+  descriptionSmall_lt: String
+  descriptionSmall_lte: String
+  descriptionSmall_gt: String
+  descriptionSmall_gte: String
+  descriptionSmall_contains: String
+  descriptionSmall_not_contains: String
+  descriptionSmall_starts_with: String
+  descriptionSmall_not_starts_with: String
+  descriptionSmall_ends_with: String
+  descriptionSmall_not_ends_with: String
+  media_every: MediaWhereInput
+  media_some: MediaWhereInput
+  media_none: MediaWhereInput
+  mediaPrimary: MediaWhereInput
+  resources_every: ResourceWhereInput
+  resources_some: ResourceWhereInput
+  resources_none: ResourceWhereInput
+  childInitiatives_every: InitiativeWhereInput
+  childInitiatives_some: InitiativeWhereInput
+  childInitiatives_none: InitiativeWhereInput
+  AND: [InitiativeWhereInput!]
+  OR: [InitiativeWhereInput!]
+  NOT: [InitiativeWhereInput!]
+}
+
+input InitiativeWhereUniqueInput {
+  id: ID
+}
+
+type Interaction {
+  id: ID!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
+  interactionType: InteractionType!
+  remote: Remote
+  publicUser: User
+  publicEntity: PublicEntity
+}
+
+type InteractionConnection {
+  pageInfo: PageInfo!
+  edges: [InteractionEdge]!
+  aggregate: AggregateInteraction!
+}
+
+input InteractionCreateInput {
+  id: ID
+  tags: TagCreateManyInput
+  interactionType: InteractionTypeCreateOneInput!
+  remote: RemoteCreateOneInput
+  publicUser: UserCreateOneInput
+  publicEntity: PublicEntityCreateOneInput
+}
+
+input InteractionCreateOneInput {
+  create: InteractionCreateInput
+  connect: InteractionWhereUniqueInput
+}
+
+type InteractionEdge {
+  node: Interaction!
+  cursor: String!
+}
+
+enum InteractionOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type InteractionPreviousValues {
+  id: ID!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type InteractionSubscriptionPayload {
+  mutation: MutationType!
+  node: Interaction
+  updatedFields: [String!]
+  previousValues: InteractionPreviousValues
+}
+
+input InteractionSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: InteractionWhereInput
+  AND: [InteractionSubscriptionWhereInput!]
+  OR: [InteractionSubscriptionWhereInput!]
+  NOT: [InteractionSubscriptionWhereInput!]
+}
+
+type InteractionType {
+  id: ID!
+  createdAt: DateTime!
+  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
+  name: String!
+}
+
+type InteractionTypeConnection {
+  pageInfo: PageInfo!
+  edges: [InteractionTypeEdge]!
+  aggregate: AggregateInteractionType!
+}
+
+input InteractionTypeCreateInput {
+  id: ID
+  tags: TagCreateManyInput
+  name: String!
+}
+
+input InteractionTypeCreateOneInput {
+  create: InteractionTypeCreateInput
+  connect: InteractionTypeWhereUniqueInput
+}
+
+type InteractionTypeEdge {
+  node: InteractionType!
+  cursor: String!
+}
+
+enum InteractionTypeOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  name_ASC
+  name_DESC
+}
+
+type InteractionTypePreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  name: String!
+}
+
+type InteractionTypeSubscriptionPayload {
+  mutation: MutationType!
+  node: InteractionType
+  updatedFields: [String!]
+  previousValues: InteractionTypePreviousValues
+}
+
+input InteractionTypeSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: InteractionTypeWhereInput
+  AND: [InteractionTypeSubscriptionWhereInput!]
+  OR: [InteractionTypeSubscriptionWhereInput!]
+  NOT: [InteractionTypeSubscriptionWhereInput!]
+}
+
+input InteractionTypeUpdateDataInput {
+  tags: TagUpdateManyInput
+  name: String
+}
+
+input InteractionTypeUpdateInput {
+  tags: TagUpdateManyInput
+  name: String
+}
+
+input InteractionTypeUpdateManyMutationInput {
+  name: String
+}
+
+input InteractionTypeUpdateOneRequiredInput {
+  create: InteractionTypeCreateInput
+  update: InteractionTypeUpdateDataInput
+  upsert: InteractionTypeUpsertNestedInput
+  connect: InteractionTypeWhereUniqueInput
+}
+
+input InteractionTypeUpsertNestedInput {
+  update: InteractionTypeUpdateDataInput!
+  create: InteractionTypeCreateInput!
+}
+
+input InteractionTypeWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  tags_every: TagWhereInput
+  tags_some: TagWhereInput
+  tags_none: TagWhereInput
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  AND: [InteractionTypeWhereInput!]
+  OR: [InteractionTypeWhereInput!]
+  NOT: [InteractionTypeWhereInput!]
+}
+
+input InteractionTypeWhereUniqueInput {
+  id: ID
+  name: String
+}
+
+input InteractionUpdateDataInput {
+  tags: TagUpdateManyInput
+  interactionType: InteractionTypeUpdateOneRequiredInput
+  remote: RemoteUpdateOneInput
+  publicUser: UserUpdateOneInput
+  publicEntity: PublicEntityUpdateOneInput
+}
+
+input InteractionUpdateInput {
+  tags: TagUpdateManyInput
+  interactionType: InteractionTypeUpdateOneRequiredInput
+  remote: RemoteUpdateOneInput
+  publicUser: UserUpdateOneInput
+  publicEntity: PublicEntityUpdateOneInput
+}
+
+input InteractionUpdateOneInput {
+  create: InteractionCreateInput
+  update: InteractionUpdateDataInput
+  upsert: InteractionUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: InteractionWhereUniqueInput
+}
+
+input InteractionUpsertNestedInput {
+  update: InteractionUpdateDataInput!
+  create: InteractionCreateInput!
+}
+
+input InteractionWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  tags_every: TagWhereInput
+  tags_some: TagWhereInput
+  tags_none: TagWhereInput
+  interactionType: InteractionTypeWhereInput
+  remote: RemoteWhereInput
+  publicUser: UserWhereInput
+  publicEntity: PublicEntityWhereInput
+  AND: [InteractionWhereInput!]
+  OR: [InteractionWhereInput!]
+  NOT: [InteractionWhereInput!]
+}
+
+input InteractionWhereUniqueInput {
+  id: ID
+}
+
 scalar Long
 
+type Media {
+  id: ID!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
+  title: String!
+  description: String!
+  descriptionSmall: String!
+  remote: Remote!
+}
+
+type MediaConnection {
+  pageInfo: PageInfo!
+  edges: [MediaEdge]!
+  aggregate: AggregateMedia!
+}
+
+input MediaCreateInput {
+  id: ID
+  tags: TagCreateManyInput
+  title: String!
+  description: String!
+  descriptionSmall: String!
+  remote: RemoteCreateOneInput!
+}
+
+input MediaCreateManyInput {
+  create: [MediaCreateInput!]
+  connect: [MediaWhereUniqueInput!]
+}
+
+input MediaCreateOneInput {
+  create: MediaCreateInput
+  connect: MediaWhereUniqueInput
+}
+
+type MediaEdge {
+  node: Media!
+  cursor: String!
+}
+
+enum MediaOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+  title_ASC
+  title_DESC
+  description_ASC
+  description_DESC
+  descriptionSmall_ASC
+  descriptionSmall_DESC
+}
+
+type MediaPreviousValues {
+  id: ID!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+  title: String!
+  description: String!
+  descriptionSmall: String!
+}
+
+input MediaScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  descriptionSmall: String
+  descriptionSmall_not: String
+  descriptionSmall_in: [String!]
+  descriptionSmall_not_in: [String!]
+  descriptionSmall_lt: String
+  descriptionSmall_lte: String
+  descriptionSmall_gt: String
+  descriptionSmall_gte: String
+  descriptionSmall_contains: String
+  descriptionSmall_not_contains: String
+  descriptionSmall_starts_with: String
+  descriptionSmall_not_starts_with: String
+  descriptionSmall_ends_with: String
+  descriptionSmall_not_ends_with: String
+  AND: [MediaScalarWhereInput!]
+  OR: [MediaScalarWhereInput!]
+  NOT: [MediaScalarWhereInput!]
+}
+
+type MediaSubscriptionPayload {
+  mutation: MutationType!
+  node: Media
+  updatedFields: [String!]
+  previousValues: MediaPreviousValues
+}
+
+input MediaSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: MediaWhereInput
+  AND: [MediaSubscriptionWhereInput!]
+  OR: [MediaSubscriptionWhereInput!]
+  NOT: [MediaSubscriptionWhereInput!]
+}
+
+input MediaUpdateDataInput {
+  tags: TagUpdateManyInput
+  title: String
+  description: String
+  descriptionSmall: String
+  remote: RemoteUpdateOneRequiredInput
+}
+
+input MediaUpdateInput {
+  tags: TagUpdateManyInput
+  title: String
+  description: String
+  descriptionSmall: String
+  remote: RemoteUpdateOneRequiredInput
+}
+
+input MediaUpdateManyDataInput {
+  title: String
+  description: String
+  descriptionSmall: String
+}
+
+input MediaUpdateManyInput {
+  create: [MediaCreateInput!]
+  update: [MediaUpdateWithWhereUniqueNestedInput!]
+  upsert: [MediaUpsertWithWhereUniqueNestedInput!]
+  delete: [MediaWhereUniqueInput!]
+  connect: [MediaWhereUniqueInput!]
+  set: [MediaWhereUniqueInput!]
+  disconnect: [MediaWhereUniqueInput!]
+  deleteMany: [MediaScalarWhereInput!]
+  updateMany: [MediaUpdateManyWithWhereNestedInput!]
+}
+
+input MediaUpdateManyMutationInput {
+  title: String
+  description: String
+  descriptionSmall: String
+}
+
+input MediaUpdateManyWithWhereNestedInput {
+  where: MediaScalarWhereInput!
+  data: MediaUpdateManyDataInput!
+}
+
+input MediaUpdateOneInput {
+  create: MediaCreateInput
+  update: MediaUpdateDataInput
+  upsert: MediaUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: MediaWhereUniqueInput
+}
+
+input MediaUpdateWithWhereUniqueNestedInput {
+  where: MediaWhereUniqueInput!
+  data: MediaUpdateDataInput!
+}
+
+input MediaUpsertNestedInput {
+  update: MediaUpdateDataInput!
+  create: MediaCreateInput!
+}
+
+input MediaUpsertWithWhereUniqueNestedInput {
+  where: MediaWhereUniqueInput!
+  update: MediaUpdateDataInput!
+  create: MediaCreateInput!
+}
+
+input MediaWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  tags_every: TagWhereInput
+  tags_some: TagWhereInput
+  tags_none: TagWhereInput
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  descriptionSmall: String
+  descriptionSmall_not: String
+  descriptionSmall_in: [String!]
+  descriptionSmall_not_in: [String!]
+  descriptionSmall_lt: String
+  descriptionSmall_lte: String
+  descriptionSmall_gt: String
+  descriptionSmall_gte: String
+  descriptionSmall_contains: String
+  descriptionSmall_not_contains: String
+  descriptionSmall_starts_with: String
+  descriptionSmall_not_starts_with: String
+  descriptionSmall_ends_with: String
+  descriptionSmall_not_ends_with: String
+  remote: RemoteWhereInput
+  AND: [MediaWhereInput!]
+  OR: [MediaWhereInput!]
+  NOT: [MediaWhereInput!]
+}
+
+input MediaWhereUniqueInput {
+  id: ID
+}
+
 type Mutation {
+  createActionScope(data: ActionScopeCreateInput!): ActionScope!
+  updateActionScope(data: ActionScopeUpdateInput!, where: ActionScopeWhereUniqueInput!): ActionScope
+  updateManyActionScopes(data: ActionScopeUpdateManyMutationInput!, where: ActionScopeWhereInput): BatchPayload!
+  upsertActionScope(where: ActionScopeWhereUniqueInput!, create: ActionScopeCreateInput!, update: ActionScopeUpdateInput!): ActionScope!
+  deleteActionScope(where: ActionScopeWhereUniqueInput!): ActionScope
+  deleteManyActionScopes(where: ActionScopeWhereInput): BatchPayload!
+  createAuthProvider(data: AuthProviderCreateInput!): AuthProvider!
+  updateAuthProvider(data: AuthProviderUpdateInput!, where: AuthProviderWhereUniqueInput!): AuthProvider
+  updateManyAuthProviders(data: AuthProviderUpdateManyMutationInput!, where: AuthProviderWhereInput): BatchPayload!
+  upsertAuthProvider(where: AuthProviderWhereUniqueInput!, create: AuthProviderCreateInput!, update: AuthProviderUpdateInput!): AuthProvider!
+  deleteAuthProvider(where: AuthProviderWhereUniqueInput!): AuthProvider
+  deleteManyAuthProviders(where: AuthProviderWhereInput): BatchPayload!
+  createAuthProviderUser(data: AuthProviderUserCreateInput!): AuthProviderUser!
+  updateAuthProviderUser(data: AuthProviderUserUpdateInput!, where: AuthProviderUserWhereUniqueInput!): AuthProviderUser
+  updateManyAuthProviderUsers(data: AuthProviderUserUpdateManyMutationInput!, where: AuthProviderUserWhereInput): BatchPayload!
+  upsertAuthProviderUser(where: AuthProviderUserWhereUniqueInput!, create: AuthProviderUserCreateInput!, update: AuthProviderUserUpdateInput!): AuthProviderUser!
+  deleteAuthProviderUser(where: AuthProviderUserWhereUniqueInput!): AuthProviderUser
+  deleteManyAuthProviderUsers(where: AuthProviderUserWhereInput): BatchPayload!
+  createGuestActionInstance(data: GuestActionInstanceCreateInput!): GuestActionInstance!
+  updateGuestActionInstance(data: GuestActionInstanceUpdateInput!, where: GuestActionInstanceWhereUniqueInput!): GuestActionInstance
+  updateManyGuestActionInstances(data: GuestActionInstanceUpdateManyMutationInput!, where: GuestActionInstanceWhereInput): BatchPayload!
+  upsertGuestActionInstance(where: GuestActionInstanceWhereUniqueInput!, create: GuestActionInstanceCreateInput!, update: GuestActionInstanceUpdateInput!): GuestActionInstance!
+  deleteGuestActionInstance(where: GuestActionInstanceWhereUniqueInput!): GuestActionInstance
+  deleteManyGuestActionInstances(where: GuestActionInstanceWhereInput): BatchPayload!
+  createInfo(data: InfoCreateInput!): Info!
+  updateInfo(data: InfoUpdateInput!, where: InfoWhereUniqueInput!): Info
+  updateManyInfoes(data: InfoUpdateManyMutationInput!, where: InfoWhereInput): BatchPayload!
+  upsertInfo(where: InfoWhereUniqueInput!, create: InfoCreateInput!, update: InfoUpdateInput!): Info!
+  deleteInfo(where: InfoWhereUniqueInput!): Info
+  deleteManyInfoes(where: InfoWhereInput): BatchPayload!
+  createInfoType(data: InfoTypeCreateInput!): InfoType!
+  updateInfoType(data: InfoTypeUpdateInput!, where: InfoTypeWhereUniqueInput!): InfoType
+  updateManyInfoTypes(data: InfoTypeUpdateManyMutationInput!, where: InfoTypeWhereInput): BatchPayload!
+  upsertInfoType(where: InfoTypeWhereUniqueInput!, create: InfoTypeCreateInput!, update: InfoTypeUpdateInput!): InfoType!
+  deleteInfoType(where: InfoTypeWhereUniqueInput!): InfoType
+  deleteManyInfoTypes(where: InfoTypeWhereInput): BatchPayload!
+  createInitiative(data: InitiativeCreateInput!): Initiative!
+  updateInitiative(data: InitiativeUpdateInput!, where: InitiativeWhereUniqueInput!): Initiative
+  updateManyInitiatives(data: InitiativeUpdateManyMutationInput!, where: InitiativeWhereInput): BatchPayload!
+  upsertInitiative(where: InitiativeWhereUniqueInput!, create: InitiativeCreateInput!, update: InitiativeUpdateInput!): Initiative!
+  deleteInitiative(where: InitiativeWhereUniqueInput!): Initiative
+  deleteManyInitiatives(where: InitiativeWhereInput): BatchPayload!
+  createInteraction(data: InteractionCreateInput!): Interaction!
+  updateInteraction(data: InteractionUpdateInput!, where: InteractionWhereUniqueInput!): Interaction
+  upsertInteraction(where: InteractionWhereUniqueInput!, create: InteractionCreateInput!, update: InteractionUpdateInput!): Interaction!
+  deleteInteraction(where: InteractionWhereUniqueInput!): Interaction
+  deleteManyInteractions(where: InteractionWhereInput): BatchPayload!
+  createInteractionType(data: InteractionTypeCreateInput!): InteractionType!
+  updateInteractionType(data: InteractionTypeUpdateInput!, where: InteractionTypeWhereUniqueInput!): InteractionType
+  updateManyInteractionTypes(data: InteractionTypeUpdateManyMutationInput!, where: InteractionTypeWhereInput): BatchPayload!
+  upsertInteractionType(where: InteractionTypeWhereUniqueInput!, create: InteractionTypeCreateInput!, update: InteractionTypeUpdateInput!): InteractionType!
+  deleteInteractionType(where: InteractionTypeWhereUniqueInput!): InteractionType
+  deleteManyInteractionTypes(where: InteractionTypeWhereInput): BatchPayload!
+  createMedia(data: MediaCreateInput!): Media!
+  updateMedia(data: MediaUpdateInput!, where: MediaWhereUniqueInput!): Media
+  updateManyMedias(data: MediaUpdateManyMutationInput!, where: MediaWhereInput): BatchPayload!
+  upsertMedia(where: MediaWhereUniqueInput!, create: MediaCreateInput!, update: MediaUpdateInput!): Media!
+  deleteMedia(where: MediaWhereUniqueInput!): Media
+  deleteManyMedias(where: MediaWhereInput): BatchPayload!
+  createOwnUser(data: OwnUserCreateInput!): OwnUser!
+  updateOwnUser(data: OwnUserUpdateInput!, where: OwnUserWhereUniqueInput!): OwnUser
+  updateManyOwnUsers(data: OwnUserUpdateManyMutationInput!, where: OwnUserWhereInput): BatchPayload!
+  upsertOwnUser(where: OwnUserWhereUniqueInput!, create: OwnUserCreateInput!, update: OwnUserUpdateInput!): OwnUser!
+  deleteOwnUser(where: OwnUserWhereUniqueInput!): OwnUser
+  deleteManyOwnUsers(where: OwnUserWhereInput): BatchPayload!
+  createPublicEntity(data: PublicEntityCreateInput!): PublicEntity!
+  updatePublicEntity(data: PublicEntityUpdateInput!, where: PublicEntityWhereUniqueInput!): PublicEntity
+  upsertPublicEntity(where: PublicEntityWhereUniqueInput!, create: PublicEntityCreateInput!, update: PublicEntityUpdateInput!): PublicEntity!
+  deletePublicEntity(where: PublicEntityWhereUniqueInput!): PublicEntity
+  deleteManyPublicEntities(where: PublicEntityWhereInput): BatchPayload!
+  createPublicEntityType(data: PublicEntityTypeCreateInput!): PublicEntityType!
+  updatePublicEntityType(data: PublicEntityTypeUpdateInput!, where: PublicEntityTypeWhereUniqueInput!): PublicEntityType
+  updateManyPublicEntityTypes(data: PublicEntityTypeUpdateManyMutationInput!, where: PublicEntityTypeWhereInput): BatchPayload!
+  upsertPublicEntityType(where: PublicEntityTypeWhereUniqueInput!, create: PublicEntityTypeCreateInput!, update: PublicEntityTypeUpdateInput!): PublicEntityType!
+  deletePublicEntityType(where: PublicEntityTypeWhereUniqueInput!): PublicEntityType
+  deleteManyPublicEntityTypes(where: PublicEntityTypeWhereInput): BatchPayload!
+  createRemote(data: RemoteCreateInput!): Remote!
+  updateRemote(data: RemoteUpdateInput!, where: RemoteWhereUniqueInput!): Remote
+  updateManyRemotes(data: RemoteUpdateManyMutationInput!, where: RemoteWhereInput): BatchPayload!
+  upsertRemote(where: RemoteWhereUniqueInput!, create: RemoteCreateInput!, update: RemoteUpdateInput!): Remote!
+  deleteRemote(where: RemoteWhereUniqueInput!): Remote
+  deleteManyRemotes(where: RemoteWhereInput): BatchPayload!
+  createResource(data: ResourceCreateInput!): Resource!
+  updateResource(data: ResourceUpdateInput!, where: ResourceWhereUniqueInput!): Resource
+  updateManyResources(data: ResourceUpdateManyMutationInput!, where: ResourceWhereInput): BatchPayload!
+  upsertResource(where: ResourceWhereUniqueInput!, create: ResourceCreateInput!, update: ResourceUpdateInput!): Resource!
+  deleteResource(where: ResourceWhereUniqueInput!): Resource
+  deleteManyResources(where: ResourceWhereInput): BatchPayload!
   createTag(data: TagCreateInput!): Tag!
   updateTag(data: TagUpdateInput!, where: TagWhereUniqueInput!): Tag
   updateManyTags(data: TagUpdateManyMutationInput!, where: TagWhereInput): BatchPayload!
@@ -31,6 +3001,17 @@ type Mutation {
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   deleteUser(where: UserWhereUniqueInput!): User
   deleteManyUsers(where: UserWhereInput): BatchPayload!
+  createUserActionInstance(data: UserActionInstanceCreateInput!): UserActionInstance!
+  updateUserActionInstance(data: UserActionInstanceUpdateInput!, where: UserActionInstanceWhereUniqueInput!): UserActionInstance
+  upsertUserActionInstance(where: UserActionInstanceWhereUniqueInput!, create: UserActionInstanceCreateInput!, update: UserActionInstanceUpdateInput!): UserActionInstance!
+  deleteUserActionInstance(where: UserActionInstanceWhereUniqueInput!): UserActionInstance
+  deleteManyUserActionInstances(where: UserActionInstanceWhereInput): BatchPayload!
+  createUserRole(data: UserRoleCreateInput!): UserRole!
+  updateUserRole(data: UserRoleUpdateInput!, where: UserRoleWhereUniqueInput!): UserRole
+  updateManyUserRoles(data: UserRoleUpdateManyMutationInput!, where: UserRoleWhereInput): BatchPayload!
+  upsertUserRole(where: UserRoleWhereUniqueInput!, create: UserRoleCreateInput!, update: UserRoleUpdateInput!): UserRole!
+  deleteUserRole(where: UserRoleWhereUniqueInput!): UserRole
+  deleteManyUserRoles(where: UserRoleWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -43,6 +3024,397 @@ interface Node {
   id: ID!
 }
 
+type OwnUser {
+  id: UUID!
+  username: String!
+  password: String!
+  firstName: String!
+  middleName: String
+  lastName: String!
+  email: String!
+  phone: String
+  address: String
+  coordinates: String
+  pic: String
+  otherDetails: String
+  user: User!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
+}
+
+type OwnUserConnection {
+  pageInfo: PageInfo!
+  edges: [OwnUserEdge]!
+  aggregate: AggregateOwnUser!
+}
+
+input OwnUserCreateInput {
+  id: UUID
+  username: String!
+  password: String!
+  firstName: String!
+  middleName: String
+  lastName: String!
+  email: String!
+  phone: String
+  address: String
+  coordinates: String
+  pic: String
+  otherDetails: String
+  user: UserCreateOneWithoutOwnUserInput!
+  tags: TagCreateManyInput
+}
+
+input OwnUserCreateOneWithoutUserInput {
+  create: OwnUserCreateWithoutUserInput
+  connect: OwnUserWhereUniqueInput
+}
+
+input OwnUserCreateWithoutUserInput {
+  id: UUID
+  username: String!
+  password: String!
+  firstName: String!
+  middleName: String
+  lastName: String!
+  email: String!
+  phone: String
+  address: String
+  coordinates: String
+  pic: String
+  otherDetails: String
+  tags: TagCreateManyInput
+}
+
+type OwnUserEdge {
+  node: OwnUser!
+  cursor: String!
+}
+
+enum OwnUserOrderByInput {
+  id_ASC
+  id_DESC
+  username_ASC
+  username_DESC
+  password_ASC
+  password_DESC
+  firstName_ASC
+  firstName_DESC
+  middleName_ASC
+  middleName_DESC
+  lastName_ASC
+  lastName_DESC
+  email_ASC
+  email_DESC
+  phone_ASC
+  phone_DESC
+  address_ASC
+  address_DESC
+  coordinates_ASC
+  coordinates_DESC
+  pic_ASC
+  pic_DESC
+  otherDetails_ASC
+  otherDetails_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type OwnUserPreviousValues {
+  id: UUID!
+  username: String!
+  password: String!
+  firstName: String!
+  middleName: String
+  lastName: String!
+  email: String!
+  phone: String
+  address: String
+  coordinates: String
+  pic: String
+  otherDetails: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type OwnUserSubscriptionPayload {
+  mutation: MutationType!
+  node: OwnUser
+  updatedFields: [String!]
+  previousValues: OwnUserPreviousValues
+}
+
+input OwnUserSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: OwnUserWhereInput
+  AND: [OwnUserSubscriptionWhereInput!]
+  OR: [OwnUserSubscriptionWhereInput!]
+  NOT: [OwnUserSubscriptionWhereInput!]
+}
+
+input OwnUserUpdateInput {
+  username: String
+  password: String
+  firstName: String
+  middleName: String
+  lastName: String
+  email: String
+  phone: String
+  address: String
+  coordinates: String
+  pic: String
+  otherDetails: String
+  user: UserUpdateOneRequiredWithoutOwnUserInput
+  tags: TagUpdateManyInput
+}
+
+input OwnUserUpdateManyMutationInput {
+  username: String
+  password: String
+  firstName: String
+  middleName: String
+  lastName: String
+  email: String
+  phone: String
+  address: String
+  coordinates: String
+  pic: String
+  otherDetails: String
+}
+
+input OwnUserUpdateOneWithoutUserInput {
+  create: OwnUserCreateWithoutUserInput
+  update: OwnUserUpdateWithoutUserDataInput
+  upsert: OwnUserUpsertWithoutUserInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: OwnUserWhereUniqueInput
+}
+
+input OwnUserUpdateWithoutUserDataInput {
+  username: String
+  password: String
+  firstName: String
+  middleName: String
+  lastName: String
+  email: String
+  phone: String
+  address: String
+  coordinates: String
+  pic: String
+  otherDetails: String
+  tags: TagUpdateManyInput
+}
+
+input OwnUserUpsertWithoutUserInput {
+  update: OwnUserUpdateWithoutUserDataInput!
+  create: OwnUserCreateWithoutUserInput!
+}
+
+input OwnUserWhereInput {
+  id: UUID
+  id_not: UUID
+  id_in: [UUID!]
+  id_not_in: [UUID!]
+  id_lt: UUID
+  id_lte: UUID
+  id_gt: UUID
+  id_gte: UUID
+  id_contains: UUID
+  id_not_contains: UUID
+  id_starts_with: UUID
+  id_not_starts_with: UUID
+  id_ends_with: UUID
+  id_not_ends_with: UUID
+  username: String
+  username_not: String
+  username_in: [String!]
+  username_not_in: [String!]
+  username_lt: String
+  username_lte: String
+  username_gt: String
+  username_gte: String
+  username_contains: String
+  username_not_contains: String
+  username_starts_with: String
+  username_not_starts_with: String
+  username_ends_with: String
+  username_not_ends_with: String
+  password: String
+  password_not: String
+  password_in: [String!]
+  password_not_in: [String!]
+  password_lt: String
+  password_lte: String
+  password_gt: String
+  password_gte: String
+  password_contains: String
+  password_not_contains: String
+  password_starts_with: String
+  password_not_starts_with: String
+  password_ends_with: String
+  password_not_ends_with: String
+  firstName: String
+  firstName_not: String
+  firstName_in: [String!]
+  firstName_not_in: [String!]
+  firstName_lt: String
+  firstName_lte: String
+  firstName_gt: String
+  firstName_gte: String
+  firstName_contains: String
+  firstName_not_contains: String
+  firstName_starts_with: String
+  firstName_not_starts_with: String
+  firstName_ends_with: String
+  firstName_not_ends_with: String
+  middleName: String
+  middleName_not: String
+  middleName_in: [String!]
+  middleName_not_in: [String!]
+  middleName_lt: String
+  middleName_lte: String
+  middleName_gt: String
+  middleName_gte: String
+  middleName_contains: String
+  middleName_not_contains: String
+  middleName_starts_with: String
+  middleName_not_starts_with: String
+  middleName_ends_with: String
+  middleName_not_ends_with: String
+  lastName: String
+  lastName_not: String
+  lastName_in: [String!]
+  lastName_not_in: [String!]
+  lastName_lt: String
+  lastName_lte: String
+  lastName_gt: String
+  lastName_gte: String
+  lastName_contains: String
+  lastName_not_contains: String
+  lastName_starts_with: String
+  lastName_not_starts_with: String
+  lastName_ends_with: String
+  lastName_not_ends_with: String
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
+  phone: String
+  phone_not: String
+  phone_in: [String!]
+  phone_not_in: [String!]
+  phone_lt: String
+  phone_lte: String
+  phone_gt: String
+  phone_gte: String
+  phone_contains: String
+  phone_not_contains: String
+  phone_starts_with: String
+  phone_not_starts_with: String
+  phone_ends_with: String
+  phone_not_ends_with: String
+  address: String
+  address_not: String
+  address_in: [String!]
+  address_not_in: [String!]
+  address_lt: String
+  address_lte: String
+  address_gt: String
+  address_gte: String
+  address_contains: String
+  address_not_contains: String
+  address_starts_with: String
+  address_not_starts_with: String
+  address_ends_with: String
+  address_not_ends_with: String
+  coordinates: String
+  coordinates_not: String
+  coordinates_in: [String!]
+  coordinates_not_in: [String!]
+  coordinates_lt: String
+  coordinates_lte: String
+  coordinates_gt: String
+  coordinates_gte: String
+  coordinates_contains: String
+  coordinates_not_contains: String
+  coordinates_starts_with: String
+  coordinates_not_starts_with: String
+  coordinates_ends_with: String
+  coordinates_not_ends_with: String
+  pic: String
+  pic_not: String
+  pic_in: [String!]
+  pic_not_in: [String!]
+  pic_lt: String
+  pic_lte: String
+  pic_gt: String
+  pic_gte: String
+  pic_contains: String
+  pic_not_contains: String
+  pic_starts_with: String
+  pic_not_starts_with: String
+  pic_ends_with: String
+  pic_not_ends_with: String
+  otherDetails: String
+  otherDetails_not: String
+  otherDetails_in: [String!]
+  otherDetails_not_in: [String!]
+  otherDetails_lt: String
+  otherDetails_lte: String
+  otherDetails_gt: String
+  otherDetails_gte: String
+  otherDetails_contains: String
+  otherDetails_not_contains: String
+  otherDetails_starts_with: String
+  otherDetails_not_starts_with: String
+  otherDetails_ends_with: String
+  otherDetails_not_ends_with: String
+  user: UserWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  tags_every: TagWhereInput
+  tags_some: TagWhereInput
+  tags_none: TagWhereInput
+  AND: [OwnUserWhereInput!]
+  OR: [OwnUserWhereInput!]
+  NOT: [OwnUserWhereInput!]
+}
+
+input OwnUserWhereUniqueInput {
+  id: UUID
+}
+
 type PageInfo {
   hasNextPage: Boolean!
   hasPreviousPage: Boolean!
@@ -50,19 +3422,970 @@ type PageInfo {
   endCursor: String
 }
 
+type PublicEntity {
+  id: ID!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
+  entityType: PublicEntityType!
+  remote: Remote!
+}
+
+type PublicEntityConnection {
+  pageInfo: PageInfo!
+  edges: [PublicEntityEdge]!
+  aggregate: AggregatePublicEntity!
+}
+
+input PublicEntityCreateInput {
+  id: ID
+  tags: TagCreateManyInput
+  entityType: PublicEntityTypeCreateOneInput!
+  remote: RemoteCreateOneInput!
+}
+
+input PublicEntityCreateOneInput {
+  create: PublicEntityCreateInput
+  connect: PublicEntityWhereUniqueInput
+}
+
+type PublicEntityEdge {
+  node: PublicEntity!
+  cursor: String!
+}
+
+enum PublicEntityOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type PublicEntityPreviousValues {
+  id: ID!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type PublicEntitySubscriptionPayload {
+  mutation: MutationType!
+  node: PublicEntity
+  updatedFields: [String!]
+  previousValues: PublicEntityPreviousValues
+}
+
+input PublicEntitySubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: PublicEntityWhereInput
+  AND: [PublicEntitySubscriptionWhereInput!]
+  OR: [PublicEntitySubscriptionWhereInput!]
+  NOT: [PublicEntitySubscriptionWhereInput!]
+}
+
+type PublicEntityType {
+  id: ID!
+  createdAt: DateTime!
+  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
+  name: String!
+}
+
+type PublicEntityTypeConnection {
+  pageInfo: PageInfo!
+  edges: [PublicEntityTypeEdge]!
+  aggregate: AggregatePublicEntityType!
+}
+
+input PublicEntityTypeCreateInput {
+  id: ID
+  tags: TagCreateManyInput
+  name: String!
+}
+
+input PublicEntityTypeCreateOneInput {
+  create: PublicEntityTypeCreateInput
+  connect: PublicEntityTypeWhereUniqueInput
+}
+
+type PublicEntityTypeEdge {
+  node: PublicEntityType!
+  cursor: String!
+}
+
+enum PublicEntityTypeOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  name_ASC
+  name_DESC
+}
+
+type PublicEntityTypePreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  name: String!
+}
+
+type PublicEntityTypeSubscriptionPayload {
+  mutation: MutationType!
+  node: PublicEntityType
+  updatedFields: [String!]
+  previousValues: PublicEntityTypePreviousValues
+}
+
+input PublicEntityTypeSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: PublicEntityTypeWhereInput
+  AND: [PublicEntityTypeSubscriptionWhereInput!]
+  OR: [PublicEntityTypeSubscriptionWhereInput!]
+  NOT: [PublicEntityTypeSubscriptionWhereInput!]
+}
+
+input PublicEntityTypeUpdateDataInput {
+  tags: TagUpdateManyInput
+  name: String
+}
+
+input PublicEntityTypeUpdateInput {
+  tags: TagUpdateManyInput
+  name: String
+}
+
+input PublicEntityTypeUpdateManyMutationInput {
+  name: String
+}
+
+input PublicEntityTypeUpdateOneRequiredInput {
+  create: PublicEntityTypeCreateInput
+  update: PublicEntityTypeUpdateDataInput
+  upsert: PublicEntityTypeUpsertNestedInput
+  connect: PublicEntityTypeWhereUniqueInput
+}
+
+input PublicEntityTypeUpsertNestedInput {
+  update: PublicEntityTypeUpdateDataInput!
+  create: PublicEntityTypeCreateInput!
+}
+
+input PublicEntityTypeWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  tags_every: TagWhereInput
+  tags_some: TagWhereInput
+  tags_none: TagWhereInput
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  AND: [PublicEntityTypeWhereInput!]
+  OR: [PublicEntityTypeWhereInput!]
+  NOT: [PublicEntityTypeWhereInput!]
+}
+
+input PublicEntityTypeWhereUniqueInput {
+  id: ID
+  name: String
+}
+
+input PublicEntityUpdateDataInput {
+  tags: TagUpdateManyInput
+  entityType: PublicEntityTypeUpdateOneRequiredInput
+  remote: RemoteUpdateOneRequiredInput
+}
+
+input PublicEntityUpdateInput {
+  tags: TagUpdateManyInput
+  entityType: PublicEntityTypeUpdateOneRequiredInput
+  remote: RemoteUpdateOneRequiredInput
+}
+
+input PublicEntityUpdateOneInput {
+  create: PublicEntityCreateInput
+  update: PublicEntityUpdateDataInput
+  upsert: PublicEntityUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: PublicEntityWhereUniqueInput
+}
+
+input PublicEntityUpsertNestedInput {
+  update: PublicEntityUpdateDataInput!
+  create: PublicEntityCreateInput!
+}
+
+input PublicEntityWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  tags_every: TagWhereInput
+  tags_some: TagWhereInput
+  tags_none: TagWhereInput
+  entityType: PublicEntityTypeWhereInput
+  remote: RemoteWhereInput
+  AND: [PublicEntityWhereInput!]
+  OR: [PublicEntityWhereInput!]
+  NOT: [PublicEntityWhereInput!]
+}
+
+input PublicEntityWhereUniqueInput {
+  id: ID
+}
+
 type Query {
+  actionScope(where: ActionScopeWhereUniqueInput!): ActionScope
+  actionScopes(where: ActionScopeWhereInput, orderBy: ActionScopeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActionScope]!
+  actionScopesConnection(where: ActionScopeWhereInput, orderBy: ActionScopeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActionScopeConnection!
+  authProvider(where: AuthProviderWhereUniqueInput!): AuthProvider
+  authProviders(where: AuthProviderWhereInput, orderBy: AuthProviderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AuthProvider]!
+  authProvidersConnection(where: AuthProviderWhereInput, orderBy: AuthProviderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AuthProviderConnection!
+  authProviderUser(where: AuthProviderUserWhereUniqueInput!): AuthProviderUser
+  authProviderUsers(where: AuthProviderUserWhereInput, orderBy: AuthProviderUserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AuthProviderUser]!
+  authProviderUsersConnection(where: AuthProviderUserWhereInput, orderBy: AuthProviderUserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AuthProviderUserConnection!
+  guestActionInstance(where: GuestActionInstanceWhereUniqueInput!): GuestActionInstance
+  guestActionInstances(where: GuestActionInstanceWhereInput, orderBy: GuestActionInstanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [GuestActionInstance]!
+  guestActionInstancesConnection(where: GuestActionInstanceWhereInput, orderBy: GuestActionInstanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GuestActionInstanceConnection!
+  info(where: InfoWhereUniqueInput!): Info
+  infoes(where: InfoWhereInput, orderBy: InfoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Info]!
+  infoesConnection(where: InfoWhereInput, orderBy: InfoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): InfoConnection!
+  infoType(where: InfoTypeWhereUniqueInput!): InfoType
+  infoTypes(where: InfoTypeWhereInput, orderBy: InfoTypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [InfoType]!
+  infoTypesConnection(where: InfoTypeWhereInput, orderBy: InfoTypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): InfoTypeConnection!
+  initiative(where: InitiativeWhereUniqueInput!): Initiative
+  initiatives(where: InitiativeWhereInput, orderBy: InitiativeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Initiative]!
+  initiativesConnection(where: InitiativeWhereInput, orderBy: InitiativeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): InitiativeConnection!
+  interaction(where: InteractionWhereUniqueInput!): Interaction
+  interactions(where: InteractionWhereInput, orderBy: InteractionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Interaction]!
+  interactionsConnection(where: InteractionWhereInput, orderBy: InteractionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): InteractionConnection!
+  interactionType(where: InteractionTypeWhereUniqueInput!): InteractionType
+  interactionTypes(where: InteractionTypeWhereInput, orderBy: InteractionTypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [InteractionType]!
+  interactionTypesConnection(where: InteractionTypeWhereInput, orderBy: InteractionTypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): InteractionTypeConnection!
+  media(where: MediaWhereUniqueInput!): Media
+  medias(where: MediaWhereInput, orderBy: MediaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Media]!
+  mediasConnection(where: MediaWhereInput, orderBy: MediaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MediaConnection!
+  ownUser(where: OwnUserWhereUniqueInput!): OwnUser
+  ownUsers(where: OwnUserWhereInput, orderBy: OwnUserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OwnUser]!
+  ownUsersConnection(where: OwnUserWhereInput, orderBy: OwnUserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OwnUserConnection!
+  publicEntity(where: PublicEntityWhereUniqueInput!): PublicEntity
+  publicEntities(where: PublicEntityWhereInput, orderBy: PublicEntityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PublicEntity]!
+  publicEntitiesConnection(where: PublicEntityWhereInput, orderBy: PublicEntityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PublicEntityConnection!
+  publicEntityType(where: PublicEntityTypeWhereUniqueInput!): PublicEntityType
+  publicEntityTypes(where: PublicEntityTypeWhereInput, orderBy: PublicEntityTypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PublicEntityType]!
+  publicEntityTypesConnection(where: PublicEntityTypeWhereInput, orderBy: PublicEntityTypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PublicEntityTypeConnection!
+  remote(where: RemoteWhereUniqueInput!): Remote
+  remotes(where: RemoteWhereInput, orderBy: RemoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Remote]!
+  remotesConnection(where: RemoteWhereInput, orderBy: RemoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RemoteConnection!
+  resource(where: ResourceWhereUniqueInput!): Resource
+  resources(where: ResourceWhereInput, orderBy: ResourceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Resource]!
+  resourcesConnection(where: ResourceWhereInput, orderBy: ResourceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ResourceConnection!
   tag(where: TagWhereUniqueInput!): Tag
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag]!
   tagsConnection(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TagConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  userActionInstance(where: UserActionInstanceWhereUniqueInput!): UserActionInstance
+  userActionInstances(where: UserActionInstanceWhereInput, orderBy: UserActionInstanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserActionInstance]!
+  userActionInstancesConnection(where: UserActionInstanceWhereInput, orderBy: UserActionInstanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserActionInstanceConnection!
+  userRole(where: UserRoleWhereUniqueInput!): UserRole
+  userRoles(where: UserRoleWhereInput, orderBy: UserRoleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserRole]!
+  userRolesConnection(where: UserRoleWhereInput, orderBy: UserRoleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserRoleConnection!
   node(id: ID!): Node
 }
 
+type Remote {
+  id: ID!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
+  name: String!
+  link: String
+  query: String
+  queryResolution: String
+}
+
+type RemoteConnection {
+  pageInfo: PageInfo!
+  edges: [RemoteEdge]!
+  aggregate: AggregateRemote!
+}
+
+input RemoteCreateInput {
+  id: ID
+  tags: TagCreateManyInput
+  name: String!
+  link: String
+  query: String
+  queryResolution: String
+}
+
+input RemoteCreateManyInput {
+  create: [RemoteCreateInput!]
+  connect: [RemoteWhereUniqueInput!]
+}
+
+input RemoteCreateOneInput {
+  create: RemoteCreateInput
+  connect: RemoteWhereUniqueInput
+}
+
+type RemoteEdge {
+  node: Remote!
+  cursor: String!
+}
+
+enum RemoteOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+  name_ASC
+  name_DESC
+  link_ASC
+  link_DESC
+  query_ASC
+  query_DESC
+  queryResolution_ASC
+  queryResolution_DESC
+}
+
+type RemotePreviousValues {
+  id: ID!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+  name: String!
+  link: String
+  query: String
+  queryResolution: String
+}
+
+input RemoteScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  link: String
+  link_not: String
+  link_in: [String!]
+  link_not_in: [String!]
+  link_lt: String
+  link_lte: String
+  link_gt: String
+  link_gte: String
+  link_contains: String
+  link_not_contains: String
+  link_starts_with: String
+  link_not_starts_with: String
+  link_ends_with: String
+  link_not_ends_with: String
+  query: String
+  query_not: String
+  query_in: [String!]
+  query_not_in: [String!]
+  query_lt: String
+  query_lte: String
+  query_gt: String
+  query_gte: String
+  query_contains: String
+  query_not_contains: String
+  query_starts_with: String
+  query_not_starts_with: String
+  query_ends_with: String
+  query_not_ends_with: String
+  queryResolution: String
+  queryResolution_not: String
+  queryResolution_in: [String!]
+  queryResolution_not_in: [String!]
+  queryResolution_lt: String
+  queryResolution_lte: String
+  queryResolution_gt: String
+  queryResolution_gte: String
+  queryResolution_contains: String
+  queryResolution_not_contains: String
+  queryResolution_starts_with: String
+  queryResolution_not_starts_with: String
+  queryResolution_ends_with: String
+  queryResolution_not_ends_with: String
+  AND: [RemoteScalarWhereInput!]
+  OR: [RemoteScalarWhereInput!]
+  NOT: [RemoteScalarWhereInput!]
+}
+
+type RemoteSubscriptionPayload {
+  mutation: MutationType!
+  node: Remote
+  updatedFields: [String!]
+  previousValues: RemotePreviousValues
+}
+
+input RemoteSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: RemoteWhereInput
+  AND: [RemoteSubscriptionWhereInput!]
+  OR: [RemoteSubscriptionWhereInput!]
+  NOT: [RemoteSubscriptionWhereInput!]
+}
+
+input RemoteUpdateDataInput {
+  tags: TagUpdateManyInput
+  name: String
+  link: String
+  query: String
+  queryResolution: String
+}
+
+input RemoteUpdateInput {
+  tags: TagUpdateManyInput
+  name: String
+  link: String
+  query: String
+  queryResolution: String
+}
+
+input RemoteUpdateManyDataInput {
+  name: String
+  link: String
+  query: String
+  queryResolution: String
+}
+
+input RemoteUpdateManyInput {
+  create: [RemoteCreateInput!]
+  update: [RemoteUpdateWithWhereUniqueNestedInput!]
+  upsert: [RemoteUpsertWithWhereUniqueNestedInput!]
+  delete: [RemoteWhereUniqueInput!]
+  connect: [RemoteWhereUniqueInput!]
+  set: [RemoteWhereUniqueInput!]
+  disconnect: [RemoteWhereUniqueInput!]
+  deleteMany: [RemoteScalarWhereInput!]
+  updateMany: [RemoteUpdateManyWithWhereNestedInput!]
+}
+
+input RemoteUpdateManyMutationInput {
+  name: String
+  link: String
+  query: String
+  queryResolution: String
+}
+
+input RemoteUpdateManyWithWhereNestedInput {
+  where: RemoteScalarWhereInput!
+  data: RemoteUpdateManyDataInput!
+}
+
+input RemoteUpdateOneInput {
+  create: RemoteCreateInput
+  update: RemoteUpdateDataInput
+  upsert: RemoteUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: RemoteWhereUniqueInput
+}
+
+input RemoteUpdateOneRequiredInput {
+  create: RemoteCreateInput
+  update: RemoteUpdateDataInput
+  upsert: RemoteUpsertNestedInput
+  connect: RemoteWhereUniqueInput
+}
+
+input RemoteUpdateWithWhereUniqueNestedInput {
+  where: RemoteWhereUniqueInput!
+  data: RemoteUpdateDataInput!
+}
+
+input RemoteUpsertNestedInput {
+  update: RemoteUpdateDataInput!
+  create: RemoteCreateInput!
+}
+
+input RemoteUpsertWithWhereUniqueNestedInput {
+  where: RemoteWhereUniqueInput!
+  update: RemoteUpdateDataInput!
+  create: RemoteCreateInput!
+}
+
+input RemoteWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  tags_every: TagWhereInput
+  tags_some: TagWhereInput
+  tags_none: TagWhereInput
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  link: String
+  link_not: String
+  link_in: [String!]
+  link_not_in: [String!]
+  link_lt: String
+  link_lte: String
+  link_gt: String
+  link_gte: String
+  link_contains: String
+  link_not_contains: String
+  link_starts_with: String
+  link_not_starts_with: String
+  link_ends_with: String
+  link_not_ends_with: String
+  query: String
+  query_not: String
+  query_in: [String!]
+  query_not_in: [String!]
+  query_lt: String
+  query_lte: String
+  query_gt: String
+  query_gte: String
+  query_contains: String
+  query_not_contains: String
+  query_starts_with: String
+  query_not_starts_with: String
+  query_ends_with: String
+  query_not_ends_with: String
+  queryResolution: String
+  queryResolution_not: String
+  queryResolution_in: [String!]
+  queryResolution_not_in: [String!]
+  queryResolution_lt: String
+  queryResolution_lte: String
+  queryResolution_gt: String
+  queryResolution_gte: String
+  queryResolution_contains: String
+  queryResolution_not_contains: String
+  queryResolution_starts_with: String
+  queryResolution_not_starts_with: String
+  queryResolution_ends_with: String
+  queryResolution_not_ends_with: String
+  AND: [RemoteWhereInput!]
+  OR: [RemoteWhereInput!]
+  NOT: [RemoteWhereInput!]
+}
+
+input RemoteWhereUniqueInput {
+  id: ID
+}
+
+type Resource {
+  id: ID!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
+  interaction: Interaction
+  media: Media
+  remote: Remote
+  link: String
+}
+
+type ResourceConnection {
+  pageInfo: PageInfo!
+  edges: [ResourceEdge]!
+  aggregate: AggregateResource!
+}
+
+input ResourceCreateInput {
+  id: ID
+  tags: TagCreateManyInput
+  interaction: InteractionCreateOneInput
+  media: MediaCreateOneInput
+  remote: RemoteCreateOneInput
+  link: String
+}
+
+input ResourceCreateManyInput {
+  create: [ResourceCreateInput!]
+  connect: [ResourceWhereUniqueInput!]
+}
+
+input ResourceCreateOneInput {
+  create: ResourceCreateInput
+  connect: ResourceWhereUniqueInput
+}
+
+type ResourceEdge {
+  node: Resource!
+  cursor: String!
+}
+
+enum ResourceOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+  link_ASC
+  link_DESC
+}
+
+type ResourcePreviousValues {
+  id: ID!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+  link: String
+}
+
+input ResourceScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  link: String
+  link_not: String
+  link_in: [String!]
+  link_not_in: [String!]
+  link_lt: String
+  link_lte: String
+  link_gt: String
+  link_gte: String
+  link_contains: String
+  link_not_contains: String
+  link_starts_with: String
+  link_not_starts_with: String
+  link_ends_with: String
+  link_not_ends_with: String
+  AND: [ResourceScalarWhereInput!]
+  OR: [ResourceScalarWhereInput!]
+  NOT: [ResourceScalarWhereInput!]
+}
+
+type ResourceSubscriptionPayload {
+  mutation: MutationType!
+  node: Resource
+  updatedFields: [String!]
+  previousValues: ResourcePreviousValues
+}
+
+input ResourceSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ResourceWhereInput
+  AND: [ResourceSubscriptionWhereInput!]
+  OR: [ResourceSubscriptionWhereInput!]
+  NOT: [ResourceSubscriptionWhereInput!]
+}
+
+input ResourceUpdateDataInput {
+  tags: TagUpdateManyInput
+  interaction: InteractionUpdateOneInput
+  media: MediaUpdateOneInput
+  remote: RemoteUpdateOneInput
+  link: String
+}
+
+input ResourceUpdateInput {
+  tags: TagUpdateManyInput
+  interaction: InteractionUpdateOneInput
+  media: MediaUpdateOneInput
+  remote: RemoteUpdateOneInput
+  link: String
+}
+
+input ResourceUpdateManyDataInput {
+  link: String
+}
+
+input ResourceUpdateManyInput {
+  create: [ResourceCreateInput!]
+  update: [ResourceUpdateWithWhereUniqueNestedInput!]
+  upsert: [ResourceUpsertWithWhereUniqueNestedInput!]
+  delete: [ResourceWhereUniqueInput!]
+  connect: [ResourceWhereUniqueInput!]
+  set: [ResourceWhereUniqueInput!]
+  disconnect: [ResourceWhereUniqueInput!]
+  deleteMany: [ResourceScalarWhereInput!]
+  updateMany: [ResourceUpdateManyWithWhereNestedInput!]
+}
+
+input ResourceUpdateManyMutationInput {
+  link: String
+}
+
+input ResourceUpdateManyWithWhereNestedInput {
+  where: ResourceScalarWhereInput!
+  data: ResourceUpdateManyDataInput!
+}
+
+input ResourceUpdateOneInput {
+  create: ResourceCreateInput
+  update: ResourceUpdateDataInput
+  upsert: ResourceUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: ResourceWhereUniqueInput
+}
+
+input ResourceUpdateWithWhereUniqueNestedInput {
+  where: ResourceWhereUniqueInput!
+  data: ResourceUpdateDataInput!
+}
+
+input ResourceUpsertNestedInput {
+  update: ResourceUpdateDataInput!
+  create: ResourceCreateInput!
+}
+
+input ResourceUpsertWithWhereUniqueNestedInput {
+  where: ResourceWhereUniqueInput!
+  update: ResourceUpdateDataInput!
+  create: ResourceCreateInput!
+}
+
+input ResourceWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  tags_every: TagWhereInput
+  tags_some: TagWhereInput
+  tags_none: TagWhereInput
+  interaction: InteractionWhereInput
+  media: MediaWhereInput
+  remote: RemoteWhereInput
+  link: String
+  link_not: String
+  link_in: [String!]
+  link_not_in: [String!]
+  link_lt: String
+  link_lte: String
+  link_gt: String
+  link_gte: String
+  link_contains: String
+  link_not_contains: String
+  link_starts_with: String
+  link_not_starts_with: String
+  link_ends_with: String
+  link_not_ends_with: String
+  AND: [ResourceWhereInput!]
+  OR: [ResourceWhereInput!]
+  NOT: [ResourceWhereInput!]
+}
+
+input ResourceWhereUniqueInput {
+  id: ID
+}
+
 type Subscription {
+  actionScope(where: ActionScopeSubscriptionWhereInput): ActionScopeSubscriptionPayload
+  authProvider(where: AuthProviderSubscriptionWhereInput): AuthProviderSubscriptionPayload
+  authProviderUser(where: AuthProviderUserSubscriptionWhereInput): AuthProviderUserSubscriptionPayload
+  guestActionInstance(where: GuestActionInstanceSubscriptionWhereInput): GuestActionInstanceSubscriptionPayload
+  info(where: InfoSubscriptionWhereInput): InfoSubscriptionPayload
+  infoType(where: InfoTypeSubscriptionWhereInput): InfoTypeSubscriptionPayload
+  initiative(where: InitiativeSubscriptionWhereInput): InitiativeSubscriptionPayload
+  interaction(where: InteractionSubscriptionWhereInput): InteractionSubscriptionPayload
+  interactionType(where: InteractionTypeSubscriptionWhereInput): InteractionTypeSubscriptionPayload
+  media(where: MediaSubscriptionWhereInput): MediaSubscriptionPayload
+  ownUser(where: OwnUserSubscriptionWhereInput): OwnUserSubscriptionPayload
+  publicEntity(where: PublicEntitySubscriptionWhereInput): PublicEntitySubscriptionPayload
+  publicEntityType(where: PublicEntityTypeSubscriptionWhereInput): PublicEntityTypeSubscriptionPayload
+  remote(where: RemoteSubscriptionWhereInput): RemoteSubscriptionPayload
+  resource(where: ResourceSubscriptionWhereInput): ResourceSubscriptionPayload
   tag(where: TagSubscriptionWhereInput): TagSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  userActionInstance(where: UserActionInstanceSubscriptionWhereInput): UserActionInstanceSubscriptionPayload
+  userRole(where: UserRoleSubscriptionWhereInput): UserRoleSubscriptionPayload
 }
 
 type Tag {
@@ -258,19 +4581,221 @@ input TagWhereUniqueInput {
 }
 
 type User {
-  id: ID!
-  name: String!
-  email: String!
-  password: String!
-  phone: String
-  address: String
-  coordinates: String
-  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
+  id: UUID!
   updatedAt: DateTime!
   createdAt: DateTime!
-  isFullAdming: Boolean!
-  isDevAdmin: Boolean!
-  isFinanceAdmin: Boolean!
+  isOwnUser: Boolean!
+  ownUser: OwnUser
+  primaryAuthProvider: AuthProviderUser
+  authProviders(where: AuthProviderUserWhereInput, orderBy: AuthProviderUserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AuthProviderUser!]
+  roles(where: UserRoleWhereInput, orderBy: UserRoleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserRole!]
+  optionalScopes(where: ActionScopeWhereInput, orderBy: ActionScopeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActionScope!]
+  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
+  actionsHistory(where: UserActionInstanceWhereInput, orderBy: UserActionInstanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserActionInstance!]
+  isDeleted: Boolean!
+}
+
+type UserActionInstance {
+  id: ID!
+  createdAt: DateTime!
+  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
+  user: User!
+  actionScope: ActionScope!
+}
+
+type UserActionInstanceConnection {
+  pageInfo: PageInfo!
+  edges: [UserActionInstanceEdge]!
+  aggregate: AggregateUserActionInstance!
+}
+
+input UserActionInstanceCreateInput {
+  id: ID
+  tags: TagCreateManyInput
+  user: UserCreateOneWithoutActionsHistoryInput!
+  actionScope: ActionScopeCreateOneWithoutUserActionsInput!
+}
+
+input UserActionInstanceCreateManyWithoutActionScopeInput {
+  create: [UserActionInstanceCreateWithoutActionScopeInput!]
+  connect: [UserActionInstanceWhereUniqueInput!]
+}
+
+input UserActionInstanceCreateManyWithoutUserInput {
+  create: [UserActionInstanceCreateWithoutUserInput!]
+  connect: [UserActionInstanceWhereUniqueInput!]
+}
+
+input UserActionInstanceCreateWithoutActionScopeInput {
+  id: ID
+  tags: TagCreateManyInput
+  user: UserCreateOneWithoutActionsHistoryInput!
+}
+
+input UserActionInstanceCreateWithoutUserInput {
+  id: ID
+  tags: TagCreateManyInput
+  actionScope: ActionScopeCreateOneWithoutUserActionsInput!
+}
+
+type UserActionInstanceEdge {
+  node: UserActionInstance!
+  cursor: String!
+}
+
+enum UserActionInstanceOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type UserActionInstancePreviousValues {
+  id: ID!
+  createdAt: DateTime!
+}
+
+input UserActionInstanceScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [UserActionInstanceScalarWhereInput!]
+  OR: [UserActionInstanceScalarWhereInput!]
+  NOT: [UserActionInstanceScalarWhereInput!]
+}
+
+type UserActionInstanceSubscriptionPayload {
+  mutation: MutationType!
+  node: UserActionInstance
+  updatedFields: [String!]
+  previousValues: UserActionInstancePreviousValues
+}
+
+input UserActionInstanceSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: UserActionInstanceWhereInput
+  AND: [UserActionInstanceSubscriptionWhereInput!]
+  OR: [UserActionInstanceSubscriptionWhereInput!]
+  NOT: [UserActionInstanceSubscriptionWhereInput!]
+}
+
+input UserActionInstanceUpdateInput {
+  tags: TagUpdateManyInput
+  user: UserUpdateOneRequiredWithoutActionsHistoryInput
+  actionScope: ActionScopeUpdateOneRequiredWithoutUserActionsInput
+}
+
+input UserActionInstanceUpdateManyWithoutActionScopeInput {
+  create: [UserActionInstanceCreateWithoutActionScopeInput!]
+  delete: [UserActionInstanceWhereUniqueInput!]
+  connect: [UserActionInstanceWhereUniqueInput!]
+  set: [UserActionInstanceWhereUniqueInput!]
+  disconnect: [UserActionInstanceWhereUniqueInput!]
+  update: [UserActionInstanceUpdateWithWhereUniqueWithoutActionScopeInput!]
+  upsert: [UserActionInstanceUpsertWithWhereUniqueWithoutActionScopeInput!]
+  deleteMany: [UserActionInstanceScalarWhereInput!]
+}
+
+input UserActionInstanceUpdateManyWithoutUserInput {
+  create: [UserActionInstanceCreateWithoutUserInput!]
+  delete: [UserActionInstanceWhereUniqueInput!]
+  connect: [UserActionInstanceWhereUniqueInput!]
+  set: [UserActionInstanceWhereUniqueInput!]
+  disconnect: [UserActionInstanceWhereUniqueInput!]
+  update: [UserActionInstanceUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [UserActionInstanceUpsertWithWhereUniqueWithoutUserInput!]
+  deleteMany: [UserActionInstanceScalarWhereInput!]
+}
+
+input UserActionInstanceUpdateWithoutActionScopeDataInput {
+  tags: TagUpdateManyInput
+  user: UserUpdateOneRequiredWithoutActionsHistoryInput
+}
+
+input UserActionInstanceUpdateWithoutUserDataInput {
+  tags: TagUpdateManyInput
+  actionScope: ActionScopeUpdateOneRequiredWithoutUserActionsInput
+}
+
+input UserActionInstanceUpdateWithWhereUniqueWithoutActionScopeInput {
+  where: UserActionInstanceWhereUniqueInput!
+  data: UserActionInstanceUpdateWithoutActionScopeDataInput!
+}
+
+input UserActionInstanceUpdateWithWhereUniqueWithoutUserInput {
+  where: UserActionInstanceWhereUniqueInput!
+  data: UserActionInstanceUpdateWithoutUserDataInput!
+}
+
+input UserActionInstanceUpsertWithWhereUniqueWithoutActionScopeInput {
+  where: UserActionInstanceWhereUniqueInput!
+  update: UserActionInstanceUpdateWithoutActionScopeDataInput!
+  create: UserActionInstanceCreateWithoutActionScopeInput!
+}
+
+input UserActionInstanceUpsertWithWhereUniqueWithoutUserInput {
+  where: UserActionInstanceWhereUniqueInput!
+  update: UserActionInstanceUpdateWithoutUserDataInput!
+  create: UserActionInstanceCreateWithoutUserInput!
+}
+
+input UserActionInstanceWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  tags_every: TagWhereInput
+  tags_some: TagWhereInput
+  tags_none: TagWhereInput
+  user: UserWhereInput
+  actionScope: ActionScopeWhereInput
+  AND: [UserActionInstanceWhereInput!]
+  OR: [UserActionInstanceWhereInput!]
+  NOT: [UserActionInstanceWhereInput!]
+}
+
+input UserActionInstanceWhereUniqueInput {
+  id: ID
 }
 
 type UserConnection {
@@ -280,17 +4805,72 @@ type UserConnection {
 }
 
 input UserCreateInput {
-  id: ID
-  name: String!
-  email: String!
-  password: String!
-  phone: String
-  address: String
-  coordinates: String
+  id: UUID
+  isOwnUser: Boolean!
+  ownUser: OwnUserCreateOneWithoutUserInput
+  primaryAuthProvider: AuthProviderUserCreateOneInput
+  authProviders: AuthProviderUserCreateManyWithoutUserInput
+  roles: UserRoleCreateManyInput
+  optionalScopes: ActionScopeCreateManyInput
   tags: TagCreateManyInput
-  isFullAdming: Boolean!
-  isDevAdmin: Boolean!
-  isFinanceAdmin: Boolean!
+  actionsHistory: UserActionInstanceCreateManyWithoutUserInput
+  isDeleted: Boolean!
+}
+
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutActionsHistoryInput {
+  create: UserCreateWithoutActionsHistoryInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutAuthProvidersInput {
+  create: UserCreateWithoutAuthProvidersInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutOwnUserInput {
+  create: UserCreateWithoutOwnUserInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutActionsHistoryInput {
+  id: UUID
+  isOwnUser: Boolean!
+  ownUser: OwnUserCreateOneWithoutUserInput
+  primaryAuthProvider: AuthProviderUserCreateOneInput
+  authProviders: AuthProviderUserCreateManyWithoutUserInput
+  roles: UserRoleCreateManyInput
+  optionalScopes: ActionScopeCreateManyInput
+  tags: TagCreateManyInput
+  isDeleted: Boolean!
+}
+
+input UserCreateWithoutAuthProvidersInput {
+  id: UUID
+  isOwnUser: Boolean!
+  ownUser: OwnUserCreateOneWithoutUserInput
+  primaryAuthProvider: AuthProviderUserCreateOneInput
+  roles: UserRoleCreateManyInput
+  optionalScopes: ActionScopeCreateManyInput
+  tags: TagCreateManyInput
+  actionsHistory: UserActionInstanceCreateManyWithoutUserInput
+  isDeleted: Boolean!
+}
+
+input UserCreateWithoutOwnUserInput {
+  id: UUID
+  isOwnUser: Boolean!
+  primaryAuthProvider: AuthProviderUserCreateOneInput
+  authProviders: AuthProviderUserCreateManyWithoutUserInput
+  roles: UserRoleCreateManyInput
+  optionalScopes: ActionScopeCreateManyInput
+  tags: TagCreateManyInput
+  actionsHistory: UserActionInstanceCreateManyWithoutUserInput
+  isDeleted: Boolean!
 }
 
 type UserEdge {
@@ -301,43 +4881,248 @@ type UserEdge {
 enum UserOrderByInput {
   id_ASC
   id_DESC
-  name_ASC
-  name_DESC
-  email_ASC
-  email_DESC
-  password_ASC
-  password_DESC
-  phone_ASC
-  phone_DESC
-  address_ASC
-  address_DESC
-  coordinates_ASC
-  coordinates_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
   createdAt_DESC
-  isFullAdming_ASC
-  isFullAdming_DESC
-  isDevAdmin_ASC
-  isDevAdmin_DESC
-  isFinanceAdmin_ASC
-  isFinanceAdmin_DESC
+  isOwnUser_ASC
+  isOwnUser_DESC
+  isDeleted_ASC
+  isDeleted_DESC
 }
 
 type UserPreviousValues {
-  id: ID!
-  name: String!
-  email: String!
-  password: String!
-  phone: String
-  address: String
-  coordinates: String
+  id: UUID!
   updatedAt: DateTime!
   createdAt: DateTime!
-  isFullAdming: Boolean!
-  isDevAdmin: Boolean!
-  isFinanceAdmin: Boolean!
+  isOwnUser: Boolean!
+  isDeleted: Boolean!
+}
+
+type UserRole {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
+  name: String!
+  actionScopes(where: ActionScopeWhereInput, orderBy: ActionScopeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ActionScope!]
+}
+
+type UserRoleConnection {
+  pageInfo: PageInfo!
+  edges: [UserRoleEdge]!
+  aggregate: AggregateUserRole!
+}
+
+input UserRoleCreateInput {
+  id: ID
+  tags: TagCreateManyInput
+  name: String!
+  actionScopes: ActionScopeCreateManyInput
+}
+
+input UserRoleCreateManyInput {
+  create: [UserRoleCreateInput!]
+  connect: [UserRoleWhereUniqueInput!]
+}
+
+type UserRoleEdge {
+  node: UserRole!
+  cursor: String!
+}
+
+enum UserRoleOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  name_ASC
+  name_DESC
+}
+
+type UserRolePreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+}
+
+input UserRoleScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  AND: [UserRoleScalarWhereInput!]
+  OR: [UserRoleScalarWhereInput!]
+  NOT: [UserRoleScalarWhereInput!]
+}
+
+type UserRoleSubscriptionPayload {
+  mutation: MutationType!
+  node: UserRole
+  updatedFields: [String!]
+  previousValues: UserRolePreviousValues
+}
+
+input UserRoleSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: UserRoleWhereInput
+  AND: [UserRoleSubscriptionWhereInput!]
+  OR: [UserRoleSubscriptionWhereInput!]
+  NOT: [UserRoleSubscriptionWhereInput!]
+}
+
+input UserRoleUpdateDataInput {
+  tags: TagUpdateManyInput
+  name: String
+  actionScopes: ActionScopeUpdateManyInput
+}
+
+input UserRoleUpdateInput {
+  tags: TagUpdateManyInput
+  name: String
+  actionScopes: ActionScopeUpdateManyInput
+}
+
+input UserRoleUpdateManyDataInput {
+  name: String
+}
+
+input UserRoleUpdateManyInput {
+  create: [UserRoleCreateInput!]
+  update: [UserRoleUpdateWithWhereUniqueNestedInput!]
+  upsert: [UserRoleUpsertWithWhereUniqueNestedInput!]
+  delete: [UserRoleWhereUniqueInput!]
+  connect: [UserRoleWhereUniqueInput!]
+  set: [UserRoleWhereUniqueInput!]
+  disconnect: [UserRoleWhereUniqueInput!]
+  deleteMany: [UserRoleScalarWhereInput!]
+  updateMany: [UserRoleUpdateManyWithWhereNestedInput!]
+}
+
+input UserRoleUpdateManyMutationInput {
+  name: String
+}
+
+input UserRoleUpdateManyWithWhereNestedInput {
+  where: UserRoleScalarWhereInput!
+  data: UserRoleUpdateManyDataInput!
+}
+
+input UserRoleUpdateWithWhereUniqueNestedInput {
+  where: UserRoleWhereUniqueInput!
+  data: UserRoleUpdateDataInput!
+}
+
+input UserRoleUpsertWithWhereUniqueNestedInput {
+  where: UserRoleWhereUniqueInput!
+  update: UserRoleUpdateDataInput!
+  create: UserRoleCreateInput!
+}
+
+input UserRoleWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  tags_every: TagWhereInput
+  tags_some: TagWhereInput
+  tags_none: TagWhereInput
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  actionScopes_every: ActionScopeWhereInput
+  actionScopes_some: ActionScopeWhereInput
+  actionScopes_none: ActionScopeWhereInput
+  AND: [UserRoleWhereInput!]
+  OR: [UserRoleWhereInput!]
+  NOT: [UserRoleWhereInput!]
+}
+
+input UserRoleWhereUniqueInput {
+  id: ID
 }
 
 type UserSubscriptionPayload {
@@ -358,133 +5143,133 @@ input UserSubscriptionWhereInput {
   NOT: [UserSubscriptionWhereInput!]
 }
 
-input UserUpdateInput {
-  name: String
-  email: String
-  password: String
-  phone: String
-  address: String
-  coordinates: String
+input UserUpdateDataInput {
+  isOwnUser: Boolean
+  ownUser: OwnUserUpdateOneWithoutUserInput
+  primaryAuthProvider: AuthProviderUserUpdateOneInput
+  authProviders: AuthProviderUserUpdateManyWithoutUserInput
+  roles: UserRoleUpdateManyInput
+  optionalScopes: ActionScopeUpdateManyInput
   tags: TagUpdateManyInput
-  isFullAdming: Boolean
-  isDevAdmin: Boolean
-  isFinanceAdmin: Boolean
+  actionsHistory: UserActionInstanceUpdateManyWithoutUserInput
+  isDeleted: Boolean
+}
+
+input UserUpdateInput {
+  isOwnUser: Boolean
+  ownUser: OwnUserUpdateOneWithoutUserInput
+  primaryAuthProvider: AuthProviderUserUpdateOneInput
+  authProviders: AuthProviderUserUpdateManyWithoutUserInput
+  roles: UserRoleUpdateManyInput
+  optionalScopes: ActionScopeUpdateManyInput
+  tags: TagUpdateManyInput
+  actionsHistory: UserActionInstanceUpdateManyWithoutUserInput
+  isDeleted: Boolean
 }
 
 input UserUpdateManyMutationInput {
-  name: String
-  email: String
-  password: String
-  phone: String
-  address: String
-  coordinates: String
-  isFullAdming: Boolean
-  isDevAdmin: Boolean
-  isFinanceAdmin: Boolean
+  isOwnUser: Boolean
+  isDeleted: Boolean
+}
+
+input UserUpdateOneInput {
+  create: UserCreateInput
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateOneRequiredWithoutActionsHistoryInput {
+  create: UserCreateWithoutActionsHistoryInput
+  update: UserUpdateWithoutActionsHistoryDataInput
+  upsert: UserUpsertWithoutActionsHistoryInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateOneRequiredWithoutAuthProvidersInput {
+  create: UserCreateWithoutAuthProvidersInput
+  update: UserUpdateWithoutAuthProvidersDataInput
+  upsert: UserUpsertWithoutAuthProvidersInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateOneRequiredWithoutOwnUserInput {
+  create: UserCreateWithoutOwnUserInput
+  update: UserUpdateWithoutOwnUserDataInput
+  upsert: UserUpsertWithoutOwnUserInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateWithoutActionsHistoryDataInput {
+  isOwnUser: Boolean
+  ownUser: OwnUserUpdateOneWithoutUserInput
+  primaryAuthProvider: AuthProviderUserUpdateOneInput
+  authProviders: AuthProviderUserUpdateManyWithoutUserInput
+  roles: UserRoleUpdateManyInput
+  optionalScopes: ActionScopeUpdateManyInput
+  tags: TagUpdateManyInput
+  isDeleted: Boolean
+}
+
+input UserUpdateWithoutAuthProvidersDataInput {
+  isOwnUser: Boolean
+  ownUser: OwnUserUpdateOneWithoutUserInput
+  primaryAuthProvider: AuthProviderUserUpdateOneInput
+  roles: UserRoleUpdateManyInput
+  optionalScopes: ActionScopeUpdateManyInput
+  tags: TagUpdateManyInput
+  actionsHistory: UserActionInstanceUpdateManyWithoutUserInput
+  isDeleted: Boolean
+}
+
+input UserUpdateWithoutOwnUserDataInput {
+  isOwnUser: Boolean
+  primaryAuthProvider: AuthProviderUserUpdateOneInput
+  authProviders: AuthProviderUserUpdateManyWithoutUserInput
+  roles: UserRoleUpdateManyInput
+  optionalScopes: ActionScopeUpdateManyInput
+  tags: TagUpdateManyInput
+  actionsHistory: UserActionInstanceUpdateManyWithoutUserInput
+  isDeleted: Boolean
+}
+
+input UserUpsertNestedInput {
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
+}
+
+input UserUpsertWithoutActionsHistoryInput {
+  update: UserUpdateWithoutActionsHistoryDataInput!
+  create: UserCreateWithoutActionsHistoryInput!
+}
+
+input UserUpsertWithoutAuthProvidersInput {
+  update: UserUpdateWithoutAuthProvidersDataInput!
+  create: UserCreateWithoutAuthProvidersInput!
+}
+
+input UserUpsertWithoutOwnUserInput {
+  update: UserUpdateWithoutOwnUserDataInput!
+  create: UserCreateWithoutOwnUserInput!
 }
 
 input UserWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  email: String
-  email_not: String
-  email_in: [String!]
-  email_not_in: [String!]
-  email_lt: String
-  email_lte: String
-  email_gt: String
-  email_gte: String
-  email_contains: String
-  email_not_contains: String
-  email_starts_with: String
-  email_not_starts_with: String
-  email_ends_with: String
-  email_not_ends_with: String
-  password: String
-  password_not: String
-  password_in: [String!]
-  password_not_in: [String!]
-  password_lt: String
-  password_lte: String
-  password_gt: String
-  password_gte: String
-  password_contains: String
-  password_not_contains: String
-  password_starts_with: String
-  password_not_starts_with: String
-  password_ends_with: String
-  password_not_ends_with: String
-  phone: String
-  phone_not: String
-  phone_in: [String!]
-  phone_not_in: [String!]
-  phone_lt: String
-  phone_lte: String
-  phone_gt: String
-  phone_gte: String
-  phone_contains: String
-  phone_not_contains: String
-  phone_starts_with: String
-  phone_not_starts_with: String
-  phone_ends_with: String
-  phone_not_ends_with: String
-  address: String
-  address_not: String
-  address_in: [String!]
-  address_not_in: [String!]
-  address_lt: String
-  address_lte: String
-  address_gt: String
-  address_gte: String
-  address_contains: String
-  address_not_contains: String
-  address_starts_with: String
-  address_not_starts_with: String
-  address_ends_with: String
-  address_not_ends_with: String
-  coordinates: String
-  coordinates_not: String
-  coordinates_in: [String!]
-  coordinates_not_in: [String!]
-  coordinates_lt: String
-  coordinates_lte: String
-  coordinates_gt: String
-  coordinates_gte: String
-  coordinates_contains: String
-  coordinates_not_contains: String
-  coordinates_starts_with: String
-  coordinates_not_starts_with: String
-  coordinates_ends_with: String
-  coordinates_not_ends_with: String
-  tags_every: TagWhereInput
-  tags_some: TagWhereInput
-  tags_none: TagWhereInput
+  id: UUID
+  id_not: UUID
+  id_in: [UUID!]
+  id_not_in: [UUID!]
+  id_lt: UUID
+  id_lte: UUID
+  id_gt: UUID
+  id_gte: UUID
+  id_contains: UUID
+  id_not_contains: UUID
+  id_starts_with: UUID
+  id_not_starts_with: UUID
+  id_ends_with: UUID
+  id_not_ends_with: UUID
   updatedAt: DateTime
   updatedAt_not: DateTime
   updatedAt_in: [DateTime!]
@@ -501,19 +5286,35 @@ input UserWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
-  isFullAdming: Boolean
-  isFullAdming_not: Boolean
-  isDevAdmin: Boolean
-  isDevAdmin_not: Boolean
-  isFinanceAdmin: Boolean
-  isFinanceAdmin_not: Boolean
+  isOwnUser: Boolean
+  isOwnUser_not: Boolean
+  ownUser: OwnUserWhereInput
+  primaryAuthProvider: AuthProviderUserWhereInput
+  authProviders_every: AuthProviderUserWhereInput
+  authProviders_some: AuthProviderUserWhereInput
+  authProviders_none: AuthProviderUserWhereInput
+  roles_every: UserRoleWhereInput
+  roles_some: UserRoleWhereInput
+  roles_none: UserRoleWhereInput
+  optionalScopes_every: ActionScopeWhereInput
+  optionalScopes_some: ActionScopeWhereInput
+  optionalScopes_none: ActionScopeWhereInput
+  tags_every: TagWhereInput
+  tags_some: TagWhereInput
+  tags_none: TagWhereInput
+  actionsHistory_every: UserActionInstanceWhereInput
+  actionsHistory_some: UserActionInstanceWhereInput
+  actionsHistory_none: UserActionInstanceWhereInput
+  isDeleted: Boolean
+  isDeleted_not: Boolean
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
 }
 
 input UserWhereUniqueInput {
-  id: ID
-  email: String
+  id: UUID
 }
+
+scalar UUID
 `

@@ -9,7 +9,7 @@ type User {
   updatedAt: DateTime! @updatedAt
   createdAt: DateTime! @createdAt
   isOwnUser: Boolean!
-  ownUser: OwnUser @relation(name: "OwnUser", onDelete: CASCADE)
+  ownUser: OwnUser @relation(name: "OwnUser", onDelete: CASCADE, link: INLINE)
   primaryAuthProvider: AuthProviderUser @relation(name: "PrimaryAuthUser", oDelete: CASCADE)
   authProviders: [AuthProviderUser!] @relation(name: "AuthUser", onDelete: CASCADE)
   roles: [UserRole!]!
@@ -81,7 +81,7 @@ type ActionScope {
   createdAt: DateTime! @createdAt
   tags: [Tag]!
   name: String!
-  guestActions: [GuestAction!] @relation(name: "GuestActionInstance")
+  guestActions: [GuestActionInstance!] @relation(name: "GuestActionInstance")
   userActions: [UserActionInstance!] @relation(name: "UserPerformedAction")
 }
 
@@ -98,7 +98,7 @@ type GuestActionInstance {
 }
 
 type UserActionInstance {
-  id: ID @id
+  id: ID! @id
   createdAt: DateTime! @createdAt
   tags: [Tag]!
   user: User! @relation(name: "UserActionHistory")
@@ -138,7 +138,7 @@ type Resource {
   link: String
 }
 
-type InfoTypes {
+type InfoType {
   id: ID! @id
   createdAt: DateTime! @createdAt
   name: String @unique
@@ -153,11 +153,11 @@ type Info {
   title: String!
   description: String!
   descriptionSmall: String!
-  remotePrimary: Remote
-  remotes: [Remote]
+  remotePrimary: Remote @relation(name: "InfoRemotePrimary")
+  remotes: [Remote] @relation(name: "InfoRemotes")
   infoType: InfoType!
-  resources: [Resource]
-  resourcePrimary: Resource
+  resources: [Resource] @relation(name: "InfoResources")
+  resourcePrimary: Resource @relation(name: "InfoResourcePrimary")
 }
 
 type InteractionType {
@@ -203,8 +203,8 @@ type Initiative {
   infoPrimary: Info!
   description: String!
   descriptionSmall: String!
-  media: [Media!]
-  mediaPrimary: Media
-  resources: [Resource!]
-  childInitiatives: [Initiative!]
+  media: [Media!] @relation(name: "InitiativeMedias")
+  mediaPrimary: Media @relation(name: "InitiativeMediaPrimary")
+  resources: [Resource!] @relation(name: "InitiativeResources")
+  childInitiatives: [Initiative!] @relation(name: "ChildInitiatives")
 }
