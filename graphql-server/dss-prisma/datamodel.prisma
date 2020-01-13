@@ -5,65 +5,104 @@ type Tag {
 }
 
 type User {
-  id: ID! @id
+  id: UUID! @id
   updatedAt: DateTime! @updatedAt
   createdAt: DateTime! @createdAt
   isOwnUser: Boolean!
-  ownUser: OwnUser
-  primaryAuthProvider: AuthProviderUser
-  otherAuthProviders: [AuthProviderUser]
-  roles: [OwnUserRole]
+  ownUser: OwnUser @relation(name: "OwnUser", onDelete: CASCADE)
+  primaryAuthProvider: AuthProviderUser @relation(name: "PrimaryAuthUser", oDelete: CASCADE)
+  authProviders: [AuthProviderUser!] @relation(name: "AuthUser", onDelete: CASCADE)
+  roles: [UserRole!]!
+  optionalScopes: [ActionScope]
   tags: [Tag]!
+  actionsHistory: [UserActionInstance] @relation(name: "UserActionHistory", onDelete: CASCADE)
+  isDeleted: Boolean!
 }
 
 type OwnUser {
-  id: ID! @id
+  id: UUID! @id
   username: String!
+  password: String!
+  firstName: String!
+  middleName: String
+  lastName: String!
   email: String!
   phone: String
   address: String
   coordinates: String
   pic: String
   otherDetails: String
+  user: User! @relation(name: "OwnUser", onDelete: CASCADE)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
   tags: [Tag]!
 }
-
-type OwnUserRole {
-  id: ID! @id
-  createdAt: DateTime! @createdAt
-  updatedAt: DateTime! @updatedAt
-  tags: [Tag]!
-  name: String!
-}
-
 
 type AuthProviderUser {
-  id: ID! @id
+  id: UUID! @id
   authProvider: AuthProvider!
   authToken: String!
-  refreshToken: String!
+  refreshToken: String
   expiryTime: DateTime
   username: String
+  firstName: String!
+  middleName: String
+  lastName: String!
   email: String
   phone: String
   address: String
   coordinates: String
   pic: String
   otherDetails: String
+  user: User! @relation(name: "AuthUser", onDelete: SET_NULL)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
   tags: [Tag]!
+}
+
+type UserRole {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  tags: [Tag]!
+  name: String!
+  actionScopes: [ActionScope!]!
 }
 
 type AuthProvider {
   id: ID! @id
   name: String!
   createdAt: DateTime! @createdAt
-  updatedAt: DateTime! @updatedAt
   tags: [Tag]!
-  supportedSites: [String!]
+}
+
+type ActionScope {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  tags: [Tag]!
+  name: String!
+  guestActions: [GuestAction!] @relation(name: "GuestActionInstance")
+  userActions: [UserActionInstance!] @relation(name: "UserPerformedAction")
+}
+
+type GuestActionInstance {
+  id: UUID! @id
+  createdAt: DateTime! @createdAt
+  firstName: String!
+  middleName: String
+  lastName: String!
+  phone: String!
+  email: String!
+  address: String!
+  action: ActionScope! @relation(name: "GuestPerformedAction")
+}
+
+type UserActionInstance {
+  id: ID @id
+  createdAt: DateTime! @createdAt
+  tags: [Tag]!
+  user: User! @relation(name: "UserActionHistory")
+  actionScope: ActionScope! @relation(name: "UserPerformedAction")
 }
 
 type Remote {
@@ -77,22 +116,33 @@ type Remote {
   queryResolution: String
 }
 
+type Media {
+  id: ID! @id
+  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt
+  tags: [Tag]!
+  title: String!
+  description: String!
+  descriptionSmall: String!
+  remote: Remote!
+}
+
 type Resource {
   id: ID! @id
   updatedAt: DateTime! @updatedAt
   createdAt: DateTime! @createdAt
   tags: [Tag]!
-  info: Info
   interaction: Interaction
   media: Media
+  remote: Remote
   link: String
 }
 
 type InfoTypes {
   id: ID! @id
-  updatedAt: DateTime! @updatedAt
   createdAt: DateTime! @createdAt
   name: String @unique
+  tags: [Tag]!
 }
 
 type Info {
@@ -103,18 +153,18 @@ type Info {
   title: String!
   description: String!
   descriptionSmall: String!
-  remotePrimary: Remote!
-  remotes: [Remote]!
+  remotePrimary: Remote
+  remotes: [Remote]
   infoType: InfoType!
-  resources: [Resource]!
-  resourcePrimary: Resource!
+  resources: [Resource]
+  resourcePrimary: Resource
 }
 
 type InteractionType {
   id: ID! @id
   createdAt: DateTime! @createdAt
   tags: [Tag]!
-  name: String!
+  name: String! @unique
 }
 
 type Interaction {
@@ -132,7 +182,7 @@ type PublicEntityType {
   id: ID! @id
   createdAt: DateTime! @createdAt
   tags: [Tag]!
-  name: String!
+  name: String! @unique
 }
 
 type PublicEntity {
@@ -141,17 +191,6 @@ type PublicEntity {
   createdAt: DateTime! @createdAt
   tags: [Tag]!
   entityType: PublicEntityType!
-  remote: Remote!
-}
-
-type Media {
-  id: ID! @id
-  updatedAt: DateTime! @updatedAt
-  createdAt: DateTime! @createdAt
-  tags: [Tag]!
-  title: String!
-  description: String!
-  descriptionSmall: String!
   remote: Remote!
 }
 
