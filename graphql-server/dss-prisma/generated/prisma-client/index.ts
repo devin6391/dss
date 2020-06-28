@@ -580,6 +580,10 @@ export interface Prisma {
     data: InteractionUpdateInput;
     where: InteractionWhereUniqueInput;
   }) => InteractionPromise;
+  updateManyInteractions: (args: {
+    data: InteractionUpdateManyMutationInput;
+    where?: InteractionWhereInput;
+  }) => BatchPayloadPromise;
   upsertInteraction: (args: {
     where: InteractionWhereUniqueInput;
     create: InteractionCreateInput;
@@ -648,6 +652,10 @@ export interface Prisma {
     data: PublicEntityUpdateInput;
     where: PublicEntityWhereUniqueInput;
   }) => PublicEntityPromise;
+  updateManyPublicEntities: (args: {
+    data: PublicEntityUpdateManyMutationInput;
+    where?: PublicEntityWhereInput;
+  }) => BatchPayloadPromise;
   upsertPublicEntity: (args: {
     where: PublicEntityWhereUniqueInput;
     create: PublicEntityCreateInput;
@@ -861,31 +869,29 @@ export type TagOrderByInput =
   | "name_ASC"
   | "name_DESC"
   | "createdAt_ASC"
-  | "createdAt_DESC";
+  | "createdAt_DESC"
+  | "encodedId_ASC"
+  | "encodedId_DESC";
 
-export type GuestActionInstanceOrderByInput =
+export type ActionScopeOrderByInput =
   | "id_ASC"
   | "id_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
-  | "firstName_ASC"
-  | "firstName_DESC"
-  | "middleName_ASC"
-  | "middleName_DESC"
-  | "lastName_ASC"
-  | "lastName_DESC"
-  | "phone_ASC"
-  | "phone_DESC"
-  | "email_ASC"
-  | "email_DESC"
-  | "address_ASC"
-  | "address_DESC";
+  | "name_ASC"
+  | "name_DESC"
+  | "encodedId_ASC"
+  | "encodedId_DESC";
 
-export type UserActionInstanceOrderByInput =
+export type AuthProviderOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "name_ASC"
+  | "name_DESC"
   | "createdAt_ASC"
-  | "createdAt_DESC";
+  | "createdAt_DESC"
+  | "encodedId_ASC"
+  | "encodedId_DESC";
 
 export type AuthProviderUserOrderByInput =
   | "id_ASC"
@@ -931,21 +937,29 @@ export type UserRoleOrderByInput =
   | "name_ASC"
   | "name_DESC";
 
-export type ActionScopeOrderByInput =
+export type UserActionInstanceOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC";
+
+export type GuestActionInstanceOrderByInput =
   | "id_ASC"
   | "id_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
-  | "name_ASC"
-  | "name_DESC";
-
-export type AuthProviderOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "name_ASC"
-  | "name_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC";
+  | "firstName_ASC"
+  | "firstName_DESC"
+  | "middleName_ASC"
+  | "middleName_DESC"
+  | "lastName_ASC"
+  | "lastName_DESC"
+  | "phone_ASC"
+  | "phone_DESC"
+  | "email_ASC"
+  | "email_DESC"
+  | "address_ASC"
+  | "address_DESC";
 
 export type RemoteOrderByInput =
   | "id_ASC"
@@ -961,7 +975,11 @@ export type RemoteOrderByInput =
   | "query_ASC"
   | "query_DESC"
   | "queryResolution_ASC"
-  | "queryResolution_DESC";
+  | "queryResolution_DESC"
+  | "encodedId_ASC"
+  | "encodedId_DESC"
+  | "displayName_ASC"
+  | "displayName_DESC";
 
 export type ResourceOrderByInput =
   | "id_ASC"
@@ -971,7 +989,23 @@ export type ResourceOrderByInput =
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "link_ASC"
-  | "link_DESC";
+  | "link_DESC"
+  | "encodedId_ASC"
+  | "encodedId_DESC"
+  | "displayName_ASC"
+  | "displayName_DESC";
+
+export type InteractionOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "encodedId_ASC"
+  | "encodedId_DESC"
+  | "displayName_ASC"
+  | "displayName_DESC";
 
 export type InfoOrderByInput =
   | "id_ASC"
@@ -985,7 +1019,11 @@ export type InfoOrderByInput =
   | "description_ASC"
   | "description_DESC"
   | "descriptionSmall_ASC"
-  | "descriptionSmall_DESC";
+  | "descriptionSmall_DESC"
+  | "encodedId_ASC"
+  | "encodedId_DESC"
+  | "displayName_ASC"
+  | "displayName_DESC";
 
 export type InfoTypeOrderByInput =
   | "id_ASC"
@@ -1007,7 +1045,11 @@ export type MediaOrderByInput =
   | "description_ASC"
   | "description_DESC"
   | "descriptionSmall_ASC"
-  | "descriptionSmall_DESC";
+  | "descriptionSmall_DESC"
+  | "encodedId_ASC"
+  | "encodedId_DESC"
+  | "displayName_ASC"
+  | "displayName_DESC";
 
 export type InitiativeOrderByInput =
   | "id_ASC"
@@ -1021,23 +1063,21 @@ export type InitiativeOrderByInput =
   | "description_ASC"
   | "description_DESC"
   | "descriptionSmall_ASC"
-  | "descriptionSmall_DESC";
-
-export type InteractionOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC";
+  | "descriptionSmall_DESC"
+  | "encodedId_ASC"
+  | "encodedId_DESC"
+  | "displayName_ASC"
+  | "displayName_DESC";
 
 export type InteractionTypeOrderByInput =
   | "id_ASC"
   | "id_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
-  | "name_ASC"
-  | "name_DESC";
+  | "encodedId_ASC"
+  | "encodedId_DESC"
+  | "displayName_ASC"
+  | "displayName_DESC";
 
 export type OwnUserOrderByInput =
   | "id_ASC"
@@ -1075,15 +1115,21 @@ export type PublicEntityOrderByInput =
   | "updatedAt_ASC"
   | "updatedAt_DESC"
   | "createdAt_ASC"
-  | "createdAt_DESC";
+  | "createdAt_DESC"
+  | "encodedId_ASC"
+  | "encodedId_DESC"
+  | "displayName_ASC"
+  | "displayName_DESC";
 
 export type PublicEntityTypeOrderByInput =
   | "id_ASC"
   | "id_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
-  | "name_ASC"
-  | "name_DESC";
+  | "encodedId_ASC"
+  | "encodedId_DESC"
+  | "displayName_ASC"
+  | "displayName_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -1095,7 +1141,11 @@ export type UserOrderByInput =
   | "isOwnUser_ASC"
   | "isOwnUser_DESC"
   | "isDeleted_ASC"
-  | "isDeleted_DESC";
+  | "isDeleted_DESC"
+  | "encodedId_ASC"
+  | "encodedId_DESC"
+  | "displayName_ASC"
+  | "displayName_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
@@ -1140,122 +1190,23 @@ export interface TagWhereInput {
   createdAt_lte?: Maybe<DateTimeInput>;
   createdAt_gt?: Maybe<DateTimeInput>;
   createdAt_gte?: Maybe<DateTimeInput>;
+  encodedId?: Maybe<String>;
+  encodedId_not?: Maybe<String>;
+  encodedId_in?: Maybe<String[] | String>;
+  encodedId_not_in?: Maybe<String[] | String>;
+  encodedId_lt?: Maybe<String>;
+  encodedId_lte?: Maybe<String>;
+  encodedId_gt?: Maybe<String>;
+  encodedId_gte?: Maybe<String>;
+  encodedId_contains?: Maybe<String>;
+  encodedId_not_contains?: Maybe<String>;
+  encodedId_starts_with?: Maybe<String>;
+  encodedId_not_starts_with?: Maybe<String>;
+  encodedId_ends_with?: Maybe<String>;
+  encodedId_not_ends_with?: Maybe<String>;
   AND?: Maybe<TagWhereInput[] | TagWhereInput>;
   OR?: Maybe<TagWhereInput[] | TagWhereInput>;
   NOT?: Maybe<TagWhereInput[] | TagWhereInput>;
-}
-
-export interface GuestActionInstanceWhereInput {
-  id?: Maybe<UUID>;
-  id_not?: Maybe<UUID>;
-  id_in?: Maybe<UUID[] | UUID>;
-  id_not_in?: Maybe<UUID[] | UUID>;
-  id_lt?: Maybe<UUID>;
-  id_lte?: Maybe<UUID>;
-  id_gt?: Maybe<UUID>;
-  id_gte?: Maybe<UUID>;
-  id_contains?: Maybe<UUID>;
-  id_not_contains?: Maybe<UUID>;
-  id_starts_with?: Maybe<UUID>;
-  id_not_starts_with?: Maybe<UUID>;
-  id_ends_with?: Maybe<UUID>;
-  id_not_ends_with?: Maybe<UUID>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  firstName?: Maybe<String>;
-  firstName_not?: Maybe<String>;
-  firstName_in?: Maybe<String[] | String>;
-  firstName_not_in?: Maybe<String[] | String>;
-  firstName_lt?: Maybe<String>;
-  firstName_lte?: Maybe<String>;
-  firstName_gt?: Maybe<String>;
-  firstName_gte?: Maybe<String>;
-  firstName_contains?: Maybe<String>;
-  firstName_not_contains?: Maybe<String>;
-  firstName_starts_with?: Maybe<String>;
-  firstName_not_starts_with?: Maybe<String>;
-  firstName_ends_with?: Maybe<String>;
-  firstName_not_ends_with?: Maybe<String>;
-  middleName?: Maybe<String>;
-  middleName_not?: Maybe<String>;
-  middleName_in?: Maybe<String[] | String>;
-  middleName_not_in?: Maybe<String[] | String>;
-  middleName_lt?: Maybe<String>;
-  middleName_lte?: Maybe<String>;
-  middleName_gt?: Maybe<String>;
-  middleName_gte?: Maybe<String>;
-  middleName_contains?: Maybe<String>;
-  middleName_not_contains?: Maybe<String>;
-  middleName_starts_with?: Maybe<String>;
-  middleName_not_starts_with?: Maybe<String>;
-  middleName_ends_with?: Maybe<String>;
-  middleName_not_ends_with?: Maybe<String>;
-  lastName?: Maybe<String>;
-  lastName_not?: Maybe<String>;
-  lastName_in?: Maybe<String[] | String>;
-  lastName_not_in?: Maybe<String[] | String>;
-  lastName_lt?: Maybe<String>;
-  lastName_lte?: Maybe<String>;
-  lastName_gt?: Maybe<String>;
-  lastName_gte?: Maybe<String>;
-  lastName_contains?: Maybe<String>;
-  lastName_not_contains?: Maybe<String>;
-  lastName_starts_with?: Maybe<String>;
-  lastName_not_starts_with?: Maybe<String>;
-  lastName_ends_with?: Maybe<String>;
-  lastName_not_ends_with?: Maybe<String>;
-  phone?: Maybe<String>;
-  phone_not?: Maybe<String>;
-  phone_in?: Maybe<String[] | String>;
-  phone_not_in?: Maybe<String[] | String>;
-  phone_lt?: Maybe<String>;
-  phone_lte?: Maybe<String>;
-  phone_gt?: Maybe<String>;
-  phone_gte?: Maybe<String>;
-  phone_contains?: Maybe<String>;
-  phone_not_contains?: Maybe<String>;
-  phone_starts_with?: Maybe<String>;
-  phone_not_starts_with?: Maybe<String>;
-  phone_ends_with?: Maybe<String>;
-  phone_not_ends_with?: Maybe<String>;
-  email?: Maybe<String>;
-  email_not?: Maybe<String>;
-  email_in?: Maybe<String[] | String>;
-  email_not_in?: Maybe<String[] | String>;
-  email_lt?: Maybe<String>;
-  email_lte?: Maybe<String>;
-  email_gt?: Maybe<String>;
-  email_gte?: Maybe<String>;
-  email_contains?: Maybe<String>;
-  email_not_contains?: Maybe<String>;
-  email_starts_with?: Maybe<String>;
-  email_not_starts_with?: Maybe<String>;
-  email_ends_with?: Maybe<String>;
-  email_not_ends_with?: Maybe<String>;
-  address?: Maybe<String>;
-  address_not?: Maybe<String>;
-  address_in?: Maybe<String[] | String>;
-  address_not_in?: Maybe<String[] | String>;
-  address_lt?: Maybe<String>;
-  address_lte?: Maybe<String>;
-  address_gt?: Maybe<String>;
-  address_gte?: Maybe<String>;
-  address_contains?: Maybe<String>;
-  address_not_contains?: Maybe<String>;
-  address_starts_with?: Maybe<String>;
-  address_not_starts_with?: Maybe<String>;
-  address_ends_with?: Maybe<String>;
-  address_not_ends_with?: Maybe<String>;
-  action?: Maybe<ActionScopeWhereInput>;
-  AND?: Maybe<GuestActionInstanceWhereInput[] | GuestActionInstanceWhereInput>;
-  OR?: Maybe<GuestActionInstanceWhereInput[] | GuestActionInstanceWhereInput>;
-  NOT?: Maybe<GuestActionInstanceWhereInput[] | GuestActionInstanceWhereInput>;
 }
 
 export interface ActionScopeWhereInput {
@@ -1298,18 +1249,30 @@ export interface ActionScopeWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
-  guestActions_every?: Maybe<GuestActionInstanceWhereInput>;
-  guestActions_some?: Maybe<GuestActionInstanceWhereInput>;
-  guestActions_none?: Maybe<GuestActionInstanceWhereInput>;
-  userActions_every?: Maybe<UserActionInstanceWhereInput>;
-  userActions_some?: Maybe<UserActionInstanceWhereInput>;
-  userActions_none?: Maybe<UserActionInstanceWhereInput>;
+  encodedId?: Maybe<String>;
+  encodedId_not?: Maybe<String>;
+  encodedId_in?: Maybe<String[] | String>;
+  encodedId_not_in?: Maybe<String[] | String>;
+  encodedId_lt?: Maybe<String>;
+  encodedId_lte?: Maybe<String>;
+  encodedId_gt?: Maybe<String>;
+  encodedId_gte?: Maybe<String>;
+  encodedId_contains?: Maybe<String>;
+  encodedId_not_contains?: Maybe<String>;
+  encodedId_starts_with?: Maybe<String>;
+  encodedId_not_starts_with?: Maybe<String>;
+  encodedId_ends_with?: Maybe<String>;
+  encodedId_not_ends_with?: Maybe<String>;
   AND?: Maybe<ActionScopeWhereInput[] | ActionScopeWhereInput>;
   OR?: Maybe<ActionScopeWhereInput[] | ActionScopeWhereInput>;
   NOT?: Maybe<ActionScopeWhereInput[] | ActionScopeWhereInput>;
 }
 
-export interface UserActionInstanceWhereInput {
+export type AuthProviderWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface AuthProviderWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -1324,6 +1287,20 @@ export interface UserActionInstanceWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
   createdAt?: Maybe<DateTimeInput>;
   createdAt_not?: Maybe<DateTimeInput>;
   createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -1335,263 +1312,28 @@ export interface UserActionInstanceWhereInput {
   tags_every?: Maybe<TagWhereInput>;
   tags_some?: Maybe<TagWhereInput>;
   tags_none?: Maybe<TagWhereInput>;
-  user?: Maybe<UserWhereInput>;
-  actionScope?: Maybe<ActionScopeWhereInput>;
-  AND?: Maybe<UserActionInstanceWhereInput[] | UserActionInstanceWhereInput>;
-  OR?: Maybe<UserActionInstanceWhereInput[] | UserActionInstanceWhereInput>;
-  NOT?: Maybe<UserActionInstanceWhereInput[] | UserActionInstanceWhereInput>;
+  encodedId?: Maybe<String>;
+  encodedId_not?: Maybe<String>;
+  encodedId_in?: Maybe<String[] | String>;
+  encodedId_not_in?: Maybe<String[] | String>;
+  encodedId_lt?: Maybe<String>;
+  encodedId_lte?: Maybe<String>;
+  encodedId_gt?: Maybe<String>;
+  encodedId_gte?: Maybe<String>;
+  encodedId_contains?: Maybe<String>;
+  encodedId_not_contains?: Maybe<String>;
+  encodedId_starts_with?: Maybe<String>;
+  encodedId_not_starts_with?: Maybe<String>;
+  encodedId_ends_with?: Maybe<String>;
+  encodedId_not_ends_with?: Maybe<String>;
+  AND?: Maybe<AuthProviderWhereInput[] | AuthProviderWhereInput>;
+  OR?: Maybe<AuthProviderWhereInput[] | AuthProviderWhereInput>;
+  NOT?: Maybe<AuthProviderWhereInput[] | AuthProviderWhereInput>;
 }
 
-export interface UserWhereInput {
-  id?: Maybe<UUID>;
-  id_not?: Maybe<UUID>;
-  id_in?: Maybe<UUID[] | UUID>;
-  id_not_in?: Maybe<UUID[] | UUID>;
-  id_lt?: Maybe<UUID>;
-  id_lte?: Maybe<UUID>;
-  id_gt?: Maybe<UUID>;
-  id_gte?: Maybe<UUID>;
-  id_contains?: Maybe<UUID>;
-  id_not_contains?: Maybe<UUID>;
-  id_starts_with?: Maybe<UUID>;
-  id_not_starts_with?: Maybe<UUID>;
-  id_ends_with?: Maybe<UUID>;
-  id_not_ends_with?: Maybe<UUID>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  isOwnUser?: Maybe<Boolean>;
-  isOwnUser_not?: Maybe<Boolean>;
-  ownUser?: Maybe<OwnUserWhereInput>;
-  primaryAuthProvider?: Maybe<AuthProviderUserWhereInput>;
-  authProviders_every?: Maybe<AuthProviderUserWhereInput>;
-  authProviders_some?: Maybe<AuthProviderUserWhereInput>;
-  authProviders_none?: Maybe<AuthProviderUserWhereInput>;
-  roles_every?: Maybe<UserRoleWhereInput>;
-  roles_some?: Maybe<UserRoleWhereInput>;
-  roles_none?: Maybe<UserRoleWhereInput>;
-  optionalScopes_every?: Maybe<ActionScopeWhereInput>;
-  optionalScopes_some?: Maybe<ActionScopeWhereInput>;
-  optionalScopes_none?: Maybe<ActionScopeWhereInput>;
-  tags_every?: Maybe<TagWhereInput>;
-  tags_some?: Maybe<TagWhereInput>;
-  tags_none?: Maybe<TagWhereInput>;
-  actionsHistory_every?: Maybe<UserActionInstanceWhereInput>;
-  actionsHistory_some?: Maybe<UserActionInstanceWhereInput>;
-  actionsHistory_none?: Maybe<UserActionInstanceWhereInput>;
-  isDeleted?: Maybe<Boolean>;
-  isDeleted_not?: Maybe<Boolean>;
-  AND?: Maybe<UserWhereInput[] | UserWhereInput>;
-  OR?: Maybe<UserWhereInput[] | UserWhereInput>;
-  NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
-}
-
-export interface OwnUserWhereInput {
-  id?: Maybe<UUID>;
-  id_not?: Maybe<UUID>;
-  id_in?: Maybe<UUID[] | UUID>;
-  id_not_in?: Maybe<UUID[] | UUID>;
-  id_lt?: Maybe<UUID>;
-  id_lte?: Maybe<UUID>;
-  id_gt?: Maybe<UUID>;
-  id_gte?: Maybe<UUID>;
-  id_contains?: Maybe<UUID>;
-  id_not_contains?: Maybe<UUID>;
-  id_starts_with?: Maybe<UUID>;
-  id_not_starts_with?: Maybe<UUID>;
-  id_ends_with?: Maybe<UUID>;
-  id_not_ends_with?: Maybe<UUID>;
-  username?: Maybe<String>;
-  username_not?: Maybe<String>;
-  username_in?: Maybe<String[] | String>;
-  username_not_in?: Maybe<String[] | String>;
-  username_lt?: Maybe<String>;
-  username_lte?: Maybe<String>;
-  username_gt?: Maybe<String>;
-  username_gte?: Maybe<String>;
-  username_contains?: Maybe<String>;
-  username_not_contains?: Maybe<String>;
-  username_starts_with?: Maybe<String>;
-  username_not_starts_with?: Maybe<String>;
-  username_ends_with?: Maybe<String>;
-  username_not_ends_with?: Maybe<String>;
-  password?: Maybe<String>;
-  password_not?: Maybe<String>;
-  password_in?: Maybe<String[] | String>;
-  password_not_in?: Maybe<String[] | String>;
-  password_lt?: Maybe<String>;
-  password_lte?: Maybe<String>;
-  password_gt?: Maybe<String>;
-  password_gte?: Maybe<String>;
-  password_contains?: Maybe<String>;
-  password_not_contains?: Maybe<String>;
-  password_starts_with?: Maybe<String>;
-  password_not_starts_with?: Maybe<String>;
-  password_ends_with?: Maybe<String>;
-  password_not_ends_with?: Maybe<String>;
-  firstName?: Maybe<String>;
-  firstName_not?: Maybe<String>;
-  firstName_in?: Maybe<String[] | String>;
-  firstName_not_in?: Maybe<String[] | String>;
-  firstName_lt?: Maybe<String>;
-  firstName_lte?: Maybe<String>;
-  firstName_gt?: Maybe<String>;
-  firstName_gte?: Maybe<String>;
-  firstName_contains?: Maybe<String>;
-  firstName_not_contains?: Maybe<String>;
-  firstName_starts_with?: Maybe<String>;
-  firstName_not_starts_with?: Maybe<String>;
-  firstName_ends_with?: Maybe<String>;
-  firstName_not_ends_with?: Maybe<String>;
-  middleName?: Maybe<String>;
-  middleName_not?: Maybe<String>;
-  middleName_in?: Maybe<String[] | String>;
-  middleName_not_in?: Maybe<String[] | String>;
-  middleName_lt?: Maybe<String>;
-  middleName_lte?: Maybe<String>;
-  middleName_gt?: Maybe<String>;
-  middleName_gte?: Maybe<String>;
-  middleName_contains?: Maybe<String>;
-  middleName_not_contains?: Maybe<String>;
-  middleName_starts_with?: Maybe<String>;
-  middleName_not_starts_with?: Maybe<String>;
-  middleName_ends_with?: Maybe<String>;
-  middleName_not_ends_with?: Maybe<String>;
-  lastName?: Maybe<String>;
-  lastName_not?: Maybe<String>;
-  lastName_in?: Maybe<String[] | String>;
-  lastName_not_in?: Maybe<String[] | String>;
-  lastName_lt?: Maybe<String>;
-  lastName_lte?: Maybe<String>;
-  lastName_gt?: Maybe<String>;
-  lastName_gte?: Maybe<String>;
-  lastName_contains?: Maybe<String>;
-  lastName_not_contains?: Maybe<String>;
-  lastName_starts_with?: Maybe<String>;
-  lastName_not_starts_with?: Maybe<String>;
-  lastName_ends_with?: Maybe<String>;
-  lastName_not_ends_with?: Maybe<String>;
-  email?: Maybe<String>;
-  email_not?: Maybe<String>;
-  email_in?: Maybe<String[] | String>;
-  email_not_in?: Maybe<String[] | String>;
-  email_lt?: Maybe<String>;
-  email_lte?: Maybe<String>;
-  email_gt?: Maybe<String>;
-  email_gte?: Maybe<String>;
-  email_contains?: Maybe<String>;
-  email_not_contains?: Maybe<String>;
-  email_starts_with?: Maybe<String>;
-  email_not_starts_with?: Maybe<String>;
-  email_ends_with?: Maybe<String>;
-  email_not_ends_with?: Maybe<String>;
-  phone?: Maybe<String>;
-  phone_not?: Maybe<String>;
-  phone_in?: Maybe<String[] | String>;
-  phone_not_in?: Maybe<String[] | String>;
-  phone_lt?: Maybe<String>;
-  phone_lte?: Maybe<String>;
-  phone_gt?: Maybe<String>;
-  phone_gte?: Maybe<String>;
-  phone_contains?: Maybe<String>;
-  phone_not_contains?: Maybe<String>;
-  phone_starts_with?: Maybe<String>;
-  phone_not_starts_with?: Maybe<String>;
-  phone_ends_with?: Maybe<String>;
-  phone_not_ends_with?: Maybe<String>;
-  address?: Maybe<String>;
-  address_not?: Maybe<String>;
-  address_in?: Maybe<String[] | String>;
-  address_not_in?: Maybe<String[] | String>;
-  address_lt?: Maybe<String>;
-  address_lte?: Maybe<String>;
-  address_gt?: Maybe<String>;
-  address_gte?: Maybe<String>;
-  address_contains?: Maybe<String>;
-  address_not_contains?: Maybe<String>;
-  address_starts_with?: Maybe<String>;
-  address_not_starts_with?: Maybe<String>;
-  address_ends_with?: Maybe<String>;
-  address_not_ends_with?: Maybe<String>;
-  coordinates?: Maybe<String>;
-  coordinates_not?: Maybe<String>;
-  coordinates_in?: Maybe<String[] | String>;
-  coordinates_not_in?: Maybe<String[] | String>;
-  coordinates_lt?: Maybe<String>;
-  coordinates_lte?: Maybe<String>;
-  coordinates_gt?: Maybe<String>;
-  coordinates_gte?: Maybe<String>;
-  coordinates_contains?: Maybe<String>;
-  coordinates_not_contains?: Maybe<String>;
-  coordinates_starts_with?: Maybe<String>;
-  coordinates_not_starts_with?: Maybe<String>;
-  coordinates_ends_with?: Maybe<String>;
-  coordinates_not_ends_with?: Maybe<String>;
-  pic?: Maybe<String>;
-  pic_not?: Maybe<String>;
-  pic_in?: Maybe<String[] | String>;
-  pic_not_in?: Maybe<String[] | String>;
-  pic_lt?: Maybe<String>;
-  pic_lte?: Maybe<String>;
-  pic_gt?: Maybe<String>;
-  pic_gte?: Maybe<String>;
-  pic_contains?: Maybe<String>;
-  pic_not_contains?: Maybe<String>;
-  pic_starts_with?: Maybe<String>;
-  pic_not_starts_with?: Maybe<String>;
-  pic_ends_with?: Maybe<String>;
-  pic_not_ends_with?: Maybe<String>;
-  otherDetails?: Maybe<String>;
-  otherDetails_not?: Maybe<String>;
-  otherDetails_in?: Maybe<String[] | String>;
-  otherDetails_not_in?: Maybe<String[] | String>;
-  otherDetails_lt?: Maybe<String>;
-  otherDetails_lte?: Maybe<String>;
-  otherDetails_gt?: Maybe<String>;
-  otherDetails_gte?: Maybe<String>;
-  otherDetails_contains?: Maybe<String>;
-  otherDetails_not_contains?: Maybe<String>;
-  otherDetails_starts_with?: Maybe<String>;
-  otherDetails_not_starts_with?: Maybe<String>;
-  otherDetails_ends_with?: Maybe<String>;
-  otherDetails_not_ends_with?: Maybe<String>;
-  user?: Maybe<UserWhereInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  tags_every?: Maybe<TagWhereInput>;
-  tags_some?: Maybe<TagWhereInput>;
-  tags_none?: Maybe<TagWhereInput>;
-  AND?: Maybe<OwnUserWhereInput[] | OwnUserWhereInput>;
-  OR?: Maybe<OwnUserWhereInput[] | OwnUserWhereInput>;
-  NOT?: Maybe<OwnUserWhereInput[] | OwnUserWhereInput>;
-}
+export type AuthProviderUserWhereUniqueInput = AtLeastOne<{
+  id: Maybe<UUID>;
+}>;
 
 export interface AuthProviderUserWhereInput {
   id?: Maybe<UUID>;
@@ -1810,35 +1552,29 @@ export interface AuthProviderUserWhereInput {
   NOT?: Maybe<AuthProviderUserWhereInput[] | AuthProviderUserWhereInput>;
 }
 
-export interface AuthProviderWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
+export interface UserWhereInput {
+  id?: Maybe<UUID>;
+  id_not?: Maybe<UUID>;
+  id_in?: Maybe<UUID[] | UUID>;
+  id_not_in?: Maybe<UUID[] | UUID>;
+  id_lt?: Maybe<UUID>;
+  id_lte?: Maybe<UUID>;
+  id_gt?: Maybe<UUID>;
+  id_gte?: Maybe<UUID>;
+  id_contains?: Maybe<UUID>;
+  id_not_contains?: Maybe<UUID>;
+  id_starts_with?: Maybe<UUID>;
+  id_not_starts_with?: Maybe<UUID>;
+  id_ends_with?: Maybe<UUID>;
+  id_not_ends_with?: Maybe<UUID>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
   createdAt?: Maybe<DateTimeInput>;
   createdAt_not?: Maybe<DateTimeInput>;
   createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -1847,12 +1583,252 @@ export interface AuthProviderWhereInput {
   createdAt_lte?: Maybe<DateTimeInput>;
   createdAt_gt?: Maybe<DateTimeInput>;
   createdAt_gte?: Maybe<DateTimeInput>;
+  isOwnUser?: Maybe<Boolean>;
+  isOwnUser_not?: Maybe<Boolean>;
+  ownUser?: Maybe<OwnUserWhereInput>;
+  primaryAuthProvider?: Maybe<AuthProviderUserWhereInput>;
+  authProviders_every?: Maybe<AuthProviderUserWhereInput>;
+  authProviders_some?: Maybe<AuthProviderUserWhereInput>;
+  authProviders_none?: Maybe<AuthProviderUserWhereInput>;
+  roles_every?: Maybe<UserRoleWhereInput>;
+  roles_some?: Maybe<UserRoleWhereInput>;
+  roles_none?: Maybe<UserRoleWhereInput>;
+  optionalScopes_every?: Maybe<ActionScopeWhereInput>;
+  optionalScopes_some?: Maybe<ActionScopeWhereInput>;
+  optionalScopes_none?: Maybe<ActionScopeWhereInput>;
   tags_every?: Maybe<TagWhereInput>;
   tags_some?: Maybe<TagWhereInput>;
   tags_none?: Maybe<TagWhereInput>;
-  AND?: Maybe<AuthProviderWhereInput[] | AuthProviderWhereInput>;
-  OR?: Maybe<AuthProviderWhereInput[] | AuthProviderWhereInput>;
-  NOT?: Maybe<AuthProviderWhereInput[] | AuthProviderWhereInput>;
+  actionsHistory_every?: Maybe<UserActionInstanceWhereInput>;
+  actionsHistory_some?: Maybe<UserActionInstanceWhereInput>;
+  actionsHistory_none?: Maybe<UserActionInstanceWhereInput>;
+  isDeleted?: Maybe<Boolean>;
+  isDeleted_not?: Maybe<Boolean>;
+  encodedId?: Maybe<String>;
+  encodedId_not?: Maybe<String>;
+  encodedId_in?: Maybe<String[] | String>;
+  encodedId_not_in?: Maybe<String[] | String>;
+  encodedId_lt?: Maybe<String>;
+  encodedId_lte?: Maybe<String>;
+  encodedId_gt?: Maybe<String>;
+  encodedId_gte?: Maybe<String>;
+  encodedId_contains?: Maybe<String>;
+  encodedId_not_contains?: Maybe<String>;
+  encodedId_starts_with?: Maybe<String>;
+  encodedId_not_starts_with?: Maybe<String>;
+  encodedId_ends_with?: Maybe<String>;
+  encodedId_not_ends_with?: Maybe<String>;
+  displayName?: Maybe<String>;
+  displayName_not?: Maybe<String>;
+  displayName_in?: Maybe<String[] | String>;
+  displayName_not_in?: Maybe<String[] | String>;
+  displayName_lt?: Maybe<String>;
+  displayName_lte?: Maybe<String>;
+  displayName_gt?: Maybe<String>;
+  displayName_gte?: Maybe<String>;
+  displayName_contains?: Maybe<String>;
+  displayName_not_contains?: Maybe<String>;
+  displayName_starts_with?: Maybe<String>;
+  displayName_not_starts_with?: Maybe<String>;
+  displayName_ends_with?: Maybe<String>;
+  displayName_not_ends_with?: Maybe<String>;
+  AND?: Maybe<UserWhereInput[] | UserWhereInput>;
+  OR?: Maybe<UserWhereInput[] | UserWhereInput>;
+  NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
+}
+
+export interface OwnUserWhereInput {
+  id?: Maybe<UUID>;
+  id_not?: Maybe<UUID>;
+  id_in?: Maybe<UUID[] | UUID>;
+  id_not_in?: Maybe<UUID[] | UUID>;
+  id_lt?: Maybe<UUID>;
+  id_lte?: Maybe<UUID>;
+  id_gt?: Maybe<UUID>;
+  id_gte?: Maybe<UUID>;
+  id_contains?: Maybe<UUID>;
+  id_not_contains?: Maybe<UUID>;
+  id_starts_with?: Maybe<UUID>;
+  id_not_starts_with?: Maybe<UUID>;
+  id_ends_with?: Maybe<UUID>;
+  id_not_ends_with?: Maybe<UUID>;
+  username?: Maybe<String>;
+  username_not?: Maybe<String>;
+  username_in?: Maybe<String[] | String>;
+  username_not_in?: Maybe<String[] | String>;
+  username_lt?: Maybe<String>;
+  username_lte?: Maybe<String>;
+  username_gt?: Maybe<String>;
+  username_gte?: Maybe<String>;
+  username_contains?: Maybe<String>;
+  username_not_contains?: Maybe<String>;
+  username_starts_with?: Maybe<String>;
+  username_not_starts_with?: Maybe<String>;
+  username_ends_with?: Maybe<String>;
+  username_not_ends_with?: Maybe<String>;
+  password?: Maybe<String>;
+  password_not?: Maybe<String>;
+  password_in?: Maybe<String[] | String>;
+  password_not_in?: Maybe<String[] | String>;
+  password_lt?: Maybe<String>;
+  password_lte?: Maybe<String>;
+  password_gt?: Maybe<String>;
+  password_gte?: Maybe<String>;
+  password_contains?: Maybe<String>;
+  password_not_contains?: Maybe<String>;
+  password_starts_with?: Maybe<String>;
+  password_not_starts_with?: Maybe<String>;
+  password_ends_with?: Maybe<String>;
+  password_not_ends_with?: Maybe<String>;
+  firstName?: Maybe<String>;
+  firstName_not?: Maybe<String>;
+  firstName_in?: Maybe<String[] | String>;
+  firstName_not_in?: Maybe<String[] | String>;
+  firstName_lt?: Maybe<String>;
+  firstName_lte?: Maybe<String>;
+  firstName_gt?: Maybe<String>;
+  firstName_gte?: Maybe<String>;
+  firstName_contains?: Maybe<String>;
+  firstName_not_contains?: Maybe<String>;
+  firstName_starts_with?: Maybe<String>;
+  firstName_not_starts_with?: Maybe<String>;
+  firstName_ends_with?: Maybe<String>;
+  firstName_not_ends_with?: Maybe<String>;
+  middleName?: Maybe<String>;
+  middleName_not?: Maybe<String>;
+  middleName_in?: Maybe<String[] | String>;
+  middleName_not_in?: Maybe<String[] | String>;
+  middleName_lt?: Maybe<String>;
+  middleName_lte?: Maybe<String>;
+  middleName_gt?: Maybe<String>;
+  middleName_gte?: Maybe<String>;
+  middleName_contains?: Maybe<String>;
+  middleName_not_contains?: Maybe<String>;
+  middleName_starts_with?: Maybe<String>;
+  middleName_not_starts_with?: Maybe<String>;
+  middleName_ends_with?: Maybe<String>;
+  middleName_not_ends_with?: Maybe<String>;
+  lastName?: Maybe<String>;
+  lastName_not?: Maybe<String>;
+  lastName_in?: Maybe<String[] | String>;
+  lastName_not_in?: Maybe<String[] | String>;
+  lastName_lt?: Maybe<String>;
+  lastName_lte?: Maybe<String>;
+  lastName_gt?: Maybe<String>;
+  lastName_gte?: Maybe<String>;
+  lastName_contains?: Maybe<String>;
+  lastName_not_contains?: Maybe<String>;
+  lastName_starts_with?: Maybe<String>;
+  lastName_not_starts_with?: Maybe<String>;
+  lastName_ends_with?: Maybe<String>;
+  lastName_not_ends_with?: Maybe<String>;
+  email?: Maybe<String>;
+  email_not?: Maybe<String>;
+  email_in?: Maybe<String[] | String>;
+  email_not_in?: Maybe<String[] | String>;
+  email_lt?: Maybe<String>;
+  email_lte?: Maybe<String>;
+  email_gt?: Maybe<String>;
+  email_gte?: Maybe<String>;
+  email_contains?: Maybe<String>;
+  email_not_contains?: Maybe<String>;
+  email_starts_with?: Maybe<String>;
+  email_not_starts_with?: Maybe<String>;
+  email_ends_with?: Maybe<String>;
+  email_not_ends_with?: Maybe<String>;
+  phone?: Maybe<String>;
+  phone_not?: Maybe<String>;
+  phone_in?: Maybe<String[] | String>;
+  phone_not_in?: Maybe<String[] | String>;
+  phone_lt?: Maybe<String>;
+  phone_lte?: Maybe<String>;
+  phone_gt?: Maybe<String>;
+  phone_gte?: Maybe<String>;
+  phone_contains?: Maybe<String>;
+  phone_not_contains?: Maybe<String>;
+  phone_starts_with?: Maybe<String>;
+  phone_not_starts_with?: Maybe<String>;
+  phone_ends_with?: Maybe<String>;
+  phone_not_ends_with?: Maybe<String>;
+  address?: Maybe<String>;
+  address_not?: Maybe<String>;
+  address_in?: Maybe<String[] | String>;
+  address_not_in?: Maybe<String[] | String>;
+  address_lt?: Maybe<String>;
+  address_lte?: Maybe<String>;
+  address_gt?: Maybe<String>;
+  address_gte?: Maybe<String>;
+  address_contains?: Maybe<String>;
+  address_not_contains?: Maybe<String>;
+  address_starts_with?: Maybe<String>;
+  address_not_starts_with?: Maybe<String>;
+  address_ends_with?: Maybe<String>;
+  address_not_ends_with?: Maybe<String>;
+  coordinates?: Maybe<String>;
+  coordinates_not?: Maybe<String>;
+  coordinates_in?: Maybe<String[] | String>;
+  coordinates_not_in?: Maybe<String[] | String>;
+  coordinates_lt?: Maybe<String>;
+  coordinates_lte?: Maybe<String>;
+  coordinates_gt?: Maybe<String>;
+  coordinates_gte?: Maybe<String>;
+  coordinates_contains?: Maybe<String>;
+  coordinates_not_contains?: Maybe<String>;
+  coordinates_starts_with?: Maybe<String>;
+  coordinates_not_starts_with?: Maybe<String>;
+  coordinates_ends_with?: Maybe<String>;
+  coordinates_not_ends_with?: Maybe<String>;
+  pic?: Maybe<String>;
+  pic_not?: Maybe<String>;
+  pic_in?: Maybe<String[] | String>;
+  pic_not_in?: Maybe<String[] | String>;
+  pic_lt?: Maybe<String>;
+  pic_lte?: Maybe<String>;
+  pic_gt?: Maybe<String>;
+  pic_gte?: Maybe<String>;
+  pic_contains?: Maybe<String>;
+  pic_not_contains?: Maybe<String>;
+  pic_starts_with?: Maybe<String>;
+  pic_not_starts_with?: Maybe<String>;
+  pic_ends_with?: Maybe<String>;
+  pic_not_ends_with?: Maybe<String>;
+  otherDetails?: Maybe<String>;
+  otherDetails_not?: Maybe<String>;
+  otherDetails_in?: Maybe<String[] | String>;
+  otherDetails_not_in?: Maybe<String[] | String>;
+  otherDetails_lt?: Maybe<String>;
+  otherDetails_lte?: Maybe<String>;
+  otherDetails_gt?: Maybe<String>;
+  otherDetails_gte?: Maybe<String>;
+  otherDetails_contains?: Maybe<String>;
+  otherDetails_not_contains?: Maybe<String>;
+  otherDetails_starts_with?: Maybe<String>;
+  otherDetails_not_starts_with?: Maybe<String>;
+  otherDetails_ends_with?: Maybe<String>;
+  otherDetails_not_ends_with?: Maybe<String>;
+  user?: Maybe<UserWhereInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  tags_every?: Maybe<TagWhereInput>;
+  tags_some?: Maybe<TagWhereInput>;
+  tags_none?: Maybe<TagWhereInput>;
+  AND?: Maybe<OwnUserWhereInput[] | OwnUserWhereInput>;
+  OR?: Maybe<OwnUserWhereInput[] | OwnUserWhereInput>;
+  NOT?: Maybe<OwnUserWhereInput[] | OwnUserWhereInput>;
 }
 
 export interface UserRoleWhereInput {
@@ -1911,1080 +1887,44 @@ export interface UserRoleWhereInput {
   NOT?: Maybe<UserRoleWhereInput[] | UserRoleWhereInput>;
 }
 
-export type AuthProviderWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export type AuthProviderUserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<UUID>;
-}>;
+export interface UserActionInstanceWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  tags_every?: Maybe<TagWhereInput>;
+  tags_some?: Maybe<TagWhereInput>;
+  tags_none?: Maybe<TagWhereInput>;
+  user?: Maybe<UserWhereInput>;
+  actionScope?: Maybe<ActionScopeWhereInput>;
+  AND?: Maybe<UserActionInstanceWhereInput[] | UserActionInstanceWhereInput>;
+  OR?: Maybe<UserActionInstanceWhereInput[] | UserActionInstanceWhereInput>;
+  NOT?: Maybe<UserActionInstanceWhereInput[] | UserActionInstanceWhereInput>;
+}
 
 export type GuestActionInstanceWhereUniqueInput = AtLeastOne<{
   id: Maybe<UUID>;
 }>;
 
-export type InfoWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface RemoteWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  tags_every?: Maybe<TagWhereInput>;
-  tags_some?: Maybe<TagWhereInput>;
-  tags_none?: Maybe<TagWhereInput>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  link?: Maybe<String>;
-  link_not?: Maybe<String>;
-  link_in?: Maybe<String[] | String>;
-  link_not_in?: Maybe<String[] | String>;
-  link_lt?: Maybe<String>;
-  link_lte?: Maybe<String>;
-  link_gt?: Maybe<String>;
-  link_gte?: Maybe<String>;
-  link_contains?: Maybe<String>;
-  link_not_contains?: Maybe<String>;
-  link_starts_with?: Maybe<String>;
-  link_not_starts_with?: Maybe<String>;
-  link_ends_with?: Maybe<String>;
-  link_not_ends_with?: Maybe<String>;
-  query?: Maybe<String>;
-  query_not?: Maybe<String>;
-  query_in?: Maybe<String[] | String>;
-  query_not_in?: Maybe<String[] | String>;
-  query_lt?: Maybe<String>;
-  query_lte?: Maybe<String>;
-  query_gt?: Maybe<String>;
-  query_gte?: Maybe<String>;
-  query_contains?: Maybe<String>;
-  query_not_contains?: Maybe<String>;
-  query_starts_with?: Maybe<String>;
-  query_not_starts_with?: Maybe<String>;
-  query_ends_with?: Maybe<String>;
-  query_not_ends_with?: Maybe<String>;
-  queryResolution?: Maybe<String>;
-  queryResolution_not?: Maybe<String>;
-  queryResolution_in?: Maybe<String[] | String>;
-  queryResolution_not_in?: Maybe<String[] | String>;
-  queryResolution_lt?: Maybe<String>;
-  queryResolution_lte?: Maybe<String>;
-  queryResolution_gt?: Maybe<String>;
-  queryResolution_gte?: Maybe<String>;
-  queryResolution_contains?: Maybe<String>;
-  queryResolution_not_contains?: Maybe<String>;
-  queryResolution_starts_with?: Maybe<String>;
-  queryResolution_not_starts_with?: Maybe<String>;
-  queryResolution_ends_with?: Maybe<String>;
-  queryResolution_not_ends_with?: Maybe<String>;
-  AND?: Maybe<RemoteWhereInput[] | RemoteWhereInput>;
-  OR?: Maybe<RemoteWhereInput[] | RemoteWhereInput>;
-  NOT?: Maybe<RemoteWhereInput[] | RemoteWhereInput>;
-}
-
-export interface ResourceWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  tags_every?: Maybe<TagWhereInput>;
-  tags_some?: Maybe<TagWhereInput>;
-  tags_none?: Maybe<TagWhereInput>;
-  interaction?: Maybe<InteractionWhereInput>;
-  media?: Maybe<MediaWhereInput>;
-  remote?: Maybe<RemoteWhereInput>;
-  link?: Maybe<String>;
-  link_not?: Maybe<String>;
-  link_in?: Maybe<String[] | String>;
-  link_not_in?: Maybe<String[] | String>;
-  link_lt?: Maybe<String>;
-  link_lte?: Maybe<String>;
-  link_gt?: Maybe<String>;
-  link_gte?: Maybe<String>;
-  link_contains?: Maybe<String>;
-  link_not_contains?: Maybe<String>;
-  link_starts_with?: Maybe<String>;
-  link_not_starts_with?: Maybe<String>;
-  link_ends_with?: Maybe<String>;
-  link_not_ends_with?: Maybe<String>;
-  AND?: Maybe<ResourceWhereInput[] | ResourceWhereInput>;
-  OR?: Maybe<ResourceWhereInput[] | ResourceWhereInput>;
-  NOT?: Maybe<ResourceWhereInput[] | ResourceWhereInput>;
-}
-
-export interface InteractionWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  tags_every?: Maybe<TagWhereInput>;
-  tags_some?: Maybe<TagWhereInput>;
-  tags_none?: Maybe<TagWhereInput>;
-  interactionType?: Maybe<InteractionTypeWhereInput>;
-  remote?: Maybe<RemoteWhereInput>;
-  publicUser?: Maybe<UserWhereInput>;
-  publicEntity?: Maybe<PublicEntityWhereInput>;
-  AND?: Maybe<InteractionWhereInput[] | InteractionWhereInput>;
-  OR?: Maybe<InteractionWhereInput[] | InteractionWhereInput>;
-  NOT?: Maybe<InteractionWhereInput[] | InteractionWhereInput>;
-}
-
-export interface InteractionTypeWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  tags_every?: Maybe<TagWhereInput>;
-  tags_some?: Maybe<TagWhereInput>;
-  tags_none?: Maybe<TagWhereInput>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  AND?: Maybe<InteractionTypeWhereInput[] | InteractionTypeWhereInput>;
-  OR?: Maybe<InteractionTypeWhereInput[] | InteractionTypeWhereInput>;
-  NOT?: Maybe<InteractionTypeWhereInput[] | InteractionTypeWhereInput>;
-}
-
-export interface PublicEntityWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  tags_every?: Maybe<TagWhereInput>;
-  tags_some?: Maybe<TagWhereInput>;
-  tags_none?: Maybe<TagWhereInput>;
-  entityType?: Maybe<PublicEntityTypeWhereInput>;
-  remote?: Maybe<RemoteWhereInput>;
-  AND?: Maybe<PublicEntityWhereInput[] | PublicEntityWhereInput>;
-  OR?: Maybe<PublicEntityWhereInput[] | PublicEntityWhereInput>;
-  NOT?: Maybe<PublicEntityWhereInput[] | PublicEntityWhereInput>;
-}
-
-export interface PublicEntityTypeWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  tags_every?: Maybe<TagWhereInput>;
-  tags_some?: Maybe<TagWhereInput>;
-  tags_none?: Maybe<TagWhereInput>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  AND?: Maybe<PublicEntityTypeWhereInput[] | PublicEntityTypeWhereInput>;
-  OR?: Maybe<PublicEntityTypeWhereInput[] | PublicEntityTypeWhereInput>;
-  NOT?: Maybe<PublicEntityTypeWhereInput[] | PublicEntityTypeWhereInput>;
-}
-
-export interface MediaWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  tags_every?: Maybe<TagWhereInput>;
-  tags_some?: Maybe<TagWhereInput>;
-  tags_none?: Maybe<TagWhereInput>;
-  title?: Maybe<String>;
-  title_not?: Maybe<String>;
-  title_in?: Maybe<String[] | String>;
-  title_not_in?: Maybe<String[] | String>;
-  title_lt?: Maybe<String>;
-  title_lte?: Maybe<String>;
-  title_gt?: Maybe<String>;
-  title_gte?: Maybe<String>;
-  title_contains?: Maybe<String>;
-  title_not_contains?: Maybe<String>;
-  title_starts_with?: Maybe<String>;
-  title_not_starts_with?: Maybe<String>;
-  title_ends_with?: Maybe<String>;
-  title_not_ends_with?: Maybe<String>;
-  description?: Maybe<String>;
-  description_not?: Maybe<String>;
-  description_in?: Maybe<String[] | String>;
-  description_not_in?: Maybe<String[] | String>;
-  description_lt?: Maybe<String>;
-  description_lte?: Maybe<String>;
-  description_gt?: Maybe<String>;
-  description_gte?: Maybe<String>;
-  description_contains?: Maybe<String>;
-  description_not_contains?: Maybe<String>;
-  description_starts_with?: Maybe<String>;
-  description_not_starts_with?: Maybe<String>;
-  description_ends_with?: Maybe<String>;
-  description_not_ends_with?: Maybe<String>;
-  descriptionSmall?: Maybe<String>;
-  descriptionSmall_not?: Maybe<String>;
-  descriptionSmall_in?: Maybe<String[] | String>;
-  descriptionSmall_not_in?: Maybe<String[] | String>;
-  descriptionSmall_lt?: Maybe<String>;
-  descriptionSmall_lte?: Maybe<String>;
-  descriptionSmall_gt?: Maybe<String>;
-  descriptionSmall_gte?: Maybe<String>;
-  descriptionSmall_contains?: Maybe<String>;
-  descriptionSmall_not_contains?: Maybe<String>;
-  descriptionSmall_starts_with?: Maybe<String>;
-  descriptionSmall_not_starts_with?: Maybe<String>;
-  descriptionSmall_ends_with?: Maybe<String>;
-  descriptionSmall_not_ends_with?: Maybe<String>;
-  remote?: Maybe<RemoteWhereInput>;
-  AND?: Maybe<MediaWhereInput[] | MediaWhereInput>;
-  OR?: Maybe<MediaWhereInput[] | MediaWhereInput>;
-  NOT?: Maybe<MediaWhereInput[] | MediaWhereInput>;
-}
-
-export interface InfoWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  tags_every?: Maybe<TagWhereInput>;
-  tags_some?: Maybe<TagWhereInput>;
-  tags_none?: Maybe<TagWhereInput>;
-  title?: Maybe<String>;
-  title_not?: Maybe<String>;
-  title_in?: Maybe<String[] | String>;
-  title_not_in?: Maybe<String[] | String>;
-  title_lt?: Maybe<String>;
-  title_lte?: Maybe<String>;
-  title_gt?: Maybe<String>;
-  title_gte?: Maybe<String>;
-  title_contains?: Maybe<String>;
-  title_not_contains?: Maybe<String>;
-  title_starts_with?: Maybe<String>;
-  title_not_starts_with?: Maybe<String>;
-  title_ends_with?: Maybe<String>;
-  title_not_ends_with?: Maybe<String>;
-  description?: Maybe<String>;
-  description_not?: Maybe<String>;
-  description_in?: Maybe<String[] | String>;
-  description_not_in?: Maybe<String[] | String>;
-  description_lt?: Maybe<String>;
-  description_lte?: Maybe<String>;
-  description_gt?: Maybe<String>;
-  description_gte?: Maybe<String>;
-  description_contains?: Maybe<String>;
-  description_not_contains?: Maybe<String>;
-  description_starts_with?: Maybe<String>;
-  description_not_starts_with?: Maybe<String>;
-  description_ends_with?: Maybe<String>;
-  description_not_ends_with?: Maybe<String>;
-  descriptionSmall?: Maybe<String>;
-  descriptionSmall_not?: Maybe<String>;
-  descriptionSmall_in?: Maybe<String[] | String>;
-  descriptionSmall_not_in?: Maybe<String[] | String>;
-  descriptionSmall_lt?: Maybe<String>;
-  descriptionSmall_lte?: Maybe<String>;
-  descriptionSmall_gt?: Maybe<String>;
-  descriptionSmall_gte?: Maybe<String>;
-  descriptionSmall_contains?: Maybe<String>;
-  descriptionSmall_not_contains?: Maybe<String>;
-  descriptionSmall_starts_with?: Maybe<String>;
-  descriptionSmall_not_starts_with?: Maybe<String>;
-  descriptionSmall_ends_with?: Maybe<String>;
-  descriptionSmall_not_ends_with?: Maybe<String>;
-  remotePrimary?: Maybe<RemoteWhereInput>;
-  remotes_every?: Maybe<RemoteWhereInput>;
-  remotes_some?: Maybe<RemoteWhereInput>;
-  remotes_none?: Maybe<RemoteWhereInput>;
-  infoType?: Maybe<InfoTypeWhereInput>;
-  resources_every?: Maybe<ResourceWhereInput>;
-  resources_some?: Maybe<ResourceWhereInput>;
-  resources_none?: Maybe<ResourceWhereInput>;
-  resourcePrimary?: Maybe<ResourceWhereInput>;
-  AND?: Maybe<InfoWhereInput[] | InfoWhereInput>;
-  OR?: Maybe<InfoWhereInput[] | InfoWhereInput>;
-  NOT?: Maybe<InfoWhereInput[] | InfoWhereInput>;
-}
-
-export interface InfoTypeWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  tags_every?: Maybe<TagWhereInput>;
-  tags_some?: Maybe<TagWhereInput>;
-  tags_none?: Maybe<TagWhereInput>;
-  AND?: Maybe<InfoTypeWhereInput[] | InfoTypeWhereInput>;
-  OR?: Maybe<InfoTypeWhereInput[] | InfoTypeWhereInput>;
-  NOT?: Maybe<InfoTypeWhereInput[] | InfoTypeWhereInput>;
-}
-
-export type InfoTypeWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  name?: Maybe<String>;
-}>;
-
-export type InitiativeWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface InitiativeWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  tags_every?: Maybe<TagWhereInput>;
-  tags_some?: Maybe<TagWhereInput>;
-  tags_none?: Maybe<TagWhereInput>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  infoPrimary?: Maybe<InfoWhereInput>;
-  description?: Maybe<String>;
-  description_not?: Maybe<String>;
-  description_in?: Maybe<String[] | String>;
-  description_not_in?: Maybe<String[] | String>;
-  description_lt?: Maybe<String>;
-  description_lte?: Maybe<String>;
-  description_gt?: Maybe<String>;
-  description_gte?: Maybe<String>;
-  description_contains?: Maybe<String>;
-  description_not_contains?: Maybe<String>;
-  description_starts_with?: Maybe<String>;
-  description_not_starts_with?: Maybe<String>;
-  description_ends_with?: Maybe<String>;
-  description_not_ends_with?: Maybe<String>;
-  descriptionSmall?: Maybe<String>;
-  descriptionSmall_not?: Maybe<String>;
-  descriptionSmall_in?: Maybe<String[] | String>;
-  descriptionSmall_not_in?: Maybe<String[] | String>;
-  descriptionSmall_lt?: Maybe<String>;
-  descriptionSmall_lte?: Maybe<String>;
-  descriptionSmall_gt?: Maybe<String>;
-  descriptionSmall_gte?: Maybe<String>;
-  descriptionSmall_contains?: Maybe<String>;
-  descriptionSmall_not_contains?: Maybe<String>;
-  descriptionSmall_starts_with?: Maybe<String>;
-  descriptionSmall_not_starts_with?: Maybe<String>;
-  descriptionSmall_ends_with?: Maybe<String>;
-  descriptionSmall_not_ends_with?: Maybe<String>;
-  media_every?: Maybe<MediaWhereInput>;
-  media_some?: Maybe<MediaWhereInput>;
-  media_none?: Maybe<MediaWhereInput>;
-  mediaPrimary?: Maybe<MediaWhereInput>;
-  resources_every?: Maybe<ResourceWhereInput>;
-  resources_some?: Maybe<ResourceWhereInput>;
-  resources_none?: Maybe<ResourceWhereInput>;
-  childInitiatives_every?: Maybe<InitiativeWhereInput>;
-  childInitiatives_some?: Maybe<InitiativeWhereInput>;
-  childInitiatives_none?: Maybe<InitiativeWhereInput>;
-  AND?: Maybe<InitiativeWhereInput[] | InitiativeWhereInput>;
-  OR?: Maybe<InitiativeWhereInput[] | InitiativeWhereInput>;
-  NOT?: Maybe<InitiativeWhereInput[] | InitiativeWhereInput>;
-}
-
-export type InteractionWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export type InteractionTypeWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  name?: Maybe<String>;
-}>;
-
-export type MediaWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export type OwnUserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<UUID>;
-}>;
-
-export type PublicEntityWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export type PublicEntityTypeWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  name?: Maybe<String>;
-}>;
-
-export type RemoteWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export type ResourceWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export type TagWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<UUID>;
-}>;
-
-export type UserActionInstanceWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export type UserRoleWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface ActionScopeCreateInput {
-  id?: Maybe<ID_Input>;
-  tags?: Maybe<TagCreateManyInput>;
-  name: String;
-  guestActions?: Maybe<GuestActionInstanceCreateManyWithoutActionInput>;
-  userActions?: Maybe<UserActionInstanceCreateManyWithoutActionScopeInput>;
-}
-
-export interface TagCreateManyInput {
-  create?: Maybe<TagCreateInput[] | TagCreateInput>;
-  connect?: Maybe<TagWhereUniqueInput[] | TagWhereUniqueInput>;
-}
-
-export interface TagCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-}
-
-export interface GuestActionInstanceCreateManyWithoutActionInput {
-  create?: Maybe<
-    | GuestActionInstanceCreateWithoutActionInput[]
-    | GuestActionInstanceCreateWithoutActionInput
-  >;
-  connect?: Maybe<
-    GuestActionInstanceWhereUniqueInput[] | GuestActionInstanceWhereUniqueInput
-  >;
-}
-
-export interface GuestActionInstanceCreateWithoutActionInput {
-  id?: Maybe<UUID>;
-  firstName: String;
-  middleName?: Maybe<String>;
-  lastName: String;
-  phone: String;
-  email: String;
-  address: String;
-}
-
-export interface UserActionInstanceCreateManyWithoutActionScopeInput {
-  create?: Maybe<
-    | UserActionInstanceCreateWithoutActionScopeInput[]
-    | UserActionInstanceCreateWithoutActionScopeInput
-  >;
-  connect?: Maybe<
-    UserActionInstanceWhereUniqueInput[] | UserActionInstanceWhereUniqueInput
-  >;
-}
-
-export interface UserActionInstanceCreateWithoutActionScopeInput {
-  id?: Maybe<ID_Input>;
-  tags?: Maybe<TagCreateManyInput>;
-  user: UserCreateOneWithoutActionsHistoryInput;
-}
-
-export interface UserCreateOneWithoutActionsHistoryInput {
-  create?: Maybe<UserCreateWithoutActionsHistoryInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserCreateWithoutActionsHistoryInput {
-  id?: Maybe<UUID>;
-  isOwnUser: Boolean;
-  ownUser?: Maybe<OwnUserCreateOneWithoutUserInput>;
-  primaryAuthProvider?: Maybe<AuthProviderUserCreateOneInput>;
-  authProviders?: Maybe<AuthProviderUserCreateManyWithoutUserInput>;
-  roles?: Maybe<UserRoleCreateManyInput>;
-  optionalScopes?: Maybe<ActionScopeCreateManyInput>;
-  tags?: Maybe<TagCreateManyInput>;
-  isDeleted: Boolean;
-}
-
-export interface OwnUserCreateOneWithoutUserInput {
-  create?: Maybe<OwnUserCreateWithoutUserInput>;
-  connect?: Maybe<OwnUserWhereUniqueInput>;
-}
-
-export interface OwnUserCreateWithoutUserInput {
-  id?: Maybe<UUID>;
-  username: String;
-  password: String;
-  firstName: String;
-  middleName?: Maybe<String>;
-  lastName: String;
-  email: String;
-  phone?: Maybe<String>;
-  address?: Maybe<String>;
-  coordinates?: Maybe<String>;
-  pic?: Maybe<String>;
-  otherDetails?: Maybe<String>;
-  tags?: Maybe<TagCreateManyInput>;
-}
-
-export interface AuthProviderUserCreateOneInput {
-  create?: Maybe<AuthProviderUserCreateInput>;
-  connect?: Maybe<AuthProviderUserWhereUniqueInput>;
-}
-
-export interface AuthProviderUserCreateInput {
-  id?: Maybe<UUID>;
-  authProvider: AuthProviderCreateOneInput;
-  authToken: String;
-  refreshToken?: Maybe<String>;
-  expiryTime?: Maybe<DateTimeInput>;
-  username?: Maybe<String>;
-  firstName: String;
-  middleName?: Maybe<String>;
-  lastName: String;
-  email?: Maybe<String>;
-  phone?: Maybe<String>;
-  address?: Maybe<String>;
-  coordinates?: Maybe<String>;
-  pic?: Maybe<String>;
-  otherDetails?: Maybe<String>;
-  user: UserCreateOneWithoutAuthProvidersInput;
-  tags?: Maybe<TagCreateManyInput>;
-}
-
-export interface AuthProviderCreateOneInput {
-  create?: Maybe<AuthProviderCreateInput>;
-  connect?: Maybe<AuthProviderWhereUniqueInput>;
-}
-
-export interface AuthProviderCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  tags?: Maybe<TagCreateManyInput>;
-}
-
-export interface UserCreateOneWithoutAuthProvidersInput {
-  create?: Maybe<UserCreateWithoutAuthProvidersInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserCreateWithoutAuthProvidersInput {
-  id?: Maybe<UUID>;
-  isOwnUser: Boolean;
-  ownUser?: Maybe<OwnUserCreateOneWithoutUserInput>;
-  primaryAuthProvider?: Maybe<AuthProviderUserCreateOneInput>;
-  roles?: Maybe<UserRoleCreateManyInput>;
-  optionalScopes?: Maybe<ActionScopeCreateManyInput>;
-  tags?: Maybe<TagCreateManyInput>;
-  actionsHistory?: Maybe<UserActionInstanceCreateManyWithoutUserInput>;
-  isDeleted: Boolean;
-}
-
-export interface UserRoleCreateManyInput {
-  create?: Maybe<UserRoleCreateInput[] | UserRoleCreateInput>;
-  connect?: Maybe<UserRoleWhereUniqueInput[] | UserRoleWhereUniqueInput>;
-}
-
-export interface UserRoleCreateInput {
-  id?: Maybe<ID_Input>;
-  tags?: Maybe<TagCreateManyInput>;
-  name: String;
-  actionScopes?: Maybe<ActionScopeCreateManyInput>;
-}
-
-export interface ActionScopeCreateManyInput {
-  create?: Maybe<ActionScopeCreateInput[] | ActionScopeCreateInput>;
-  connect?: Maybe<ActionScopeWhereUniqueInput[] | ActionScopeWhereUniqueInput>;
-}
-
-export interface UserActionInstanceCreateManyWithoutUserInput {
-  create?: Maybe<
-    | UserActionInstanceCreateWithoutUserInput[]
-    | UserActionInstanceCreateWithoutUserInput
-  >;
-  connect?: Maybe<
-    UserActionInstanceWhereUniqueInput[] | UserActionInstanceWhereUniqueInput
-  >;
-}
-
-export interface UserActionInstanceCreateWithoutUserInput {
-  id?: Maybe<ID_Input>;
-  tags?: Maybe<TagCreateManyInput>;
-  actionScope: ActionScopeCreateOneWithoutUserActionsInput;
-}
-
-export interface ActionScopeCreateOneWithoutUserActionsInput {
-  create?: Maybe<ActionScopeCreateWithoutUserActionsInput>;
-  connect?: Maybe<ActionScopeWhereUniqueInput>;
-}
-
-export interface ActionScopeCreateWithoutUserActionsInput {
-  id?: Maybe<ID_Input>;
-  tags?: Maybe<TagCreateManyInput>;
-  name: String;
-  guestActions?: Maybe<GuestActionInstanceCreateManyWithoutActionInput>;
-}
-
-export interface AuthProviderUserCreateManyWithoutUserInput {
-  create?: Maybe<
-    | AuthProviderUserCreateWithoutUserInput[]
-    | AuthProviderUserCreateWithoutUserInput
-  >;
-  connect?: Maybe<
-    AuthProviderUserWhereUniqueInput[] | AuthProviderUserWhereUniqueInput
-  >;
-}
-
-export interface AuthProviderUserCreateWithoutUserInput {
-  id?: Maybe<UUID>;
-  authProvider: AuthProviderCreateOneInput;
-  authToken: String;
-  refreshToken?: Maybe<String>;
-  expiryTime?: Maybe<DateTimeInput>;
-  username?: Maybe<String>;
-  firstName: String;
-  middleName?: Maybe<String>;
-  lastName: String;
-  email?: Maybe<String>;
-  phone?: Maybe<String>;
-  address?: Maybe<String>;
-  coordinates?: Maybe<String>;
-  pic?: Maybe<String>;
-  otherDetails?: Maybe<String>;
-  tags?: Maybe<TagCreateManyInput>;
-}
-
-export interface ActionScopeUpdateInput {
-  tags?: Maybe<TagUpdateManyInput>;
-  name?: Maybe<String>;
-  guestActions?: Maybe<GuestActionInstanceUpdateManyWithoutActionInput>;
-  userActions?: Maybe<UserActionInstanceUpdateManyWithoutActionScopeInput>;
-}
-
-export interface TagUpdateManyInput {
-  create?: Maybe<TagCreateInput[] | TagCreateInput>;
-  update?: Maybe<
-    TagUpdateWithWhereUniqueNestedInput[] | TagUpdateWithWhereUniqueNestedInput
-  >;
-  upsert?: Maybe<
-    TagUpsertWithWhereUniqueNestedInput[] | TagUpsertWithWhereUniqueNestedInput
-  >;
-  delete?: Maybe<TagWhereUniqueInput[] | TagWhereUniqueInput>;
-  connect?: Maybe<TagWhereUniqueInput[] | TagWhereUniqueInput>;
-  set?: Maybe<TagWhereUniqueInput[] | TagWhereUniqueInput>;
-  disconnect?: Maybe<TagWhereUniqueInput[] | TagWhereUniqueInput>;
-  deleteMany?: Maybe<TagScalarWhereInput[] | TagScalarWhereInput>;
-  updateMany?: Maybe<
-    TagUpdateManyWithWhereNestedInput[] | TagUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface TagUpdateWithWhereUniqueNestedInput {
-  where: TagWhereUniqueInput;
-  data: TagUpdateDataInput;
-}
-
-export interface TagUpdateDataInput {
-  name?: Maybe<String>;
-}
-
-export interface TagUpsertWithWhereUniqueNestedInput {
-  where: TagWhereUniqueInput;
-  update: TagUpdateDataInput;
-  create: TagCreateInput;
-}
-
-export interface TagScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<TagScalarWhereInput[] | TagScalarWhereInput>;
-  OR?: Maybe<TagScalarWhereInput[] | TagScalarWhereInput>;
-  NOT?: Maybe<TagScalarWhereInput[] | TagScalarWhereInput>;
-}
-
-export interface TagUpdateManyWithWhereNestedInput {
-  where: TagScalarWhereInput;
-  data: TagUpdateManyDataInput;
-}
-
-export interface TagUpdateManyDataInput {
-  name?: Maybe<String>;
-}
-
-export interface GuestActionInstanceUpdateManyWithoutActionInput {
-  create?: Maybe<
-    | GuestActionInstanceCreateWithoutActionInput[]
-    | GuestActionInstanceCreateWithoutActionInput
-  >;
-  delete?: Maybe<
-    GuestActionInstanceWhereUniqueInput[] | GuestActionInstanceWhereUniqueInput
-  >;
-  connect?: Maybe<
-    GuestActionInstanceWhereUniqueInput[] | GuestActionInstanceWhereUniqueInput
-  >;
-  set?: Maybe<
-    GuestActionInstanceWhereUniqueInput[] | GuestActionInstanceWhereUniqueInput
-  >;
-  disconnect?: Maybe<
-    GuestActionInstanceWhereUniqueInput[] | GuestActionInstanceWhereUniqueInput
-  >;
-  update?: Maybe<
-    | GuestActionInstanceUpdateWithWhereUniqueWithoutActionInput[]
-    | GuestActionInstanceUpdateWithWhereUniqueWithoutActionInput
-  >;
-  upsert?: Maybe<
-    | GuestActionInstanceUpsertWithWhereUniqueWithoutActionInput[]
-    | GuestActionInstanceUpsertWithWhereUniqueWithoutActionInput
-  >;
-  deleteMany?: Maybe<
-    GuestActionInstanceScalarWhereInput[] | GuestActionInstanceScalarWhereInput
-  >;
-  updateMany?: Maybe<
-    | GuestActionInstanceUpdateManyWithWhereNestedInput[]
-    | GuestActionInstanceUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface GuestActionInstanceUpdateWithWhereUniqueWithoutActionInput {
-  where: GuestActionInstanceWhereUniqueInput;
-  data: GuestActionInstanceUpdateWithoutActionDataInput;
-}
-
-export interface GuestActionInstanceUpdateWithoutActionDataInput {
-  firstName?: Maybe<String>;
-  middleName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  phone?: Maybe<String>;
-  email?: Maybe<String>;
-  address?: Maybe<String>;
-}
-
-export interface GuestActionInstanceUpsertWithWhereUniqueWithoutActionInput {
-  where: GuestActionInstanceWhereUniqueInput;
-  update: GuestActionInstanceUpdateWithoutActionDataInput;
-  create: GuestActionInstanceCreateWithoutActionInput;
-}
-
-export interface GuestActionInstanceScalarWhereInput {
+export interface GuestActionInstanceWhereInput {
   id?: Maybe<UUID>;
   id_not?: Maybe<UUID>;
   id_in?: Maybe<UUID[] | UUID>;
@@ -3091,87 +2031,1255 @@ export interface GuestActionInstanceScalarWhereInput {
   address_not_starts_with?: Maybe<String>;
   address_ends_with?: Maybe<String>;
   address_not_ends_with?: Maybe<String>;
-  AND?: Maybe<
-    GuestActionInstanceScalarWhereInput[] | GuestActionInstanceScalarWhereInput
+  action?: Maybe<ActionScopeWhereInput>;
+  AND?: Maybe<GuestActionInstanceWhereInput[] | GuestActionInstanceWhereInput>;
+  OR?: Maybe<GuestActionInstanceWhereInput[] | GuestActionInstanceWhereInput>;
+  NOT?: Maybe<GuestActionInstanceWhereInput[] | GuestActionInstanceWhereInput>;
+}
+
+export type InfoWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  displayName?: Maybe<String>;
+}>;
+
+export interface RemoteWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  tags_every?: Maybe<TagWhereInput>;
+  tags_some?: Maybe<TagWhereInput>;
+  tags_none?: Maybe<TagWhereInput>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  link?: Maybe<String>;
+  link_not?: Maybe<String>;
+  link_in?: Maybe<String[] | String>;
+  link_not_in?: Maybe<String[] | String>;
+  link_lt?: Maybe<String>;
+  link_lte?: Maybe<String>;
+  link_gt?: Maybe<String>;
+  link_gte?: Maybe<String>;
+  link_contains?: Maybe<String>;
+  link_not_contains?: Maybe<String>;
+  link_starts_with?: Maybe<String>;
+  link_not_starts_with?: Maybe<String>;
+  link_ends_with?: Maybe<String>;
+  link_not_ends_with?: Maybe<String>;
+  query?: Maybe<String>;
+  query_not?: Maybe<String>;
+  query_in?: Maybe<String[] | String>;
+  query_not_in?: Maybe<String[] | String>;
+  query_lt?: Maybe<String>;
+  query_lte?: Maybe<String>;
+  query_gt?: Maybe<String>;
+  query_gte?: Maybe<String>;
+  query_contains?: Maybe<String>;
+  query_not_contains?: Maybe<String>;
+  query_starts_with?: Maybe<String>;
+  query_not_starts_with?: Maybe<String>;
+  query_ends_with?: Maybe<String>;
+  query_not_ends_with?: Maybe<String>;
+  queryResolution?: Maybe<String>;
+  queryResolution_not?: Maybe<String>;
+  queryResolution_in?: Maybe<String[] | String>;
+  queryResolution_not_in?: Maybe<String[] | String>;
+  queryResolution_lt?: Maybe<String>;
+  queryResolution_lte?: Maybe<String>;
+  queryResolution_gt?: Maybe<String>;
+  queryResolution_gte?: Maybe<String>;
+  queryResolution_contains?: Maybe<String>;
+  queryResolution_not_contains?: Maybe<String>;
+  queryResolution_starts_with?: Maybe<String>;
+  queryResolution_not_starts_with?: Maybe<String>;
+  queryResolution_ends_with?: Maybe<String>;
+  queryResolution_not_ends_with?: Maybe<String>;
+  encodedId?: Maybe<String>;
+  encodedId_not?: Maybe<String>;
+  encodedId_in?: Maybe<String[] | String>;
+  encodedId_not_in?: Maybe<String[] | String>;
+  encodedId_lt?: Maybe<String>;
+  encodedId_lte?: Maybe<String>;
+  encodedId_gt?: Maybe<String>;
+  encodedId_gte?: Maybe<String>;
+  encodedId_contains?: Maybe<String>;
+  encodedId_not_contains?: Maybe<String>;
+  encodedId_starts_with?: Maybe<String>;
+  encodedId_not_starts_with?: Maybe<String>;
+  encodedId_ends_with?: Maybe<String>;
+  encodedId_not_ends_with?: Maybe<String>;
+  displayName?: Maybe<String>;
+  displayName_not?: Maybe<String>;
+  displayName_in?: Maybe<String[] | String>;
+  displayName_not_in?: Maybe<String[] | String>;
+  displayName_lt?: Maybe<String>;
+  displayName_lte?: Maybe<String>;
+  displayName_gt?: Maybe<String>;
+  displayName_gte?: Maybe<String>;
+  displayName_contains?: Maybe<String>;
+  displayName_not_contains?: Maybe<String>;
+  displayName_starts_with?: Maybe<String>;
+  displayName_not_starts_with?: Maybe<String>;
+  displayName_ends_with?: Maybe<String>;
+  displayName_not_ends_with?: Maybe<String>;
+  AND?: Maybe<RemoteWhereInput[] | RemoteWhereInput>;
+  OR?: Maybe<RemoteWhereInput[] | RemoteWhereInput>;
+  NOT?: Maybe<RemoteWhereInput[] | RemoteWhereInput>;
+}
+
+export interface ResourceWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  tags_every?: Maybe<TagWhereInput>;
+  tags_some?: Maybe<TagWhereInput>;
+  tags_none?: Maybe<TagWhereInput>;
+  interaction?: Maybe<InteractionWhereInput>;
+  media?: Maybe<MediaWhereInput>;
+  remote?: Maybe<RemoteWhereInput>;
+  link?: Maybe<String>;
+  link_not?: Maybe<String>;
+  link_in?: Maybe<String[] | String>;
+  link_not_in?: Maybe<String[] | String>;
+  link_lt?: Maybe<String>;
+  link_lte?: Maybe<String>;
+  link_gt?: Maybe<String>;
+  link_gte?: Maybe<String>;
+  link_contains?: Maybe<String>;
+  link_not_contains?: Maybe<String>;
+  link_starts_with?: Maybe<String>;
+  link_not_starts_with?: Maybe<String>;
+  link_ends_with?: Maybe<String>;
+  link_not_ends_with?: Maybe<String>;
+  encodedId?: Maybe<String>;
+  encodedId_not?: Maybe<String>;
+  encodedId_in?: Maybe<String[] | String>;
+  encodedId_not_in?: Maybe<String[] | String>;
+  encodedId_lt?: Maybe<String>;
+  encodedId_lte?: Maybe<String>;
+  encodedId_gt?: Maybe<String>;
+  encodedId_gte?: Maybe<String>;
+  encodedId_contains?: Maybe<String>;
+  encodedId_not_contains?: Maybe<String>;
+  encodedId_starts_with?: Maybe<String>;
+  encodedId_not_starts_with?: Maybe<String>;
+  encodedId_ends_with?: Maybe<String>;
+  encodedId_not_ends_with?: Maybe<String>;
+  displayName?: Maybe<String>;
+  displayName_not?: Maybe<String>;
+  displayName_in?: Maybe<String[] | String>;
+  displayName_not_in?: Maybe<String[] | String>;
+  displayName_lt?: Maybe<String>;
+  displayName_lte?: Maybe<String>;
+  displayName_gt?: Maybe<String>;
+  displayName_gte?: Maybe<String>;
+  displayName_contains?: Maybe<String>;
+  displayName_not_contains?: Maybe<String>;
+  displayName_starts_with?: Maybe<String>;
+  displayName_not_starts_with?: Maybe<String>;
+  displayName_ends_with?: Maybe<String>;
+  displayName_not_ends_with?: Maybe<String>;
+  AND?: Maybe<ResourceWhereInput[] | ResourceWhereInput>;
+  OR?: Maybe<ResourceWhereInput[] | ResourceWhereInput>;
+  NOT?: Maybe<ResourceWhereInput[] | ResourceWhereInput>;
+}
+
+export interface InteractionWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  tags_every?: Maybe<TagWhereInput>;
+  tags_some?: Maybe<TagWhereInput>;
+  tags_none?: Maybe<TagWhereInput>;
+  interactionType?: Maybe<InteractionTypeWhereInput>;
+  remote?: Maybe<RemoteWhereInput>;
+  publicUser?: Maybe<UserWhereInput>;
+  publicEntity?: Maybe<PublicEntityWhereInput>;
+  encodedId?: Maybe<String>;
+  encodedId_not?: Maybe<String>;
+  encodedId_in?: Maybe<String[] | String>;
+  encodedId_not_in?: Maybe<String[] | String>;
+  encodedId_lt?: Maybe<String>;
+  encodedId_lte?: Maybe<String>;
+  encodedId_gt?: Maybe<String>;
+  encodedId_gte?: Maybe<String>;
+  encodedId_contains?: Maybe<String>;
+  encodedId_not_contains?: Maybe<String>;
+  encodedId_starts_with?: Maybe<String>;
+  encodedId_not_starts_with?: Maybe<String>;
+  encodedId_ends_with?: Maybe<String>;
+  encodedId_not_ends_with?: Maybe<String>;
+  displayName?: Maybe<String>;
+  displayName_not?: Maybe<String>;
+  displayName_in?: Maybe<String[] | String>;
+  displayName_not_in?: Maybe<String[] | String>;
+  displayName_lt?: Maybe<String>;
+  displayName_lte?: Maybe<String>;
+  displayName_gt?: Maybe<String>;
+  displayName_gte?: Maybe<String>;
+  displayName_contains?: Maybe<String>;
+  displayName_not_contains?: Maybe<String>;
+  displayName_starts_with?: Maybe<String>;
+  displayName_not_starts_with?: Maybe<String>;
+  displayName_ends_with?: Maybe<String>;
+  displayName_not_ends_with?: Maybe<String>;
+  AND?: Maybe<InteractionWhereInput[] | InteractionWhereInput>;
+  OR?: Maybe<InteractionWhereInput[] | InteractionWhereInput>;
+  NOT?: Maybe<InteractionWhereInput[] | InteractionWhereInput>;
+}
+
+export interface InteractionTypeWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  tags_every?: Maybe<TagWhereInput>;
+  tags_some?: Maybe<TagWhereInput>;
+  tags_none?: Maybe<TagWhereInput>;
+  encodedId?: Maybe<String>;
+  encodedId_not?: Maybe<String>;
+  encodedId_in?: Maybe<String[] | String>;
+  encodedId_not_in?: Maybe<String[] | String>;
+  encodedId_lt?: Maybe<String>;
+  encodedId_lte?: Maybe<String>;
+  encodedId_gt?: Maybe<String>;
+  encodedId_gte?: Maybe<String>;
+  encodedId_contains?: Maybe<String>;
+  encodedId_not_contains?: Maybe<String>;
+  encodedId_starts_with?: Maybe<String>;
+  encodedId_not_starts_with?: Maybe<String>;
+  encodedId_ends_with?: Maybe<String>;
+  encodedId_not_ends_with?: Maybe<String>;
+  displayName?: Maybe<String>;
+  displayName_not?: Maybe<String>;
+  displayName_in?: Maybe<String[] | String>;
+  displayName_not_in?: Maybe<String[] | String>;
+  displayName_lt?: Maybe<String>;
+  displayName_lte?: Maybe<String>;
+  displayName_gt?: Maybe<String>;
+  displayName_gte?: Maybe<String>;
+  displayName_contains?: Maybe<String>;
+  displayName_not_contains?: Maybe<String>;
+  displayName_starts_with?: Maybe<String>;
+  displayName_not_starts_with?: Maybe<String>;
+  displayName_ends_with?: Maybe<String>;
+  displayName_not_ends_with?: Maybe<String>;
+  AND?: Maybe<InteractionTypeWhereInput[] | InteractionTypeWhereInput>;
+  OR?: Maybe<InteractionTypeWhereInput[] | InteractionTypeWhereInput>;
+  NOT?: Maybe<InteractionTypeWhereInput[] | InteractionTypeWhereInput>;
+}
+
+export interface PublicEntityWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  tags_every?: Maybe<TagWhereInput>;
+  tags_some?: Maybe<TagWhereInput>;
+  tags_none?: Maybe<TagWhereInput>;
+  entityType?: Maybe<PublicEntityTypeWhereInput>;
+  remote?: Maybe<RemoteWhereInput>;
+  encodedId?: Maybe<String>;
+  encodedId_not?: Maybe<String>;
+  encodedId_in?: Maybe<String[] | String>;
+  encodedId_not_in?: Maybe<String[] | String>;
+  encodedId_lt?: Maybe<String>;
+  encodedId_lte?: Maybe<String>;
+  encodedId_gt?: Maybe<String>;
+  encodedId_gte?: Maybe<String>;
+  encodedId_contains?: Maybe<String>;
+  encodedId_not_contains?: Maybe<String>;
+  encodedId_starts_with?: Maybe<String>;
+  encodedId_not_starts_with?: Maybe<String>;
+  encodedId_ends_with?: Maybe<String>;
+  encodedId_not_ends_with?: Maybe<String>;
+  displayName?: Maybe<String>;
+  displayName_not?: Maybe<String>;
+  displayName_in?: Maybe<String[] | String>;
+  displayName_not_in?: Maybe<String[] | String>;
+  displayName_lt?: Maybe<String>;
+  displayName_lte?: Maybe<String>;
+  displayName_gt?: Maybe<String>;
+  displayName_gte?: Maybe<String>;
+  displayName_contains?: Maybe<String>;
+  displayName_not_contains?: Maybe<String>;
+  displayName_starts_with?: Maybe<String>;
+  displayName_not_starts_with?: Maybe<String>;
+  displayName_ends_with?: Maybe<String>;
+  displayName_not_ends_with?: Maybe<String>;
+  AND?: Maybe<PublicEntityWhereInput[] | PublicEntityWhereInput>;
+  OR?: Maybe<PublicEntityWhereInput[] | PublicEntityWhereInput>;
+  NOT?: Maybe<PublicEntityWhereInput[] | PublicEntityWhereInput>;
+}
+
+export interface PublicEntityTypeWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  tags_every?: Maybe<TagWhereInput>;
+  tags_some?: Maybe<TagWhereInput>;
+  tags_none?: Maybe<TagWhereInput>;
+  encodedId?: Maybe<String>;
+  encodedId_not?: Maybe<String>;
+  encodedId_in?: Maybe<String[] | String>;
+  encodedId_not_in?: Maybe<String[] | String>;
+  encodedId_lt?: Maybe<String>;
+  encodedId_lte?: Maybe<String>;
+  encodedId_gt?: Maybe<String>;
+  encodedId_gte?: Maybe<String>;
+  encodedId_contains?: Maybe<String>;
+  encodedId_not_contains?: Maybe<String>;
+  encodedId_starts_with?: Maybe<String>;
+  encodedId_not_starts_with?: Maybe<String>;
+  encodedId_ends_with?: Maybe<String>;
+  encodedId_not_ends_with?: Maybe<String>;
+  displayName?: Maybe<String>;
+  displayName_not?: Maybe<String>;
+  displayName_in?: Maybe<String[] | String>;
+  displayName_not_in?: Maybe<String[] | String>;
+  displayName_lt?: Maybe<String>;
+  displayName_lte?: Maybe<String>;
+  displayName_gt?: Maybe<String>;
+  displayName_gte?: Maybe<String>;
+  displayName_contains?: Maybe<String>;
+  displayName_not_contains?: Maybe<String>;
+  displayName_starts_with?: Maybe<String>;
+  displayName_not_starts_with?: Maybe<String>;
+  displayName_ends_with?: Maybe<String>;
+  displayName_not_ends_with?: Maybe<String>;
+  AND?: Maybe<PublicEntityTypeWhereInput[] | PublicEntityTypeWhereInput>;
+  OR?: Maybe<PublicEntityTypeWhereInput[] | PublicEntityTypeWhereInput>;
+  NOT?: Maybe<PublicEntityTypeWhereInput[] | PublicEntityTypeWhereInput>;
+}
+
+export interface MediaWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  tags_every?: Maybe<TagWhereInput>;
+  tags_some?: Maybe<TagWhereInput>;
+  tags_none?: Maybe<TagWhereInput>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
+  descriptionSmall?: Maybe<String>;
+  descriptionSmall_not?: Maybe<String>;
+  descriptionSmall_in?: Maybe<String[] | String>;
+  descriptionSmall_not_in?: Maybe<String[] | String>;
+  descriptionSmall_lt?: Maybe<String>;
+  descriptionSmall_lte?: Maybe<String>;
+  descriptionSmall_gt?: Maybe<String>;
+  descriptionSmall_gte?: Maybe<String>;
+  descriptionSmall_contains?: Maybe<String>;
+  descriptionSmall_not_contains?: Maybe<String>;
+  descriptionSmall_starts_with?: Maybe<String>;
+  descriptionSmall_not_starts_with?: Maybe<String>;
+  descriptionSmall_ends_with?: Maybe<String>;
+  descriptionSmall_not_ends_with?: Maybe<String>;
+  remote?: Maybe<RemoteWhereInput>;
+  encodedId?: Maybe<String>;
+  encodedId_not?: Maybe<String>;
+  encodedId_in?: Maybe<String[] | String>;
+  encodedId_not_in?: Maybe<String[] | String>;
+  encodedId_lt?: Maybe<String>;
+  encodedId_lte?: Maybe<String>;
+  encodedId_gt?: Maybe<String>;
+  encodedId_gte?: Maybe<String>;
+  encodedId_contains?: Maybe<String>;
+  encodedId_not_contains?: Maybe<String>;
+  encodedId_starts_with?: Maybe<String>;
+  encodedId_not_starts_with?: Maybe<String>;
+  encodedId_ends_with?: Maybe<String>;
+  encodedId_not_ends_with?: Maybe<String>;
+  displayName?: Maybe<String>;
+  displayName_not?: Maybe<String>;
+  displayName_in?: Maybe<String[] | String>;
+  displayName_not_in?: Maybe<String[] | String>;
+  displayName_lt?: Maybe<String>;
+  displayName_lte?: Maybe<String>;
+  displayName_gt?: Maybe<String>;
+  displayName_gte?: Maybe<String>;
+  displayName_contains?: Maybe<String>;
+  displayName_not_contains?: Maybe<String>;
+  displayName_starts_with?: Maybe<String>;
+  displayName_not_starts_with?: Maybe<String>;
+  displayName_ends_with?: Maybe<String>;
+  displayName_not_ends_with?: Maybe<String>;
+  AND?: Maybe<MediaWhereInput[] | MediaWhereInput>;
+  OR?: Maybe<MediaWhereInput[] | MediaWhereInput>;
+  NOT?: Maybe<MediaWhereInput[] | MediaWhereInput>;
+}
+
+export interface InfoWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  tags_every?: Maybe<TagWhereInput>;
+  tags_some?: Maybe<TagWhereInput>;
+  tags_none?: Maybe<TagWhereInput>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
+  descriptionSmall?: Maybe<String>;
+  descriptionSmall_not?: Maybe<String>;
+  descriptionSmall_in?: Maybe<String[] | String>;
+  descriptionSmall_not_in?: Maybe<String[] | String>;
+  descriptionSmall_lt?: Maybe<String>;
+  descriptionSmall_lte?: Maybe<String>;
+  descriptionSmall_gt?: Maybe<String>;
+  descriptionSmall_gte?: Maybe<String>;
+  descriptionSmall_contains?: Maybe<String>;
+  descriptionSmall_not_contains?: Maybe<String>;
+  descriptionSmall_starts_with?: Maybe<String>;
+  descriptionSmall_not_starts_with?: Maybe<String>;
+  descriptionSmall_ends_with?: Maybe<String>;
+  descriptionSmall_not_ends_with?: Maybe<String>;
+  remotePrimary?: Maybe<RemoteWhereInput>;
+  remotes_every?: Maybe<RemoteWhereInput>;
+  remotes_some?: Maybe<RemoteWhereInput>;
+  remotes_none?: Maybe<RemoteWhereInput>;
+  infoType?: Maybe<InfoTypeWhereInput>;
+  resources_every?: Maybe<ResourceWhereInput>;
+  resources_some?: Maybe<ResourceWhereInput>;
+  resources_none?: Maybe<ResourceWhereInput>;
+  intercations_every?: Maybe<InteractionWhereInput>;
+  intercations_some?: Maybe<InteractionWhereInput>;
+  intercations_none?: Maybe<InteractionWhereInput>;
+  resourcePrimary?: Maybe<ResourceWhereInput>;
+  encodedId?: Maybe<String>;
+  encodedId_not?: Maybe<String>;
+  encodedId_in?: Maybe<String[] | String>;
+  encodedId_not_in?: Maybe<String[] | String>;
+  encodedId_lt?: Maybe<String>;
+  encodedId_lte?: Maybe<String>;
+  encodedId_gt?: Maybe<String>;
+  encodedId_gte?: Maybe<String>;
+  encodedId_contains?: Maybe<String>;
+  encodedId_not_contains?: Maybe<String>;
+  encodedId_starts_with?: Maybe<String>;
+  encodedId_not_starts_with?: Maybe<String>;
+  encodedId_ends_with?: Maybe<String>;
+  encodedId_not_ends_with?: Maybe<String>;
+  displayName?: Maybe<String>;
+  displayName_not?: Maybe<String>;
+  displayName_in?: Maybe<String[] | String>;
+  displayName_not_in?: Maybe<String[] | String>;
+  displayName_lt?: Maybe<String>;
+  displayName_lte?: Maybe<String>;
+  displayName_gt?: Maybe<String>;
+  displayName_gte?: Maybe<String>;
+  displayName_contains?: Maybe<String>;
+  displayName_not_contains?: Maybe<String>;
+  displayName_starts_with?: Maybe<String>;
+  displayName_not_starts_with?: Maybe<String>;
+  displayName_ends_with?: Maybe<String>;
+  displayName_not_ends_with?: Maybe<String>;
+  AND?: Maybe<InfoWhereInput[] | InfoWhereInput>;
+  OR?: Maybe<InfoWhereInput[] | InfoWhereInput>;
+  NOT?: Maybe<InfoWhereInput[] | InfoWhereInput>;
+}
+
+export interface InfoTypeWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  tags_every?: Maybe<TagWhereInput>;
+  tags_some?: Maybe<TagWhereInput>;
+  tags_none?: Maybe<TagWhereInput>;
+  AND?: Maybe<InfoTypeWhereInput[] | InfoTypeWhereInput>;
+  OR?: Maybe<InfoTypeWhereInput[] | InfoTypeWhereInput>;
+  NOT?: Maybe<InfoTypeWhereInput[] | InfoTypeWhereInput>;
+}
+
+export type InfoTypeWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  name?: Maybe<String>;
+}>;
+
+export type InitiativeWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  displayName?: Maybe<String>;
+}>;
+
+export interface InitiativeWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  tags_every?: Maybe<TagWhereInput>;
+  tags_some?: Maybe<TagWhereInput>;
+  tags_none?: Maybe<TagWhereInput>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  infoPrimary?: Maybe<InfoWhereInput>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
+  descriptionSmall?: Maybe<String>;
+  descriptionSmall_not?: Maybe<String>;
+  descriptionSmall_in?: Maybe<String[] | String>;
+  descriptionSmall_not_in?: Maybe<String[] | String>;
+  descriptionSmall_lt?: Maybe<String>;
+  descriptionSmall_lte?: Maybe<String>;
+  descriptionSmall_gt?: Maybe<String>;
+  descriptionSmall_gte?: Maybe<String>;
+  descriptionSmall_contains?: Maybe<String>;
+  descriptionSmall_not_contains?: Maybe<String>;
+  descriptionSmall_starts_with?: Maybe<String>;
+  descriptionSmall_not_starts_with?: Maybe<String>;
+  descriptionSmall_ends_with?: Maybe<String>;
+  descriptionSmall_not_ends_with?: Maybe<String>;
+  media_every?: Maybe<MediaWhereInput>;
+  media_some?: Maybe<MediaWhereInput>;
+  media_none?: Maybe<MediaWhereInput>;
+  mediaPrimary?: Maybe<MediaWhereInput>;
+  resources_every?: Maybe<ResourceWhereInput>;
+  resources_some?: Maybe<ResourceWhereInput>;
+  resources_none?: Maybe<ResourceWhereInput>;
+  childInitiatives_every?: Maybe<InitiativeWhereInput>;
+  childInitiatives_some?: Maybe<InitiativeWhereInput>;
+  childInitiatives_none?: Maybe<InitiativeWhereInput>;
+  encodedId?: Maybe<String>;
+  encodedId_not?: Maybe<String>;
+  encodedId_in?: Maybe<String[] | String>;
+  encodedId_not_in?: Maybe<String[] | String>;
+  encodedId_lt?: Maybe<String>;
+  encodedId_lte?: Maybe<String>;
+  encodedId_gt?: Maybe<String>;
+  encodedId_gte?: Maybe<String>;
+  encodedId_contains?: Maybe<String>;
+  encodedId_not_contains?: Maybe<String>;
+  encodedId_starts_with?: Maybe<String>;
+  encodedId_not_starts_with?: Maybe<String>;
+  encodedId_ends_with?: Maybe<String>;
+  encodedId_not_ends_with?: Maybe<String>;
+  displayName?: Maybe<String>;
+  displayName_not?: Maybe<String>;
+  displayName_in?: Maybe<String[] | String>;
+  displayName_not_in?: Maybe<String[] | String>;
+  displayName_lt?: Maybe<String>;
+  displayName_lte?: Maybe<String>;
+  displayName_gt?: Maybe<String>;
+  displayName_gte?: Maybe<String>;
+  displayName_contains?: Maybe<String>;
+  displayName_not_contains?: Maybe<String>;
+  displayName_starts_with?: Maybe<String>;
+  displayName_not_starts_with?: Maybe<String>;
+  displayName_ends_with?: Maybe<String>;
+  displayName_not_ends_with?: Maybe<String>;
+  AND?: Maybe<InitiativeWhereInput[] | InitiativeWhereInput>;
+  OR?: Maybe<InitiativeWhereInput[] | InitiativeWhereInput>;
+  NOT?: Maybe<InitiativeWhereInput[] | InitiativeWhereInput>;
+}
+
+export type InteractionWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  displayName?: Maybe<String>;
+}>;
+
+export type InteractionTypeWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  displayName?: Maybe<String>;
+}>;
+
+export type MediaWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  displayName?: Maybe<String>;
+}>;
+
+export type OwnUserWhereUniqueInput = AtLeastOne<{
+  id: Maybe<UUID>;
+}>;
+
+export type PublicEntityWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  displayName?: Maybe<String>;
+}>;
+
+export type PublicEntityTypeWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  displayName?: Maybe<String>;
+}>;
+
+export type RemoteWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  displayName?: Maybe<String>;
+}>;
+
+export type ResourceWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  displayName?: Maybe<String>;
+}>;
+
+export type TagWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: Maybe<UUID>;
+  displayName?: Maybe<String>;
+}>;
+
+export type UserActionInstanceWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export type UserRoleWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface ActionScopeCreateInput {
+  id?: Maybe<ID_Input>;
+  tags?: Maybe<TagCreateManyInput>;
+  name: String;
+  encodedId: String;
+}
+
+export interface TagCreateManyInput {
+  create?: Maybe<TagCreateInput[] | TagCreateInput>;
+  connect?: Maybe<TagWhereUniqueInput[] | TagWhereUniqueInput>;
+}
+
+export interface TagCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  encodedId: String;
+}
+
+export interface ActionScopeUpdateInput {
+  tags?: Maybe<TagUpdateManyInput>;
+  name?: Maybe<String>;
+  encodedId?: Maybe<String>;
+}
+
+export interface TagUpdateManyInput {
+  create?: Maybe<TagCreateInput[] | TagCreateInput>;
+  update?: Maybe<
+    TagUpdateWithWhereUniqueNestedInput[] | TagUpdateWithWhereUniqueNestedInput
   >;
-  OR?: Maybe<
-    GuestActionInstanceScalarWhereInput[] | GuestActionInstanceScalarWhereInput
+  upsert?: Maybe<
+    TagUpsertWithWhereUniqueNestedInput[] | TagUpsertWithWhereUniqueNestedInput
   >;
-  NOT?: Maybe<
-    GuestActionInstanceScalarWhereInput[] | GuestActionInstanceScalarWhereInput
+  delete?: Maybe<TagWhereUniqueInput[] | TagWhereUniqueInput>;
+  connect?: Maybe<TagWhereUniqueInput[] | TagWhereUniqueInput>;
+  set?: Maybe<TagWhereUniqueInput[] | TagWhereUniqueInput>;
+  disconnect?: Maybe<TagWhereUniqueInput[] | TagWhereUniqueInput>;
+  deleteMany?: Maybe<TagScalarWhereInput[] | TagScalarWhereInput>;
+  updateMany?: Maybe<
+    TagUpdateManyWithWhereNestedInput[] | TagUpdateManyWithWhereNestedInput
   >;
 }
 
-export interface GuestActionInstanceUpdateManyWithWhereNestedInput {
-  where: GuestActionInstanceScalarWhereInput;
-  data: GuestActionInstanceUpdateManyDataInput;
+export interface TagUpdateWithWhereUniqueNestedInput {
+  where: TagWhereUniqueInput;
+  data: TagUpdateDataInput;
 }
 
-export interface GuestActionInstanceUpdateManyDataInput {
-  firstName?: Maybe<String>;
+export interface TagUpdateDataInput {
+  name?: Maybe<String>;
+  encodedId?: Maybe<String>;
+}
+
+export interface TagUpsertWithWhereUniqueNestedInput {
+  where: TagWhereUniqueInput;
+  update: TagUpdateDataInput;
+  create: TagCreateInput;
+}
+
+export interface TagScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  encodedId?: Maybe<String>;
+  encodedId_not?: Maybe<String>;
+  encodedId_in?: Maybe<String[] | String>;
+  encodedId_not_in?: Maybe<String[] | String>;
+  encodedId_lt?: Maybe<String>;
+  encodedId_lte?: Maybe<String>;
+  encodedId_gt?: Maybe<String>;
+  encodedId_gte?: Maybe<String>;
+  encodedId_contains?: Maybe<String>;
+  encodedId_not_contains?: Maybe<String>;
+  encodedId_starts_with?: Maybe<String>;
+  encodedId_not_starts_with?: Maybe<String>;
+  encodedId_ends_with?: Maybe<String>;
+  encodedId_not_ends_with?: Maybe<String>;
+  AND?: Maybe<TagScalarWhereInput[] | TagScalarWhereInput>;
+  OR?: Maybe<TagScalarWhereInput[] | TagScalarWhereInput>;
+  NOT?: Maybe<TagScalarWhereInput[] | TagScalarWhereInput>;
+}
+
+export interface TagUpdateManyWithWhereNestedInput {
+  where: TagScalarWhereInput;
+  data: TagUpdateManyDataInput;
+}
+
+export interface TagUpdateManyDataInput {
+  name?: Maybe<String>;
+  encodedId?: Maybe<String>;
+}
+
+export interface ActionScopeUpdateManyMutationInput {
+  name?: Maybe<String>;
+  encodedId?: Maybe<String>;
+}
+
+export interface AuthProviderCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  tags?: Maybe<TagCreateManyInput>;
+  encodedId: String;
+}
+
+export interface AuthProviderUpdateInput {
+  name?: Maybe<String>;
+  tags?: Maybe<TagUpdateManyInput>;
+  encodedId?: Maybe<String>;
+}
+
+export interface AuthProviderUpdateManyMutationInput {
+  name?: Maybe<String>;
+  encodedId?: Maybe<String>;
+}
+
+export interface AuthProviderUserCreateInput {
+  id?: Maybe<UUID>;
+  authProvider: AuthProviderCreateOneInput;
+  authToken: String;
+  refreshToken?: Maybe<String>;
+  expiryTime?: Maybe<DateTimeInput>;
+  username?: Maybe<String>;
+  firstName: String;
   middleName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  phone?: Maybe<String>;
+  lastName: String;
   email?: Maybe<String>;
+  phone?: Maybe<String>;
   address?: Maybe<String>;
+  coordinates?: Maybe<String>;
+  pic?: Maybe<String>;
+  otherDetails?: Maybe<String>;
+  user: UserCreateOneWithoutAuthProvidersInput;
+  tags?: Maybe<TagCreateManyInput>;
 }
 
-export interface UserActionInstanceUpdateManyWithoutActionScopeInput {
+export interface AuthProviderCreateOneInput {
+  create?: Maybe<AuthProviderCreateInput>;
+  connect?: Maybe<AuthProviderWhereUniqueInput>;
+}
+
+export interface UserCreateOneWithoutAuthProvidersInput {
+  create?: Maybe<UserCreateWithoutAuthProvidersInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserCreateWithoutAuthProvidersInput {
+  id?: Maybe<UUID>;
+  isOwnUser: Boolean;
+  ownUser?: Maybe<OwnUserCreateOneWithoutUserInput>;
+  primaryAuthProvider?: Maybe<AuthProviderUserCreateOneInput>;
+  roles?: Maybe<UserRoleCreateManyInput>;
+  optionalScopes?: Maybe<ActionScopeCreateManyInput>;
+  tags?: Maybe<TagCreateManyInput>;
+  actionsHistory?: Maybe<UserActionInstanceCreateManyWithoutUserInput>;
+  isDeleted: Boolean;
+  encodedId: String;
+  displayName: String;
+}
+
+export interface OwnUserCreateOneWithoutUserInput {
+  create?: Maybe<OwnUserCreateWithoutUserInput>;
+  connect?: Maybe<OwnUserWhereUniqueInput>;
+}
+
+export interface OwnUserCreateWithoutUserInput {
+  id?: Maybe<UUID>;
+  username: String;
+  password: String;
+  firstName: String;
+  middleName?: Maybe<String>;
+  lastName: String;
+  email: String;
+  phone?: Maybe<String>;
+  address?: Maybe<String>;
+  coordinates?: Maybe<String>;
+  pic?: Maybe<String>;
+  otherDetails?: Maybe<String>;
+  tags?: Maybe<TagCreateManyInput>;
+}
+
+export interface AuthProviderUserCreateOneInput {
+  create?: Maybe<AuthProviderUserCreateInput>;
+  connect?: Maybe<AuthProviderUserWhereUniqueInput>;
+}
+
+export interface UserRoleCreateManyInput {
+  create?: Maybe<UserRoleCreateInput[] | UserRoleCreateInput>;
+  connect?: Maybe<UserRoleWhereUniqueInput[] | UserRoleWhereUniqueInput>;
+}
+
+export interface UserRoleCreateInput {
+  id?: Maybe<ID_Input>;
+  tags?: Maybe<TagCreateManyInput>;
+  name: String;
+  actionScopes?: Maybe<ActionScopeCreateManyInput>;
+}
+
+export interface ActionScopeCreateManyInput {
+  create?: Maybe<ActionScopeCreateInput[] | ActionScopeCreateInput>;
+  connect?: Maybe<ActionScopeWhereUniqueInput[] | ActionScopeWhereUniqueInput>;
+}
+
+export interface UserActionInstanceCreateManyWithoutUserInput {
   create?: Maybe<
-    | UserActionInstanceCreateWithoutActionScopeInput[]
-    | UserActionInstanceCreateWithoutActionScopeInput
-  >;
-  delete?: Maybe<
-    UserActionInstanceWhereUniqueInput[] | UserActionInstanceWhereUniqueInput
+    | UserActionInstanceCreateWithoutUserInput[]
+    | UserActionInstanceCreateWithoutUserInput
   >;
   connect?: Maybe<
     UserActionInstanceWhereUniqueInput[] | UserActionInstanceWhereUniqueInput
   >;
-  set?: Maybe<
-    UserActionInstanceWhereUniqueInput[] | UserActionInstanceWhereUniqueInput
-  >;
-  disconnect?: Maybe<
-    UserActionInstanceWhereUniqueInput[] | UserActionInstanceWhereUniqueInput
-  >;
-  update?: Maybe<
-    | UserActionInstanceUpdateWithWhereUniqueWithoutActionScopeInput[]
-    | UserActionInstanceUpdateWithWhereUniqueWithoutActionScopeInput
-  >;
-  upsert?: Maybe<
-    | UserActionInstanceUpsertWithWhereUniqueWithoutActionScopeInput[]
-    | UserActionInstanceUpsertWithWhereUniqueWithoutActionScopeInput
-  >;
-  deleteMany?: Maybe<
-    UserActionInstanceScalarWhereInput[] | UserActionInstanceScalarWhereInput
-  >;
 }
 
-export interface UserActionInstanceUpdateWithWhereUniqueWithoutActionScopeInput {
-  where: UserActionInstanceWhereUniqueInput;
-  data: UserActionInstanceUpdateWithoutActionScopeDataInput;
+export interface UserActionInstanceCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
+  tags?: Maybe<TagCreateManyInput>;
+  actionScope: ActionScopeCreateOneInput;
 }
 
-export interface UserActionInstanceUpdateWithoutActionScopeDataInput {
+export interface ActionScopeCreateOneInput {
+  create?: Maybe<ActionScopeCreateInput>;
+  connect?: Maybe<ActionScopeWhereUniqueInput>;
+}
+
+export interface AuthProviderUserUpdateInput {
+  authProvider?: Maybe<AuthProviderUpdateOneRequiredInput>;
+  authToken?: Maybe<String>;
+  refreshToken?: Maybe<String>;
+  expiryTime?: Maybe<DateTimeInput>;
+  username?: Maybe<String>;
+  firstName?: Maybe<String>;
+  middleName?: Maybe<String>;
+  lastName?: Maybe<String>;
+  email?: Maybe<String>;
+  phone?: Maybe<String>;
+  address?: Maybe<String>;
+  coordinates?: Maybe<String>;
+  pic?: Maybe<String>;
+  otherDetails?: Maybe<String>;
+  user?: Maybe<UserUpdateOneRequiredWithoutAuthProvidersInput>;
   tags?: Maybe<TagUpdateManyInput>;
-  user?: Maybe<UserUpdateOneRequiredWithoutActionsHistoryInput>;
 }
 
-export interface UserUpdateOneRequiredWithoutActionsHistoryInput {
-  create?: Maybe<UserCreateWithoutActionsHistoryInput>;
-  update?: Maybe<UserUpdateWithoutActionsHistoryDataInput>;
-  upsert?: Maybe<UserUpsertWithoutActionsHistoryInput>;
+export interface AuthProviderUpdateOneRequiredInput {
+  create?: Maybe<AuthProviderCreateInput>;
+  update?: Maybe<AuthProviderUpdateDataInput>;
+  upsert?: Maybe<AuthProviderUpsertNestedInput>;
+  connect?: Maybe<AuthProviderWhereUniqueInput>;
+}
+
+export interface AuthProviderUpdateDataInput {
+  name?: Maybe<String>;
+  tags?: Maybe<TagUpdateManyInput>;
+  encodedId?: Maybe<String>;
+}
+
+export interface AuthProviderUpsertNestedInput {
+  update: AuthProviderUpdateDataInput;
+  create: AuthProviderCreateInput;
+}
+
+export interface UserUpdateOneRequiredWithoutAuthProvidersInput {
+  create?: Maybe<UserCreateWithoutAuthProvidersInput>;
+  update?: Maybe<UserUpdateWithoutAuthProvidersDataInput>;
+  upsert?: Maybe<UserUpsertWithoutAuthProvidersInput>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface UserUpdateWithoutActionsHistoryDataInput {
+export interface UserUpdateWithoutAuthProvidersDataInput {
   isOwnUser?: Maybe<Boolean>;
   ownUser?: Maybe<OwnUserUpdateOneWithoutUserInput>;
   primaryAuthProvider?: Maybe<AuthProviderUserUpdateOneInput>;
-  authProviders?: Maybe<AuthProviderUserUpdateManyWithoutUserInput>;
   roles?: Maybe<UserRoleUpdateManyInput>;
   optionalScopes?: Maybe<ActionScopeUpdateManyInput>;
   tags?: Maybe<TagUpdateManyInput>;
+  actionsHistory?: Maybe<UserActionInstanceUpdateManyWithoutUserInput>;
   isDeleted?: Maybe<Boolean>;
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
 }
 
 export interface OwnUserUpdateOneWithoutUserInput {
@@ -3231,39 +3339,9 @@ export interface AuthProviderUserUpdateDataInput {
   tags?: Maybe<TagUpdateManyInput>;
 }
 
-export interface AuthProviderUpdateOneRequiredInput {
-  create?: Maybe<AuthProviderCreateInput>;
-  update?: Maybe<AuthProviderUpdateDataInput>;
-  upsert?: Maybe<AuthProviderUpsertNestedInput>;
-  connect?: Maybe<AuthProviderWhereUniqueInput>;
-}
-
-export interface AuthProviderUpdateDataInput {
-  name?: Maybe<String>;
-  tags?: Maybe<TagUpdateManyInput>;
-}
-
-export interface AuthProviderUpsertNestedInput {
-  update: AuthProviderUpdateDataInput;
-  create: AuthProviderCreateInput;
-}
-
-export interface UserUpdateOneRequiredWithoutAuthProvidersInput {
-  create?: Maybe<UserCreateWithoutAuthProvidersInput>;
-  update?: Maybe<UserUpdateWithoutAuthProvidersDataInput>;
-  upsert?: Maybe<UserUpsertWithoutAuthProvidersInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserUpdateWithoutAuthProvidersDataInput {
-  isOwnUser?: Maybe<Boolean>;
-  ownUser?: Maybe<OwnUserUpdateOneWithoutUserInput>;
-  primaryAuthProvider?: Maybe<AuthProviderUserUpdateOneInput>;
-  roles?: Maybe<UserRoleUpdateManyInput>;
-  optionalScopes?: Maybe<ActionScopeUpdateManyInput>;
-  tags?: Maybe<TagUpdateManyInput>;
-  actionsHistory?: Maybe<UserActionInstanceUpdateManyWithoutUserInput>;
-  isDeleted?: Maybe<Boolean>;
+export interface AuthProviderUserUpsertNestedInput {
+  update: AuthProviderUserUpdateDataInput;
+  create: AuthProviderUserCreateInput;
 }
 
 export interface UserRoleUpdateManyInput {
@@ -3331,8 +3409,7 @@ export interface ActionScopeUpdateWithWhereUniqueNestedInput {
 export interface ActionScopeUpdateDataInput {
   tags?: Maybe<TagUpdateManyInput>;
   name?: Maybe<String>;
-  guestActions?: Maybe<GuestActionInstanceUpdateManyWithoutActionInput>;
-  userActions?: Maybe<UserActionInstanceUpdateManyWithoutActionScopeInput>;
+  encodedId?: Maybe<String>;
 }
 
 export interface ActionScopeUpsertWithWhereUniqueNestedInput {
@@ -3378,6 +3455,20 @@ export interface ActionScopeScalarWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
+  encodedId?: Maybe<String>;
+  encodedId_not?: Maybe<String>;
+  encodedId_in?: Maybe<String[] | String>;
+  encodedId_not_in?: Maybe<String[] | String>;
+  encodedId_lt?: Maybe<String>;
+  encodedId_lte?: Maybe<String>;
+  encodedId_gt?: Maybe<String>;
+  encodedId_gte?: Maybe<String>;
+  encodedId_contains?: Maybe<String>;
+  encodedId_not_contains?: Maybe<String>;
+  encodedId_starts_with?: Maybe<String>;
+  encodedId_not_starts_with?: Maybe<String>;
+  encodedId_ends_with?: Maybe<String>;
+  encodedId_not_ends_with?: Maybe<String>;
   AND?: Maybe<ActionScopeScalarWhereInput[] | ActionScopeScalarWhereInput>;
   OR?: Maybe<ActionScopeScalarWhereInput[] | ActionScopeScalarWhereInput>;
   NOT?: Maybe<ActionScopeScalarWhereInput[] | ActionScopeScalarWhereInput>;
@@ -3390,6 +3481,7 @@ export interface ActionScopeUpdateManyWithWhereNestedInput {
 
 export interface ActionScopeUpdateManyDataInput {
   name?: Maybe<String>;
+  encodedId?: Maybe<String>;
 }
 
 export interface UserRoleUpsertWithWhereUniqueNestedInput {
@@ -3494,25 +3586,19 @@ export interface UserActionInstanceUpdateWithWhereUniqueWithoutUserInput {
 
 export interface UserActionInstanceUpdateWithoutUserDataInput {
   tags?: Maybe<TagUpdateManyInput>;
-  actionScope?: Maybe<ActionScopeUpdateOneRequiredWithoutUserActionsInput>;
+  actionScope?: Maybe<ActionScopeUpdateOneRequiredInput>;
 }
 
-export interface ActionScopeUpdateOneRequiredWithoutUserActionsInput {
-  create?: Maybe<ActionScopeCreateWithoutUserActionsInput>;
-  update?: Maybe<ActionScopeUpdateWithoutUserActionsDataInput>;
-  upsert?: Maybe<ActionScopeUpsertWithoutUserActionsInput>;
+export interface ActionScopeUpdateOneRequiredInput {
+  create?: Maybe<ActionScopeCreateInput>;
+  update?: Maybe<ActionScopeUpdateDataInput>;
+  upsert?: Maybe<ActionScopeUpsertNestedInput>;
   connect?: Maybe<ActionScopeWhereUniqueInput>;
 }
 
-export interface ActionScopeUpdateWithoutUserActionsDataInput {
-  tags?: Maybe<TagUpdateManyInput>;
-  name?: Maybe<String>;
-  guestActions?: Maybe<GuestActionInstanceUpdateManyWithoutActionInput>;
-}
-
-export interface ActionScopeUpsertWithoutUserActionsInput {
-  update: ActionScopeUpdateWithoutUserActionsDataInput;
-  create: ActionScopeCreateWithoutUserActionsInput;
+export interface ActionScopeUpsertNestedInput {
+  update: ActionScopeUpdateDataInput;
+  create: ActionScopeCreateInput;
 }
 
 export interface UserActionInstanceUpsertWithWhereUniqueWithoutUserInput {
@@ -3560,9 +3646,561 @@ export interface UserUpsertWithoutAuthProvidersInput {
   create: UserCreateWithoutAuthProvidersInput;
 }
 
-export interface AuthProviderUserUpsertNestedInput {
-  update: AuthProviderUserUpdateDataInput;
-  create: AuthProviderUserCreateInput;
+export interface AuthProviderUserUpdateManyMutationInput {
+  authToken?: Maybe<String>;
+  refreshToken?: Maybe<String>;
+  expiryTime?: Maybe<DateTimeInput>;
+  username?: Maybe<String>;
+  firstName?: Maybe<String>;
+  middleName?: Maybe<String>;
+  lastName?: Maybe<String>;
+  email?: Maybe<String>;
+  phone?: Maybe<String>;
+  address?: Maybe<String>;
+  coordinates?: Maybe<String>;
+  pic?: Maybe<String>;
+  otherDetails?: Maybe<String>;
+}
+
+export interface GuestActionInstanceCreateInput {
+  id?: Maybe<UUID>;
+  firstName: String;
+  middleName?: Maybe<String>;
+  lastName: String;
+  phone: String;
+  email: String;
+  address: String;
+  action: ActionScopeCreateOneInput;
+}
+
+export interface GuestActionInstanceUpdateInput {
+  firstName?: Maybe<String>;
+  middleName?: Maybe<String>;
+  lastName?: Maybe<String>;
+  phone?: Maybe<String>;
+  email?: Maybe<String>;
+  address?: Maybe<String>;
+  action?: Maybe<ActionScopeUpdateOneRequiredInput>;
+}
+
+export interface GuestActionInstanceUpdateManyMutationInput {
+  firstName?: Maybe<String>;
+  middleName?: Maybe<String>;
+  lastName?: Maybe<String>;
+  phone?: Maybe<String>;
+  email?: Maybe<String>;
+  address?: Maybe<String>;
+}
+
+export interface InfoCreateInput {
+  id?: Maybe<ID_Input>;
+  tags?: Maybe<TagCreateManyInput>;
+  title: String;
+  description: String;
+  descriptionSmall: String;
+  remotePrimary?: Maybe<RemoteCreateOneInput>;
+  remotes?: Maybe<RemoteCreateManyInput>;
+  infoType: InfoTypeCreateOneInput;
+  resources?: Maybe<ResourceCreateManyInput>;
+  intercations?: Maybe<InteractionCreateManyInput>;
+  resourcePrimary?: Maybe<ResourceCreateOneInput>;
+  encodedId: String;
+  displayName: String;
+}
+
+export interface RemoteCreateOneInput {
+  create?: Maybe<RemoteCreateInput>;
+  connect?: Maybe<RemoteWhereUniqueInput>;
+}
+
+export interface RemoteCreateInput {
+  id?: Maybe<ID_Input>;
+  tags?: Maybe<TagCreateManyInput>;
+  name: String;
+  link?: Maybe<String>;
+  query?: Maybe<String>;
+  queryResolution?: Maybe<String>;
+  encodedId: String;
+  displayName: String;
+}
+
+export interface RemoteCreateManyInput {
+  create?: Maybe<RemoteCreateInput[] | RemoteCreateInput>;
+  connect?: Maybe<RemoteWhereUniqueInput[] | RemoteWhereUniqueInput>;
+}
+
+export interface InfoTypeCreateOneInput {
+  create?: Maybe<InfoTypeCreateInput>;
+  connect?: Maybe<InfoTypeWhereUniqueInput>;
+}
+
+export interface InfoTypeCreateInput {
+  id?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  tags?: Maybe<TagCreateManyInput>;
+}
+
+export interface ResourceCreateManyInput {
+  create?: Maybe<ResourceCreateInput[] | ResourceCreateInput>;
+  connect?: Maybe<ResourceWhereUniqueInput[] | ResourceWhereUniqueInput>;
+}
+
+export interface ResourceCreateInput {
+  id?: Maybe<ID_Input>;
+  tags?: Maybe<TagCreateManyInput>;
+  interaction?: Maybe<InteractionCreateOneInput>;
+  media?: Maybe<MediaCreateOneInput>;
+  remote?: Maybe<RemoteCreateOneInput>;
+  link?: Maybe<String>;
+  encodedId: String;
+  displayName: String;
+}
+
+export interface InteractionCreateOneInput {
+  create?: Maybe<InteractionCreateInput>;
+  connect?: Maybe<InteractionWhereUniqueInput>;
+}
+
+export interface InteractionCreateInput {
+  id?: Maybe<ID_Input>;
+  tags?: Maybe<TagCreateManyInput>;
+  interactionType: InteractionTypeCreateOneInput;
+  remote?: Maybe<RemoteCreateOneInput>;
+  publicUser?: Maybe<UserCreateOneInput>;
+  publicEntity?: Maybe<PublicEntityCreateOneInput>;
+  encodedId: String;
+  displayName: String;
+}
+
+export interface InteractionTypeCreateOneInput {
+  create?: Maybe<InteractionTypeCreateInput>;
+  connect?: Maybe<InteractionTypeWhereUniqueInput>;
+}
+
+export interface InteractionTypeCreateInput {
+  id?: Maybe<ID_Input>;
+  tags?: Maybe<TagCreateManyInput>;
+  encodedId: String;
+  displayName: String;
+}
+
+export interface UserCreateOneInput {
+  create?: Maybe<UserCreateInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserCreateInput {
+  id?: Maybe<UUID>;
+  isOwnUser: Boolean;
+  ownUser?: Maybe<OwnUserCreateOneWithoutUserInput>;
+  primaryAuthProvider?: Maybe<AuthProviderUserCreateOneInput>;
+  authProviders?: Maybe<AuthProviderUserCreateManyWithoutUserInput>;
+  roles?: Maybe<UserRoleCreateManyInput>;
+  optionalScopes?: Maybe<ActionScopeCreateManyInput>;
+  tags?: Maybe<TagCreateManyInput>;
+  actionsHistory?: Maybe<UserActionInstanceCreateManyWithoutUserInput>;
+  isDeleted: Boolean;
+  encodedId: String;
+  displayName: String;
+}
+
+export interface AuthProviderUserCreateManyWithoutUserInput {
+  create?: Maybe<
+    | AuthProviderUserCreateWithoutUserInput[]
+    | AuthProviderUserCreateWithoutUserInput
+  >;
+  connect?: Maybe<
+    AuthProviderUserWhereUniqueInput[] | AuthProviderUserWhereUniqueInput
+  >;
+}
+
+export interface AuthProviderUserCreateWithoutUserInput {
+  id?: Maybe<UUID>;
+  authProvider: AuthProviderCreateOneInput;
+  authToken: String;
+  refreshToken?: Maybe<String>;
+  expiryTime?: Maybe<DateTimeInput>;
+  username?: Maybe<String>;
+  firstName: String;
+  middleName?: Maybe<String>;
+  lastName: String;
+  email?: Maybe<String>;
+  phone?: Maybe<String>;
+  address?: Maybe<String>;
+  coordinates?: Maybe<String>;
+  pic?: Maybe<String>;
+  otherDetails?: Maybe<String>;
+  tags?: Maybe<TagCreateManyInput>;
+}
+
+export interface PublicEntityCreateOneInput {
+  create?: Maybe<PublicEntityCreateInput>;
+  connect?: Maybe<PublicEntityWhereUniqueInput>;
+}
+
+export interface PublicEntityCreateInput {
+  id?: Maybe<ID_Input>;
+  tags?: Maybe<TagCreateManyInput>;
+  entityType: PublicEntityTypeCreateOneInput;
+  remote: RemoteCreateOneInput;
+  encodedId: String;
+  displayName: String;
+}
+
+export interface PublicEntityTypeCreateOneInput {
+  create?: Maybe<PublicEntityTypeCreateInput>;
+  connect?: Maybe<PublicEntityTypeWhereUniqueInput>;
+}
+
+export interface PublicEntityTypeCreateInput {
+  id?: Maybe<ID_Input>;
+  tags?: Maybe<TagCreateManyInput>;
+  encodedId: String;
+  displayName: String;
+}
+
+export interface MediaCreateOneInput {
+  create?: Maybe<MediaCreateInput>;
+  connect?: Maybe<MediaWhereUniqueInput>;
+}
+
+export interface MediaCreateInput {
+  id?: Maybe<ID_Input>;
+  tags?: Maybe<TagCreateManyInput>;
+  title: String;
+  description: String;
+  descriptionSmall: String;
+  remote: RemoteCreateOneInput;
+  encodedId: String;
+  displayName: String;
+}
+
+export interface InteractionCreateManyInput {
+  create?: Maybe<InteractionCreateInput[] | InteractionCreateInput>;
+  connect?: Maybe<InteractionWhereUniqueInput[] | InteractionWhereUniqueInput>;
+}
+
+export interface ResourceCreateOneInput {
+  create?: Maybe<ResourceCreateInput>;
+  connect?: Maybe<ResourceWhereUniqueInput>;
+}
+
+export interface InfoUpdateInput {
+  tags?: Maybe<TagUpdateManyInput>;
+  title?: Maybe<String>;
+  description?: Maybe<String>;
+  descriptionSmall?: Maybe<String>;
+  remotePrimary?: Maybe<RemoteUpdateOneInput>;
+  remotes?: Maybe<RemoteUpdateManyInput>;
+  infoType?: Maybe<InfoTypeUpdateOneRequiredInput>;
+  resources?: Maybe<ResourceUpdateManyInput>;
+  intercations?: Maybe<InteractionUpdateManyInput>;
+  resourcePrimary?: Maybe<ResourceUpdateOneInput>;
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
+}
+
+export interface RemoteUpdateOneInput {
+  create?: Maybe<RemoteCreateInput>;
+  update?: Maybe<RemoteUpdateDataInput>;
+  upsert?: Maybe<RemoteUpsertNestedInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<RemoteWhereUniqueInput>;
+}
+
+export interface RemoteUpdateDataInput {
+  tags?: Maybe<TagUpdateManyInput>;
+  name?: Maybe<String>;
+  link?: Maybe<String>;
+  query?: Maybe<String>;
+  queryResolution?: Maybe<String>;
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
+}
+
+export interface RemoteUpsertNestedInput {
+  update: RemoteUpdateDataInput;
+  create: RemoteCreateInput;
+}
+
+export interface RemoteUpdateManyInput {
+  create?: Maybe<RemoteCreateInput[] | RemoteCreateInput>;
+  update?: Maybe<
+    | RemoteUpdateWithWhereUniqueNestedInput[]
+    | RemoteUpdateWithWhereUniqueNestedInput
+  >;
+  upsert?: Maybe<
+    | RemoteUpsertWithWhereUniqueNestedInput[]
+    | RemoteUpsertWithWhereUniqueNestedInput
+  >;
+  delete?: Maybe<RemoteWhereUniqueInput[] | RemoteWhereUniqueInput>;
+  connect?: Maybe<RemoteWhereUniqueInput[] | RemoteWhereUniqueInput>;
+  set?: Maybe<RemoteWhereUniqueInput[] | RemoteWhereUniqueInput>;
+  disconnect?: Maybe<RemoteWhereUniqueInput[] | RemoteWhereUniqueInput>;
+  deleteMany?: Maybe<RemoteScalarWhereInput[] | RemoteScalarWhereInput>;
+  updateMany?: Maybe<
+    | RemoteUpdateManyWithWhereNestedInput[]
+    | RemoteUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface RemoteUpdateWithWhereUniqueNestedInput {
+  where: RemoteWhereUniqueInput;
+  data: RemoteUpdateDataInput;
+}
+
+export interface RemoteUpsertWithWhereUniqueNestedInput {
+  where: RemoteWhereUniqueInput;
+  update: RemoteUpdateDataInput;
+  create: RemoteCreateInput;
+}
+
+export interface RemoteScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  link?: Maybe<String>;
+  link_not?: Maybe<String>;
+  link_in?: Maybe<String[] | String>;
+  link_not_in?: Maybe<String[] | String>;
+  link_lt?: Maybe<String>;
+  link_lte?: Maybe<String>;
+  link_gt?: Maybe<String>;
+  link_gte?: Maybe<String>;
+  link_contains?: Maybe<String>;
+  link_not_contains?: Maybe<String>;
+  link_starts_with?: Maybe<String>;
+  link_not_starts_with?: Maybe<String>;
+  link_ends_with?: Maybe<String>;
+  link_not_ends_with?: Maybe<String>;
+  query?: Maybe<String>;
+  query_not?: Maybe<String>;
+  query_in?: Maybe<String[] | String>;
+  query_not_in?: Maybe<String[] | String>;
+  query_lt?: Maybe<String>;
+  query_lte?: Maybe<String>;
+  query_gt?: Maybe<String>;
+  query_gte?: Maybe<String>;
+  query_contains?: Maybe<String>;
+  query_not_contains?: Maybe<String>;
+  query_starts_with?: Maybe<String>;
+  query_not_starts_with?: Maybe<String>;
+  query_ends_with?: Maybe<String>;
+  query_not_ends_with?: Maybe<String>;
+  queryResolution?: Maybe<String>;
+  queryResolution_not?: Maybe<String>;
+  queryResolution_in?: Maybe<String[] | String>;
+  queryResolution_not_in?: Maybe<String[] | String>;
+  queryResolution_lt?: Maybe<String>;
+  queryResolution_lte?: Maybe<String>;
+  queryResolution_gt?: Maybe<String>;
+  queryResolution_gte?: Maybe<String>;
+  queryResolution_contains?: Maybe<String>;
+  queryResolution_not_contains?: Maybe<String>;
+  queryResolution_starts_with?: Maybe<String>;
+  queryResolution_not_starts_with?: Maybe<String>;
+  queryResolution_ends_with?: Maybe<String>;
+  queryResolution_not_ends_with?: Maybe<String>;
+  encodedId?: Maybe<String>;
+  encodedId_not?: Maybe<String>;
+  encodedId_in?: Maybe<String[] | String>;
+  encodedId_not_in?: Maybe<String[] | String>;
+  encodedId_lt?: Maybe<String>;
+  encodedId_lte?: Maybe<String>;
+  encodedId_gt?: Maybe<String>;
+  encodedId_gte?: Maybe<String>;
+  encodedId_contains?: Maybe<String>;
+  encodedId_not_contains?: Maybe<String>;
+  encodedId_starts_with?: Maybe<String>;
+  encodedId_not_starts_with?: Maybe<String>;
+  encodedId_ends_with?: Maybe<String>;
+  encodedId_not_ends_with?: Maybe<String>;
+  displayName?: Maybe<String>;
+  displayName_not?: Maybe<String>;
+  displayName_in?: Maybe<String[] | String>;
+  displayName_not_in?: Maybe<String[] | String>;
+  displayName_lt?: Maybe<String>;
+  displayName_lte?: Maybe<String>;
+  displayName_gt?: Maybe<String>;
+  displayName_gte?: Maybe<String>;
+  displayName_contains?: Maybe<String>;
+  displayName_not_contains?: Maybe<String>;
+  displayName_starts_with?: Maybe<String>;
+  displayName_not_starts_with?: Maybe<String>;
+  displayName_ends_with?: Maybe<String>;
+  displayName_not_ends_with?: Maybe<String>;
+  AND?: Maybe<RemoteScalarWhereInput[] | RemoteScalarWhereInput>;
+  OR?: Maybe<RemoteScalarWhereInput[] | RemoteScalarWhereInput>;
+  NOT?: Maybe<RemoteScalarWhereInput[] | RemoteScalarWhereInput>;
+}
+
+export interface RemoteUpdateManyWithWhereNestedInput {
+  where: RemoteScalarWhereInput;
+  data: RemoteUpdateManyDataInput;
+}
+
+export interface RemoteUpdateManyDataInput {
+  name?: Maybe<String>;
+  link?: Maybe<String>;
+  query?: Maybe<String>;
+  queryResolution?: Maybe<String>;
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
+}
+
+export interface InfoTypeUpdateOneRequiredInput {
+  create?: Maybe<InfoTypeCreateInput>;
+  update?: Maybe<InfoTypeUpdateDataInput>;
+  upsert?: Maybe<InfoTypeUpsertNestedInput>;
+  connect?: Maybe<InfoTypeWhereUniqueInput>;
+}
+
+export interface InfoTypeUpdateDataInput {
+  name?: Maybe<String>;
+  tags?: Maybe<TagUpdateManyInput>;
+}
+
+export interface InfoTypeUpsertNestedInput {
+  update: InfoTypeUpdateDataInput;
+  create: InfoTypeCreateInput;
+}
+
+export interface ResourceUpdateManyInput {
+  create?: Maybe<ResourceCreateInput[] | ResourceCreateInput>;
+  update?: Maybe<
+    | ResourceUpdateWithWhereUniqueNestedInput[]
+    | ResourceUpdateWithWhereUniqueNestedInput
+  >;
+  upsert?: Maybe<
+    | ResourceUpsertWithWhereUniqueNestedInput[]
+    | ResourceUpsertWithWhereUniqueNestedInput
+  >;
+  delete?: Maybe<ResourceWhereUniqueInput[] | ResourceWhereUniqueInput>;
+  connect?: Maybe<ResourceWhereUniqueInput[] | ResourceWhereUniqueInput>;
+  set?: Maybe<ResourceWhereUniqueInput[] | ResourceWhereUniqueInput>;
+  disconnect?: Maybe<ResourceWhereUniqueInput[] | ResourceWhereUniqueInput>;
+  deleteMany?: Maybe<ResourceScalarWhereInput[] | ResourceScalarWhereInput>;
+  updateMany?: Maybe<
+    | ResourceUpdateManyWithWhereNestedInput[]
+    | ResourceUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface ResourceUpdateWithWhereUniqueNestedInput {
+  where: ResourceWhereUniqueInput;
+  data: ResourceUpdateDataInput;
+}
+
+export interface ResourceUpdateDataInput {
+  tags?: Maybe<TagUpdateManyInput>;
+  interaction?: Maybe<InteractionUpdateOneInput>;
+  media?: Maybe<MediaUpdateOneInput>;
+  remote?: Maybe<RemoteUpdateOneInput>;
+  link?: Maybe<String>;
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
+}
+
+export interface InteractionUpdateOneInput {
+  create?: Maybe<InteractionCreateInput>;
+  update?: Maybe<InteractionUpdateDataInput>;
+  upsert?: Maybe<InteractionUpsertNestedInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<InteractionWhereUniqueInput>;
+}
+
+export interface InteractionUpdateDataInput {
+  tags?: Maybe<TagUpdateManyInput>;
+  interactionType?: Maybe<InteractionTypeUpdateOneRequiredInput>;
+  remote?: Maybe<RemoteUpdateOneInput>;
+  publicUser?: Maybe<UserUpdateOneInput>;
+  publicEntity?: Maybe<PublicEntityUpdateOneInput>;
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
+}
+
+export interface InteractionTypeUpdateOneRequiredInput {
+  create?: Maybe<InteractionTypeCreateInput>;
+  update?: Maybe<InteractionTypeUpdateDataInput>;
+  upsert?: Maybe<InteractionTypeUpsertNestedInput>;
+  connect?: Maybe<InteractionTypeWhereUniqueInput>;
+}
+
+export interface InteractionTypeUpdateDataInput {
+  tags?: Maybe<TagUpdateManyInput>;
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
+}
+
+export interface InteractionTypeUpsertNestedInput {
+  update: InteractionTypeUpdateDataInput;
+  create: InteractionTypeCreateInput;
+}
+
+export interface UserUpdateOneInput {
+  create?: Maybe<UserCreateInput>;
+  update?: Maybe<UserUpdateDataInput>;
+  upsert?: Maybe<UserUpsertNestedInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateDataInput {
+  isOwnUser?: Maybe<Boolean>;
+  ownUser?: Maybe<OwnUserUpdateOneWithoutUserInput>;
+  primaryAuthProvider?: Maybe<AuthProviderUserUpdateOneInput>;
+  authProviders?: Maybe<AuthProviderUserUpdateManyWithoutUserInput>;
+  roles?: Maybe<UserRoleUpdateManyInput>;
+  optionalScopes?: Maybe<ActionScopeUpdateManyInput>;
+  tags?: Maybe<TagUpdateManyInput>;
+  actionsHistory?: Maybe<UserActionInstanceUpdateManyWithoutUserInput>;
+  isDeleted?: Maybe<Boolean>;
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
 }
 
 export interface AuthProviderUserUpdateManyWithoutUserInput {
@@ -3867,543 +4505,6 @@ export interface AuthProviderUserUpdateManyDataInput {
   otherDetails?: Maybe<String>;
 }
 
-export interface UserUpsertWithoutActionsHistoryInput {
-  update: UserUpdateWithoutActionsHistoryDataInput;
-  create: UserCreateWithoutActionsHistoryInput;
-}
-
-export interface UserActionInstanceUpsertWithWhereUniqueWithoutActionScopeInput {
-  where: UserActionInstanceWhereUniqueInput;
-  update: UserActionInstanceUpdateWithoutActionScopeDataInput;
-  create: UserActionInstanceCreateWithoutActionScopeInput;
-}
-
-export interface ActionScopeUpdateManyMutationInput {
-  name?: Maybe<String>;
-}
-
-export interface AuthProviderUpdateInput {
-  name?: Maybe<String>;
-  tags?: Maybe<TagUpdateManyInput>;
-}
-
-export interface AuthProviderUpdateManyMutationInput {
-  name?: Maybe<String>;
-}
-
-export interface AuthProviderUserUpdateInput {
-  authProvider?: Maybe<AuthProviderUpdateOneRequiredInput>;
-  authToken?: Maybe<String>;
-  refreshToken?: Maybe<String>;
-  expiryTime?: Maybe<DateTimeInput>;
-  username?: Maybe<String>;
-  firstName?: Maybe<String>;
-  middleName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
-  phone?: Maybe<String>;
-  address?: Maybe<String>;
-  coordinates?: Maybe<String>;
-  pic?: Maybe<String>;
-  otherDetails?: Maybe<String>;
-  user?: Maybe<UserUpdateOneRequiredWithoutAuthProvidersInput>;
-  tags?: Maybe<TagUpdateManyInput>;
-}
-
-export interface AuthProviderUserUpdateManyMutationInput {
-  authToken?: Maybe<String>;
-  refreshToken?: Maybe<String>;
-  expiryTime?: Maybe<DateTimeInput>;
-  username?: Maybe<String>;
-  firstName?: Maybe<String>;
-  middleName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
-  phone?: Maybe<String>;
-  address?: Maybe<String>;
-  coordinates?: Maybe<String>;
-  pic?: Maybe<String>;
-  otherDetails?: Maybe<String>;
-}
-
-export interface GuestActionInstanceCreateInput {
-  id?: Maybe<UUID>;
-  firstName: String;
-  middleName?: Maybe<String>;
-  lastName: String;
-  phone: String;
-  email: String;
-  address: String;
-  action: ActionScopeCreateOneWithoutGuestActionsInput;
-}
-
-export interface ActionScopeCreateOneWithoutGuestActionsInput {
-  create?: Maybe<ActionScopeCreateWithoutGuestActionsInput>;
-  connect?: Maybe<ActionScopeWhereUniqueInput>;
-}
-
-export interface ActionScopeCreateWithoutGuestActionsInput {
-  id?: Maybe<ID_Input>;
-  tags?: Maybe<TagCreateManyInput>;
-  name: String;
-  userActions?: Maybe<UserActionInstanceCreateManyWithoutActionScopeInput>;
-}
-
-export interface GuestActionInstanceUpdateInput {
-  firstName?: Maybe<String>;
-  middleName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  phone?: Maybe<String>;
-  email?: Maybe<String>;
-  address?: Maybe<String>;
-  action?: Maybe<ActionScopeUpdateOneRequiredWithoutGuestActionsInput>;
-}
-
-export interface ActionScopeUpdateOneRequiredWithoutGuestActionsInput {
-  create?: Maybe<ActionScopeCreateWithoutGuestActionsInput>;
-  update?: Maybe<ActionScopeUpdateWithoutGuestActionsDataInput>;
-  upsert?: Maybe<ActionScopeUpsertWithoutGuestActionsInput>;
-  connect?: Maybe<ActionScopeWhereUniqueInput>;
-}
-
-export interface ActionScopeUpdateWithoutGuestActionsDataInput {
-  tags?: Maybe<TagUpdateManyInput>;
-  name?: Maybe<String>;
-  userActions?: Maybe<UserActionInstanceUpdateManyWithoutActionScopeInput>;
-}
-
-export interface ActionScopeUpsertWithoutGuestActionsInput {
-  update: ActionScopeUpdateWithoutGuestActionsDataInput;
-  create: ActionScopeCreateWithoutGuestActionsInput;
-}
-
-export interface GuestActionInstanceUpdateManyMutationInput {
-  firstName?: Maybe<String>;
-  middleName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  phone?: Maybe<String>;
-  email?: Maybe<String>;
-  address?: Maybe<String>;
-}
-
-export interface InfoCreateInput {
-  id?: Maybe<ID_Input>;
-  tags?: Maybe<TagCreateManyInput>;
-  title: String;
-  description: String;
-  descriptionSmall: String;
-  remotePrimary?: Maybe<RemoteCreateOneInput>;
-  remotes?: Maybe<RemoteCreateManyInput>;
-  infoType: InfoTypeCreateOneInput;
-  resources?: Maybe<ResourceCreateManyInput>;
-  resourcePrimary?: Maybe<ResourceCreateOneInput>;
-}
-
-export interface RemoteCreateOneInput {
-  create?: Maybe<RemoteCreateInput>;
-  connect?: Maybe<RemoteWhereUniqueInput>;
-}
-
-export interface RemoteCreateInput {
-  id?: Maybe<ID_Input>;
-  tags?: Maybe<TagCreateManyInput>;
-  name: String;
-  link?: Maybe<String>;
-  query?: Maybe<String>;
-  queryResolution?: Maybe<String>;
-}
-
-export interface RemoteCreateManyInput {
-  create?: Maybe<RemoteCreateInput[] | RemoteCreateInput>;
-  connect?: Maybe<RemoteWhereUniqueInput[] | RemoteWhereUniqueInput>;
-}
-
-export interface InfoTypeCreateOneInput {
-  create?: Maybe<InfoTypeCreateInput>;
-  connect?: Maybe<InfoTypeWhereUniqueInput>;
-}
-
-export interface InfoTypeCreateInput {
-  id?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  tags?: Maybe<TagCreateManyInput>;
-}
-
-export interface ResourceCreateManyInput {
-  create?: Maybe<ResourceCreateInput[] | ResourceCreateInput>;
-  connect?: Maybe<ResourceWhereUniqueInput[] | ResourceWhereUniqueInput>;
-}
-
-export interface ResourceCreateInput {
-  id?: Maybe<ID_Input>;
-  tags?: Maybe<TagCreateManyInput>;
-  interaction?: Maybe<InteractionCreateOneInput>;
-  media?: Maybe<MediaCreateOneInput>;
-  remote?: Maybe<RemoteCreateOneInput>;
-  link?: Maybe<String>;
-}
-
-export interface InteractionCreateOneInput {
-  create?: Maybe<InteractionCreateInput>;
-  connect?: Maybe<InteractionWhereUniqueInput>;
-}
-
-export interface InteractionCreateInput {
-  id?: Maybe<ID_Input>;
-  tags?: Maybe<TagCreateManyInput>;
-  interactionType: InteractionTypeCreateOneInput;
-  remote?: Maybe<RemoteCreateOneInput>;
-  publicUser?: Maybe<UserCreateOneInput>;
-  publicEntity?: Maybe<PublicEntityCreateOneInput>;
-}
-
-export interface InteractionTypeCreateOneInput {
-  create?: Maybe<InteractionTypeCreateInput>;
-  connect?: Maybe<InteractionTypeWhereUniqueInput>;
-}
-
-export interface InteractionTypeCreateInput {
-  id?: Maybe<ID_Input>;
-  tags?: Maybe<TagCreateManyInput>;
-  name: String;
-}
-
-export interface UserCreateOneInput {
-  create?: Maybe<UserCreateInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserCreateInput {
-  id?: Maybe<UUID>;
-  isOwnUser: Boolean;
-  ownUser?: Maybe<OwnUserCreateOneWithoutUserInput>;
-  primaryAuthProvider?: Maybe<AuthProviderUserCreateOneInput>;
-  authProviders?: Maybe<AuthProviderUserCreateManyWithoutUserInput>;
-  roles?: Maybe<UserRoleCreateManyInput>;
-  optionalScopes?: Maybe<ActionScopeCreateManyInput>;
-  tags?: Maybe<TagCreateManyInput>;
-  actionsHistory?: Maybe<UserActionInstanceCreateManyWithoutUserInput>;
-  isDeleted: Boolean;
-}
-
-export interface PublicEntityCreateOneInput {
-  create?: Maybe<PublicEntityCreateInput>;
-  connect?: Maybe<PublicEntityWhereUniqueInput>;
-}
-
-export interface PublicEntityCreateInput {
-  id?: Maybe<ID_Input>;
-  tags?: Maybe<TagCreateManyInput>;
-  entityType: PublicEntityTypeCreateOneInput;
-  remote: RemoteCreateOneInput;
-}
-
-export interface PublicEntityTypeCreateOneInput {
-  create?: Maybe<PublicEntityTypeCreateInput>;
-  connect?: Maybe<PublicEntityTypeWhereUniqueInput>;
-}
-
-export interface PublicEntityTypeCreateInput {
-  id?: Maybe<ID_Input>;
-  tags?: Maybe<TagCreateManyInput>;
-  name: String;
-}
-
-export interface MediaCreateOneInput {
-  create?: Maybe<MediaCreateInput>;
-  connect?: Maybe<MediaWhereUniqueInput>;
-}
-
-export interface MediaCreateInput {
-  id?: Maybe<ID_Input>;
-  tags?: Maybe<TagCreateManyInput>;
-  title: String;
-  description: String;
-  descriptionSmall: String;
-  remote: RemoteCreateOneInput;
-}
-
-export interface ResourceCreateOneInput {
-  create?: Maybe<ResourceCreateInput>;
-  connect?: Maybe<ResourceWhereUniqueInput>;
-}
-
-export interface InfoUpdateInput {
-  tags?: Maybe<TagUpdateManyInput>;
-  title?: Maybe<String>;
-  description?: Maybe<String>;
-  descriptionSmall?: Maybe<String>;
-  remotePrimary?: Maybe<RemoteUpdateOneInput>;
-  remotes?: Maybe<RemoteUpdateManyInput>;
-  infoType?: Maybe<InfoTypeUpdateOneRequiredInput>;
-  resources?: Maybe<ResourceUpdateManyInput>;
-  resourcePrimary?: Maybe<ResourceUpdateOneInput>;
-}
-
-export interface RemoteUpdateOneInput {
-  create?: Maybe<RemoteCreateInput>;
-  update?: Maybe<RemoteUpdateDataInput>;
-  upsert?: Maybe<RemoteUpsertNestedInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<RemoteWhereUniqueInput>;
-}
-
-export interface RemoteUpdateDataInput {
-  tags?: Maybe<TagUpdateManyInput>;
-  name?: Maybe<String>;
-  link?: Maybe<String>;
-  query?: Maybe<String>;
-  queryResolution?: Maybe<String>;
-}
-
-export interface RemoteUpsertNestedInput {
-  update: RemoteUpdateDataInput;
-  create: RemoteCreateInput;
-}
-
-export interface RemoteUpdateManyInput {
-  create?: Maybe<RemoteCreateInput[] | RemoteCreateInput>;
-  update?: Maybe<
-    | RemoteUpdateWithWhereUniqueNestedInput[]
-    | RemoteUpdateWithWhereUniqueNestedInput
-  >;
-  upsert?: Maybe<
-    | RemoteUpsertWithWhereUniqueNestedInput[]
-    | RemoteUpsertWithWhereUniqueNestedInput
-  >;
-  delete?: Maybe<RemoteWhereUniqueInput[] | RemoteWhereUniqueInput>;
-  connect?: Maybe<RemoteWhereUniqueInput[] | RemoteWhereUniqueInput>;
-  set?: Maybe<RemoteWhereUniqueInput[] | RemoteWhereUniqueInput>;
-  disconnect?: Maybe<RemoteWhereUniqueInput[] | RemoteWhereUniqueInput>;
-  deleteMany?: Maybe<RemoteScalarWhereInput[] | RemoteScalarWhereInput>;
-  updateMany?: Maybe<
-    | RemoteUpdateManyWithWhereNestedInput[]
-    | RemoteUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface RemoteUpdateWithWhereUniqueNestedInput {
-  where: RemoteWhereUniqueInput;
-  data: RemoteUpdateDataInput;
-}
-
-export interface RemoteUpsertWithWhereUniqueNestedInput {
-  where: RemoteWhereUniqueInput;
-  update: RemoteUpdateDataInput;
-  create: RemoteCreateInput;
-}
-
-export interface RemoteScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  link?: Maybe<String>;
-  link_not?: Maybe<String>;
-  link_in?: Maybe<String[] | String>;
-  link_not_in?: Maybe<String[] | String>;
-  link_lt?: Maybe<String>;
-  link_lte?: Maybe<String>;
-  link_gt?: Maybe<String>;
-  link_gte?: Maybe<String>;
-  link_contains?: Maybe<String>;
-  link_not_contains?: Maybe<String>;
-  link_starts_with?: Maybe<String>;
-  link_not_starts_with?: Maybe<String>;
-  link_ends_with?: Maybe<String>;
-  link_not_ends_with?: Maybe<String>;
-  query?: Maybe<String>;
-  query_not?: Maybe<String>;
-  query_in?: Maybe<String[] | String>;
-  query_not_in?: Maybe<String[] | String>;
-  query_lt?: Maybe<String>;
-  query_lte?: Maybe<String>;
-  query_gt?: Maybe<String>;
-  query_gte?: Maybe<String>;
-  query_contains?: Maybe<String>;
-  query_not_contains?: Maybe<String>;
-  query_starts_with?: Maybe<String>;
-  query_not_starts_with?: Maybe<String>;
-  query_ends_with?: Maybe<String>;
-  query_not_ends_with?: Maybe<String>;
-  queryResolution?: Maybe<String>;
-  queryResolution_not?: Maybe<String>;
-  queryResolution_in?: Maybe<String[] | String>;
-  queryResolution_not_in?: Maybe<String[] | String>;
-  queryResolution_lt?: Maybe<String>;
-  queryResolution_lte?: Maybe<String>;
-  queryResolution_gt?: Maybe<String>;
-  queryResolution_gte?: Maybe<String>;
-  queryResolution_contains?: Maybe<String>;
-  queryResolution_not_contains?: Maybe<String>;
-  queryResolution_starts_with?: Maybe<String>;
-  queryResolution_not_starts_with?: Maybe<String>;
-  queryResolution_ends_with?: Maybe<String>;
-  queryResolution_not_ends_with?: Maybe<String>;
-  AND?: Maybe<RemoteScalarWhereInput[] | RemoteScalarWhereInput>;
-  OR?: Maybe<RemoteScalarWhereInput[] | RemoteScalarWhereInput>;
-  NOT?: Maybe<RemoteScalarWhereInput[] | RemoteScalarWhereInput>;
-}
-
-export interface RemoteUpdateManyWithWhereNestedInput {
-  where: RemoteScalarWhereInput;
-  data: RemoteUpdateManyDataInput;
-}
-
-export interface RemoteUpdateManyDataInput {
-  name?: Maybe<String>;
-  link?: Maybe<String>;
-  query?: Maybe<String>;
-  queryResolution?: Maybe<String>;
-}
-
-export interface InfoTypeUpdateOneRequiredInput {
-  create?: Maybe<InfoTypeCreateInput>;
-  update?: Maybe<InfoTypeUpdateDataInput>;
-  upsert?: Maybe<InfoTypeUpsertNestedInput>;
-  connect?: Maybe<InfoTypeWhereUniqueInput>;
-}
-
-export interface InfoTypeUpdateDataInput {
-  name?: Maybe<String>;
-  tags?: Maybe<TagUpdateManyInput>;
-}
-
-export interface InfoTypeUpsertNestedInput {
-  update: InfoTypeUpdateDataInput;
-  create: InfoTypeCreateInput;
-}
-
-export interface ResourceUpdateManyInput {
-  create?: Maybe<ResourceCreateInput[] | ResourceCreateInput>;
-  update?: Maybe<
-    | ResourceUpdateWithWhereUniqueNestedInput[]
-    | ResourceUpdateWithWhereUniqueNestedInput
-  >;
-  upsert?: Maybe<
-    | ResourceUpsertWithWhereUniqueNestedInput[]
-    | ResourceUpsertWithWhereUniqueNestedInput
-  >;
-  delete?: Maybe<ResourceWhereUniqueInput[] | ResourceWhereUniqueInput>;
-  connect?: Maybe<ResourceWhereUniqueInput[] | ResourceWhereUniqueInput>;
-  set?: Maybe<ResourceWhereUniqueInput[] | ResourceWhereUniqueInput>;
-  disconnect?: Maybe<ResourceWhereUniqueInput[] | ResourceWhereUniqueInput>;
-  deleteMany?: Maybe<ResourceScalarWhereInput[] | ResourceScalarWhereInput>;
-  updateMany?: Maybe<
-    | ResourceUpdateManyWithWhereNestedInput[]
-    | ResourceUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface ResourceUpdateWithWhereUniqueNestedInput {
-  where: ResourceWhereUniqueInput;
-  data: ResourceUpdateDataInput;
-}
-
-export interface ResourceUpdateDataInput {
-  tags?: Maybe<TagUpdateManyInput>;
-  interaction?: Maybe<InteractionUpdateOneInput>;
-  media?: Maybe<MediaUpdateOneInput>;
-  remote?: Maybe<RemoteUpdateOneInput>;
-  link?: Maybe<String>;
-}
-
-export interface InteractionUpdateOneInput {
-  create?: Maybe<InteractionCreateInput>;
-  update?: Maybe<InteractionUpdateDataInput>;
-  upsert?: Maybe<InteractionUpsertNestedInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<InteractionWhereUniqueInput>;
-}
-
-export interface InteractionUpdateDataInput {
-  tags?: Maybe<TagUpdateManyInput>;
-  interactionType?: Maybe<InteractionTypeUpdateOneRequiredInput>;
-  remote?: Maybe<RemoteUpdateOneInput>;
-  publicUser?: Maybe<UserUpdateOneInput>;
-  publicEntity?: Maybe<PublicEntityUpdateOneInput>;
-}
-
-export interface InteractionTypeUpdateOneRequiredInput {
-  create?: Maybe<InteractionTypeCreateInput>;
-  update?: Maybe<InteractionTypeUpdateDataInput>;
-  upsert?: Maybe<InteractionTypeUpsertNestedInput>;
-  connect?: Maybe<InteractionTypeWhereUniqueInput>;
-}
-
-export interface InteractionTypeUpdateDataInput {
-  tags?: Maybe<TagUpdateManyInput>;
-  name?: Maybe<String>;
-}
-
-export interface InteractionTypeUpsertNestedInput {
-  update: InteractionTypeUpdateDataInput;
-  create: InteractionTypeCreateInput;
-}
-
-export interface UserUpdateOneInput {
-  create?: Maybe<UserCreateInput>;
-  update?: Maybe<UserUpdateDataInput>;
-  upsert?: Maybe<UserUpsertNestedInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserUpdateDataInput {
-  isOwnUser?: Maybe<Boolean>;
-  ownUser?: Maybe<OwnUserUpdateOneWithoutUserInput>;
-  primaryAuthProvider?: Maybe<AuthProviderUserUpdateOneInput>;
-  authProviders?: Maybe<AuthProviderUserUpdateManyWithoutUserInput>;
-  roles?: Maybe<UserRoleUpdateManyInput>;
-  optionalScopes?: Maybe<ActionScopeUpdateManyInput>;
-  tags?: Maybe<TagUpdateManyInput>;
-  actionsHistory?: Maybe<UserActionInstanceUpdateManyWithoutUserInput>;
-  isDeleted?: Maybe<Boolean>;
-}
-
 export interface UserUpsertNestedInput {
   update: UserUpdateDataInput;
   create: UserCreateInput;
@@ -4422,6 +4523,8 @@ export interface PublicEntityUpdateDataInput {
   tags?: Maybe<TagUpdateManyInput>;
   entityType?: Maybe<PublicEntityTypeUpdateOneRequiredInput>;
   remote?: Maybe<RemoteUpdateOneRequiredInput>;
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
 }
 
 export interface PublicEntityTypeUpdateOneRequiredInput {
@@ -4433,7 +4536,8 @@ export interface PublicEntityTypeUpdateOneRequiredInput {
 
 export interface PublicEntityTypeUpdateDataInput {
   tags?: Maybe<TagUpdateManyInput>;
-  name?: Maybe<String>;
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
 }
 
 export interface PublicEntityTypeUpsertNestedInput {
@@ -4473,6 +4577,8 @@ export interface MediaUpdateDataInput {
   description?: Maybe<String>;
   descriptionSmall?: Maybe<String>;
   remote?: Maybe<RemoteUpdateOneRequiredInput>;
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
 }
 
 export interface MediaUpsertNestedInput {
@@ -4531,6 +4637,34 @@ export interface ResourceScalarWhereInput {
   link_not_starts_with?: Maybe<String>;
   link_ends_with?: Maybe<String>;
   link_not_ends_with?: Maybe<String>;
+  encodedId?: Maybe<String>;
+  encodedId_not?: Maybe<String>;
+  encodedId_in?: Maybe<String[] | String>;
+  encodedId_not_in?: Maybe<String[] | String>;
+  encodedId_lt?: Maybe<String>;
+  encodedId_lte?: Maybe<String>;
+  encodedId_gt?: Maybe<String>;
+  encodedId_gte?: Maybe<String>;
+  encodedId_contains?: Maybe<String>;
+  encodedId_not_contains?: Maybe<String>;
+  encodedId_starts_with?: Maybe<String>;
+  encodedId_not_starts_with?: Maybe<String>;
+  encodedId_ends_with?: Maybe<String>;
+  encodedId_not_ends_with?: Maybe<String>;
+  displayName?: Maybe<String>;
+  displayName_not?: Maybe<String>;
+  displayName_in?: Maybe<String[] | String>;
+  displayName_not_in?: Maybe<String[] | String>;
+  displayName_lt?: Maybe<String>;
+  displayName_lte?: Maybe<String>;
+  displayName_gt?: Maybe<String>;
+  displayName_gte?: Maybe<String>;
+  displayName_contains?: Maybe<String>;
+  displayName_not_contains?: Maybe<String>;
+  displayName_starts_with?: Maybe<String>;
+  displayName_not_starts_with?: Maybe<String>;
+  displayName_ends_with?: Maybe<String>;
+  displayName_not_ends_with?: Maybe<String>;
   AND?: Maybe<ResourceScalarWhereInput[] | ResourceScalarWhereInput>;
   OR?: Maybe<ResourceScalarWhereInput[] | ResourceScalarWhereInput>;
   NOT?: Maybe<ResourceScalarWhereInput[] | ResourceScalarWhereInput>;
@@ -4543,6 +4677,118 @@ export interface ResourceUpdateManyWithWhereNestedInput {
 
 export interface ResourceUpdateManyDataInput {
   link?: Maybe<String>;
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
+}
+
+export interface InteractionUpdateManyInput {
+  create?: Maybe<InteractionCreateInput[] | InteractionCreateInput>;
+  update?: Maybe<
+    | InteractionUpdateWithWhereUniqueNestedInput[]
+    | InteractionUpdateWithWhereUniqueNestedInput
+  >;
+  upsert?: Maybe<
+    | InteractionUpsertWithWhereUniqueNestedInput[]
+    | InteractionUpsertWithWhereUniqueNestedInput
+  >;
+  delete?: Maybe<InteractionWhereUniqueInput[] | InteractionWhereUniqueInput>;
+  connect?: Maybe<InteractionWhereUniqueInput[] | InteractionWhereUniqueInput>;
+  set?: Maybe<InteractionWhereUniqueInput[] | InteractionWhereUniqueInput>;
+  disconnect?: Maybe<
+    InteractionWhereUniqueInput[] | InteractionWhereUniqueInput
+  >;
+  deleteMany?: Maybe<
+    InteractionScalarWhereInput[] | InteractionScalarWhereInput
+  >;
+  updateMany?: Maybe<
+    | InteractionUpdateManyWithWhereNestedInput[]
+    | InteractionUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface InteractionUpdateWithWhereUniqueNestedInput {
+  where: InteractionWhereUniqueInput;
+  data: InteractionUpdateDataInput;
+}
+
+export interface InteractionUpsertWithWhereUniqueNestedInput {
+  where: InteractionWhereUniqueInput;
+  update: InteractionUpdateDataInput;
+  create: InteractionCreateInput;
+}
+
+export interface InteractionScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  encodedId?: Maybe<String>;
+  encodedId_not?: Maybe<String>;
+  encodedId_in?: Maybe<String[] | String>;
+  encodedId_not_in?: Maybe<String[] | String>;
+  encodedId_lt?: Maybe<String>;
+  encodedId_lte?: Maybe<String>;
+  encodedId_gt?: Maybe<String>;
+  encodedId_gte?: Maybe<String>;
+  encodedId_contains?: Maybe<String>;
+  encodedId_not_contains?: Maybe<String>;
+  encodedId_starts_with?: Maybe<String>;
+  encodedId_not_starts_with?: Maybe<String>;
+  encodedId_ends_with?: Maybe<String>;
+  encodedId_not_ends_with?: Maybe<String>;
+  displayName?: Maybe<String>;
+  displayName_not?: Maybe<String>;
+  displayName_in?: Maybe<String[] | String>;
+  displayName_not_in?: Maybe<String[] | String>;
+  displayName_lt?: Maybe<String>;
+  displayName_lte?: Maybe<String>;
+  displayName_gt?: Maybe<String>;
+  displayName_gte?: Maybe<String>;
+  displayName_contains?: Maybe<String>;
+  displayName_not_contains?: Maybe<String>;
+  displayName_starts_with?: Maybe<String>;
+  displayName_not_starts_with?: Maybe<String>;
+  displayName_ends_with?: Maybe<String>;
+  displayName_not_ends_with?: Maybe<String>;
+  AND?: Maybe<InteractionScalarWhereInput[] | InteractionScalarWhereInput>;
+  OR?: Maybe<InteractionScalarWhereInput[] | InteractionScalarWhereInput>;
+  NOT?: Maybe<InteractionScalarWhereInput[] | InteractionScalarWhereInput>;
+}
+
+export interface InteractionUpdateManyWithWhereNestedInput {
+  where: InteractionScalarWhereInput;
+  data: InteractionUpdateManyDataInput;
+}
+
+export interface InteractionUpdateManyDataInput {
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
 }
 
 export interface ResourceUpdateOneInput {
@@ -4563,6 +4809,8 @@ export interface InfoUpdateManyMutationInput {
   title?: Maybe<String>;
   description?: Maybe<String>;
   descriptionSmall?: Maybe<String>;
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
 }
 
 export interface InfoTypeUpdateInput {
@@ -4585,6 +4833,8 @@ export interface InitiativeCreateInput {
   mediaPrimary?: Maybe<MediaCreateOneInput>;
   resources?: Maybe<ResourceCreateManyInput>;
   childInitiatives?: Maybe<InitiativeCreateManyWithoutChildInitiativesInput>;
+  encodedId: String;
+  displayName: String;
 }
 
 export interface InfoCreateOneInput {
@@ -4615,6 +4865,8 @@ export interface InitiativeCreateWithoutChildInitiativesInput {
   media?: Maybe<MediaCreateManyInput>;
   mediaPrimary?: Maybe<MediaCreateOneInput>;
   resources?: Maybe<ResourceCreateManyInput>;
+  encodedId: String;
+  displayName: String;
 }
 
 export interface InitiativeUpdateInput {
@@ -4627,6 +4879,8 @@ export interface InitiativeUpdateInput {
   mediaPrimary?: Maybe<MediaUpdateOneInput>;
   resources?: Maybe<ResourceUpdateManyInput>;
   childInitiatives?: Maybe<InitiativeUpdateManyWithoutChildInitiativesInput>;
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
 }
 
 export interface InfoUpdateOneRequiredInput {
@@ -4645,7 +4899,10 @@ export interface InfoUpdateDataInput {
   remotes?: Maybe<RemoteUpdateManyInput>;
   infoType?: Maybe<InfoTypeUpdateOneRequiredInput>;
   resources?: Maybe<ResourceUpdateManyInput>;
+  intercations?: Maybe<InteractionUpdateManyInput>;
   resourcePrimary?: Maybe<ResourceUpdateOneInput>;
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
 }
 
 export interface InfoUpsertNestedInput {
@@ -4757,6 +5014,34 @@ export interface MediaScalarWhereInput {
   descriptionSmall_not_starts_with?: Maybe<String>;
   descriptionSmall_ends_with?: Maybe<String>;
   descriptionSmall_not_ends_with?: Maybe<String>;
+  encodedId?: Maybe<String>;
+  encodedId_not?: Maybe<String>;
+  encodedId_in?: Maybe<String[] | String>;
+  encodedId_not_in?: Maybe<String[] | String>;
+  encodedId_lt?: Maybe<String>;
+  encodedId_lte?: Maybe<String>;
+  encodedId_gt?: Maybe<String>;
+  encodedId_gte?: Maybe<String>;
+  encodedId_contains?: Maybe<String>;
+  encodedId_not_contains?: Maybe<String>;
+  encodedId_starts_with?: Maybe<String>;
+  encodedId_not_starts_with?: Maybe<String>;
+  encodedId_ends_with?: Maybe<String>;
+  encodedId_not_ends_with?: Maybe<String>;
+  displayName?: Maybe<String>;
+  displayName_not?: Maybe<String>;
+  displayName_in?: Maybe<String[] | String>;
+  displayName_not_in?: Maybe<String[] | String>;
+  displayName_lt?: Maybe<String>;
+  displayName_lte?: Maybe<String>;
+  displayName_gt?: Maybe<String>;
+  displayName_gte?: Maybe<String>;
+  displayName_contains?: Maybe<String>;
+  displayName_not_contains?: Maybe<String>;
+  displayName_starts_with?: Maybe<String>;
+  displayName_not_starts_with?: Maybe<String>;
+  displayName_ends_with?: Maybe<String>;
+  displayName_not_ends_with?: Maybe<String>;
   AND?: Maybe<MediaScalarWhereInput[] | MediaScalarWhereInput>;
   OR?: Maybe<MediaScalarWhereInput[] | MediaScalarWhereInput>;
   NOT?: Maybe<MediaScalarWhereInput[] | MediaScalarWhereInput>;
@@ -4771,6 +5056,8 @@ export interface MediaUpdateManyDataInput {
   title?: Maybe<String>;
   description?: Maybe<String>;
   descriptionSmall?: Maybe<String>;
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
 }
 
 export interface InitiativeUpdateManyWithoutChildInitiativesInput {
@@ -4811,6 +5098,8 @@ export interface InitiativeUpdateWithoutChildInitiativesDataInput {
   media?: Maybe<MediaUpdateManyInput>;
   mediaPrimary?: Maybe<MediaUpdateOneInput>;
   resources?: Maybe<ResourceUpdateManyInput>;
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
 }
 
 export interface InitiativeUpsertWithWhereUniqueWithoutChildInitiativesInput {
@@ -4892,6 +5181,34 @@ export interface InitiativeScalarWhereInput {
   descriptionSmall_not_starts_with?: Maybe<String>;
   descriptionSmall_ends_with?: Maybe<String>;
   descriptionSmall_not_ends_with?: Maybe<String>;
+  encodedId?: Maybe<String>;
+  encodedId_not?: Maybe<String>;
+  encodedId_in?: Maybe<String[] | String>;
+  encodedId_not_in?: Maybe<String[] | String>;
+  encodedId_lt?: Maybe<String>;
+  encodedId_lte?: Maybe<String>;
+  encodedId_gt?: Maybe<String>;
+  encodedId_gte?: Maybe<String>;
+  encodedId_contains?: Maybe<String>;
+  encodedId_not_contains?: Maybe<String>;
+  encodedId_starts_with?: Maybe<String>;
+  encodedId_not_starts_with?: Maybe<String>;
+  encodedId_ends_with?: Maybe<String>;
+  encodedId_not_ends_with?: Maybe<String>;
+  displayName?: Maybe<String>;
+  displayName_not?: Maybe<String>;
+  displayName_in?: Maybe<String[] | String>;
+  displayName_not_in?: Maybe<String[] | String>;
+  displayName_lt?: Maybe<String>;
+  displayName_lte?: Maybe<String>;
+  displayName_gt?: Maybe<String>;
+  displayName_gte?: Maybe<String>;
+  displayName_contains?: Maybe<String>;
+  displayName_not_contains?: Maybe<String>;
+  displayName_starts_with?: Maybe<String>;
+  displayName_not_starts_with?: Maybe<String>;
+  displayName_ends_with?: Maybe<String>;
+  displayName_not_ends_with?: Maybe<String>;
   AND?: Maybe<InitiativeScalarWhereInput[] | InitiativeScalarWhereInput>;
   OR?: Maybe<InitiativeScalarWhereInput[] | InitiativeScalarWhereInput>;
   NOT?: Maybe<InitiativeScalarWhereInput[] | InitiativeScalarWhereInput>;
@@ -4906,12 +5223,16 @@ export interface InitiativeUpdateManyDataInput {
   name?: Maybe<String>;
   description?: Maybe<String>;
   descriptionSmall?: Maybe<String>;
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
 }
 
 export interface InitiativeUpdateManyMutationInput {
   name?: Maybe<String>;
   description?: Maybe<String>;
   descriptionSmall?: Maybe<String>;
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
 }
 
 export interface InteractionUpdateInput {
@@ -4920,15 +5241,24 @@ export interface InteractionUpdateInput {
   remote?: Maybe<RemoteUpdateOneInput>;
   publicUser?: Maybe<UserUpdateOneInput>;
   publicEntity?: Maybe<PublicEntityUpdateOneInput>;
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
+}
+
+export interface InteractionUpdateManyMutationInput {
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
 }
 
 export interface InteractionTypeUpdateInput {
   tags?: Maybe<TagUpdateManyInput>;
-  name?: Maybe<String>;
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
 }
 
 export interface InteractionTypeUpdateManyMutationInput {
-  name?: Maybe<String>;
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
 }
 
 export interface MediaUpdateInput {
@@ -4937,12 +5267,16 @@ export interface MediaUpdateInput {
   description?: Maybe<String>;
   descriptionSmall?: Maybe<String>;
   remote?: Maybe<RemoteUpdateOneRequiredInput>;
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
 }
 
 export interface MediaUpdateManyMutationInput {
   title?: Maybe<String>;
   description?: Maybe<String>;
   descriptionSmall?: Maybe<String>;
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
 }
 
 export interface OwnUserCreateInput {
@@ -4977,6 +5311,8 @@ export interface UserCreateWithoutOwnUserInput {
   tags?: Maybe<TagCreateManyInput>;
   actionsHistory?: Maybe<UserActionInstanceCreateManyWithoutUserInput>;
   isDeleted: Boolean;
+  encodedId: String;
+  displayName: String;
 }
 
 export interface OwnUserUpdateInput {
@@ -5011,6 +5347,8 @@ export interface UserUpdateWithoutOwnUserDataInput {
   tags?: Maybe<TagUpdateManyInput>;
   actionsHistory?: Maybe<UserActionInstanceUpdateManyWithoutUserInput>;
   isDeleted?: Maybe<Boolean>;
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
 }
 
 export interface UserUpsertWithoutOwnUserInput {
@@ -5036,15 +5374,24 @@ export interface PublicEntityUpdateInput {
   tags?: Maybe<TagUpdateManyInput>;
   entityType?: Maybe<PublicEntityTypeUpdateOneRequiredInput>;
   remote?: Maybe<RemoteUpdateOneRequiredInput>;
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
+}
+
+export interface PublicEntityUpdateManyMutationInput {
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
 }
 
 export interface PublicEntityTypeUpdateInput {
   tags?: Maybe<TagUpdateManyInput>;
-  name?: Maybe<String>;
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
 }
 
 export interface PublicEntityTypeUpdateManyMutationInput {
-  name?: Maybe<String>;
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
 }
 
 export interface RemoteUpdateInput {
@@ -5053,6 +5400,8 @@ export interface RemoteUpdateInput {
   link?: Maybe<String>;
   query?: Maybe<String>;
   queryResolution?: Maybe<String>;
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
 }
 
 export interface RemoteUpdateManyMutationInput {
@@ -5060,6 +5409,8 @@ export interface RemoteUpdateManyMutationInput {
   link?: Maybe<String>;
   query?: Maybe<String>;
   queryResolution?: Maybe<String>;
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
 }
 
 export interface ResourceUpdateInput {
@@ -5068,18 +5419,24 @@ export interface ResourceUpdateInput {
   media?: Maybe<MediaUpdateOneInput>;
   remote?: Maybe<RemoteUpdateOneInput>;
   link?: Maybe<String>;
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
 }
 
 export interface ResourceUpdateManyMutationInput {
   link?: Maybe<String>;
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
 }
 
 export interface TagUpdateInput {
   name?: Maybe<String>;
+  encodedId?: Maybe<String>;
 }
 
 export interface TagUpdateManyMutationInput {
   name?: Maybe<String>;
+  encodedId?: Maybe<String>;
 }
 
 export interface UserUpdateInput {
@@ -5092,24 +5449,72 @@ export interface UserUpdateInput {
   tags?: Maybe<TagUpdateManyInput>;
   actionsHistory?: Maybe<UserActionInstanceUpdateManyWithoutUserInput>;
   isDeleted?: Maybe<Boolean>;
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
 }
 
 export interface UserUpdateManyMutationInput {
   isOwnUser?: Maybe<Boolean>;
   isDeleted?: Maybe<Boolean>;
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
 }
 
 export interface UserActionInstanceCreateInput {
   id?: Maybe<ID_Input>;
   tags?: Maybe<TagCreateManyInput>;
   user: UserCreateOneWithoutActionsHistoryInput;
-  actionScope: ActionScopeCreateOneWithoutUserActionsInput;
+  actionScope: ActionScopeCreateOneInput;
+}
+
+export interface UserCreateOneWithoutActionsHistoryInput {
+  create?: Maybe<UserCreateWithoutActionsHistoryInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserCreateWithoutActionsHistoryInput {
+  id?: Maybe<UUID>;
+  isOwnUser: Boolean;
+  ownUser?: Maybe<OwnUserCreateOneWithoutUserInput>;
+  primaryAuthProvider?: Maybe<AuthProviderUserCreateOneInput>;
+  authProviders?: Maybe<AuthProviderUserCreateManyWithoutUserInput>;
+  roles?: Maybe<UserRoleCreateManyInput>;
+  optionalScopes?: Maybe<ActionScopeCreateManyInput>;
+  tags?: Maybe<TagCreateManyInput>;
+  isDeleted: Boolean;
+  encodedId: String;
+  displayName: String;
 }
 
 export interface UserActionInstanceUpdateInput {
   tags?: Maybe<TagUpdateManyInput>;
   user?: Maybe<UserUpdateOneRequiredWithoutActionsHistoryInput>;
-  actionScope?: Maybe<ActionScopeUpdateOneRequiredWithoutUserActionsInput>;
+  actionScope?: Maybe<ActionScopeUpdateOneRequiredInput>;
+}
+
+export interface UserUpdateOneRequiredWithoutActionsHistoryInput {
+  create?: Maybe<UserCreateWithoutActionsHistoryInput>;
+  update?: Maybe<UserUpdateWithoutActionsHistoryDataInput>;
+  upsert?: Maybe<UserUpsertWithoutActionsHistoryInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateWithoutActionsHistoryDataInput {
+  isOwnUser?: Maybe<Boolean>;
+  ownUser?: Maybe<OwnUserUpdateOneWithoutUserInput>;
+  primaryAuthProvider?: Maybe<AuthProviderUserUpdateOneInput>;
+  authProviders?: Maybe<AuthProviderUserUpdateManyWithoutUserInput>;
+  roles?: Maybe<UserRoleUpdateManyInput>;
+  optionalScopes?: Maybe<ActionScopeUpdateManyInput>;
+  tags?: Maybe<TagUpdateManyInput>;
+  isDeleted?: Maybe<Boolean>;
+  encodedId?: Maybe<String>;
+  displayName?: Maybe<String>;
+}
+
+export interface UserUpsertWithoutActionsHistoryInput {
+  update: UserUpdateWithoutActionsHistoryDataInput;
+  create: UserCreateWithoutActionsHistoryInput;
 }
 
 export interface UserRoleUpdateInput {
@@ -5426,6 +5831,7 @@ export interface ActionScope {
   id: ID_Output;
   createdAt: DateTimeOutput;
   name: String;
+  encodedId: String;
 }
 
 export interface ActionScopePromise extends Promise<ActionScope>, Fragmentable {
@@ -5441,24 +5847,7 @@ export interface ActionScopePromise extends Promise<ActionScope>, Fragmentable {
     last?: Int;
   }) => T;
   name: () => Promise<String>;
-  guestActions: <T = FragmentableArray<GuestActionInstance>>(args?: {
-    where?: GuestActionInstanceWhereInput;
-    orderBy?: GuestActionInstanceOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  userActions: <T = FragmentableArray<UserActionInstance>>(args?: {
-    where?: UserActionInstanceWhereInput;
-    orderBy?: UserActionInstanceOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  encodedId: () => Promise<String>;
 }
 
 export interface ActionScopeSubscription
@@ -5476,28 +5865,7 @@ export interface ActionScopeSubscription
     last?: Int;
   }) => T;
   name: () => Promise<AsyncIterator<String>>;
-  guestActions: <
-    T = Promise<AsyncIterator<GuestActionInstanceSubscription>>
-  >(args?: {
-    where?: GuestActionInstanceWhereInput;
-    orderBy?: GuestActionInstanceOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  userActions: <
-    T = Promise<AsyncIterator<UserActionInstanceSubscription>>
-  >(args?: {
-    where?: UserActionInstanceWhereInput;
-    orderBy?: UserActionInstanceOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  encodedId: () => Promise<AsyncIterator<String>>;
 }
 
 export interface ActionScopeNullablePromise
@@ -5515,36 +5883,21 @@ export interface ActionScopeNullablePromise
     last?: Int;
   }) => T;
   name: () => Promise<String>;
-  guestActions: <T = FragmentableArray<GuestActionInstance>>(args?: {
-    where?: GuestActionInstanceWhereInput;
-    orderBy?: GuestActionInstanceOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  userActions: <T = FragmentableArray<UserActionInstance>>(args?: {
-    where?: UserActionInstanceWhereInput;
-    orderBy?: UserActionInstanceOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  encodedId: () => Promise<String>;
 }
 
 export interface Tag {
   id: ID_Output;
   name: String;
   createdAt: DateTimeOutput;
+  encodedId: String;
 }
 
 export interface TagPromise extends Promise<Tag>, Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
+  encodedId: () => Promise<String>;
 }
 
 export interface TagSubscription
@@ -5553,76 +5906,107 @@ export interface TagSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  encodedId: () => Promise<AsyncIterator<String>>;
 }
 
 export interface TagNullablePromise extends Promise<Tag | null>, Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
+  encodedId: () => Promise<String>;
 }
 
-export interface GuestActionInstance {
-  id: UUID;
-  createdAt: DateTimeOutput;
-  firstName: String;
-  middleName?: String;
-  lastName: String;
-  phone: String;
-  email: String;
-  address: String;
+export interface ActionScopeConnection {
+  pageInfo: PageInfo;
+  edges: ActionScopeEdge[];
 }
 
-export interface GuestActionInstancePromise
-  extends Promise<GuestActionInstance>,
+export interface ActionScopeConnectionPromise
+  extends Promise<ActionScopeConnection>,
     Fragmentable {
-  id: () => Promise<UUID>;
-  createdAt: () => Promise<DateTimeOutput>;
-  firstName: () => Promise<String>;
-  middleName: () => Promise<String>;
-  lastName: () => Promise<String>;
-  phone: () => Promise<String>;
-  email: () => Promise<String>;
-  address: () => Promise<String>;
-  action: <T = ActionScopePromise>() => T;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ActionScopeEdge>>() => T;
+  aggregate: <T = AggregateActionScopePromise>() => T;
 }
 
-export interface GuestActionInstanceSubscription
-  extends Promise<AsyncIterator<GuestActionInstance>>,
+export interface ActionScopeConnectionSubscription
+  extends Promise<AsyncIterator<ActionScopeConnection>>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<UUID>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  firstName: () => Promise<AsyncIterator<String>>;
-  middleName: () => Promise<AsyncIterator<String>>;
-  lastName: () => Promise<AsyncIterator<String>>;
-  phone: () => Promise<AsyncIterator<String>>;
-  email: () => Promise<AsyncIterator<String>>;
-  address: () => Promise<AsyncIterator<String>>;
-  action: <T = ActionScopeSubscription>() => T;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ActionScopeEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateActionScopeSubscription>() => T;
 }
 
-export interface GuestActionInstanceNullablePromise
-  extends Promise<GuestActionInstance | null>,
+export interface PageInfo {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
+}
+
+export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
+}
+
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfo>>,
     Fragmentable {
-  id: () => Promise<UUID>;
-  createdAt: () => Promise<DateTimeOutput>;
-  firstName: () => Promise<String>;
-  middleName: () => Promise<String>;
-  lastName: () => Promise<String>;
-  phone: () => Promise<String>;
-  email: () => Promise<String>;
-  address: () => Promise<String>;
-  action: <T = ActionScopePromise>() => T;
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface UserActionInstance {
+export interface ActionScopeEdge {
+  node: ActionScope;
+  cursor: String;
+}
+
+export interface ActionScopeEdgePromise
+  extends Promise<ActionScopeEdge>,
+    Fragmentable {
+  node: <T = ActionScopePromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface ActionScopeEdgeSubscription
+  extends Promise<AsyncIterator<ActionScopeEdge>>,
+    Fragmentable {
+  node: <T = ActionScopeSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateActionScope {
+  count: Int;
+}
+
+export interface AggregateActionScopePromise
+  extends Promise<AggregateActionScope>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateActionScopeSubscription
+  extends Promise<AsyncIterator<AggregateActionScope>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface AuthProvider {
   id: ID_Output;
+  name: String;
   createdAt: DateTimeOutput;
+  encodedId: String;
 }
 
-export interface UserActionInstancePromise
-  extends Promise<UserActionInstance>,
+export interface AuthProviderPromise
+  extends Promise<AuthProvider>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
   tags: <T = FragmentableArray<Tag>>(args?: {
     where?: TagWhereInput;
@@ -5633,14 +6017,14 @@ export interface UserActionInstancePromise
     first?: Int;
     last?: Int;
   }) => T;
-  user: <T = UserPromise>() => T;
-  actionScope: <T = ActionScopePromise>() => T;
+  encodedId: () => Promise<String>;
 }
 
-export interface UserActionInstanceSubscription
-  extends Promise<AsyncIterator<UserActionInstance>>,
+export interface AuthProviderSubscription
+  extends Promise<AsyncIterator<AuthProvider>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   tags: <T = Promise<AsyncIterator<TagSubscription>>>(args?: {
     where?: TagWhereInput;
@@ -5651,14 +6035,14 @@ export interface UserActionInstanceSubscription
     first?: Int;
     last?: Int;
   }) => T;
-  user: <T = UserSubscription>() => T;
-  actionScope: <T = ActionScopeSubscription>() => T;
+  encodedId: () => Promise<AsyncIterator<String>>;
 }
 
-export interface UserActionInstanceNullablePromise
-  extends Promise<UserActionInstance | null>,
+export interface AuthProviderNullablePromise
+  extends Promise<AuthProvider | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
   tags: <T = FragmentableArray<Tag>>(args?: {
     where?: TagWhereInput;
@@ -5669,291 +6053,63 @@ export interface UserActionInstanceNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
-  user: <T = UserPromise>() => T;
-  actionScope: <T = ActionScopePromise>() => T;
+  encodedId: () => Promise<String>;
 }
 
-export interface User {
-  id: UUID;
-  updatedAt: DateTimeOutput;
-  createdAt: DateTimeOutput;
-  isOwnUser: Boolean;
-  isDeleted: Boolean;
+export interface AuthProviderConnection {
+  pageInfo: PageInfo;
+  edges: AuthProviderEdge[];
 }
 
-export interface UserPromise extends Promise<User>, Fragmentable {
-  id: () => Promise<UUID>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  createdAt: () => Promise<DateTimeOutput>;
-  isOwnUser: () => Promise<Boolean>;
-  ownUser: <T = OwnUserPromise>() => T;
-  primaryAuthProvider: <T = AuthProviderUserPromise>() => T;
-  authProviders: <T = FragmentableArray<AuthProviderUser>>(args?: {
-    where?: AuthProviderUserWhereInput;
-    orderBy?: AuthProviderUserOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  roles: <T = FragmentableArray<UserRole>>(args?: {
-    where?: UserRoleWhereInput;
-    orderBy?: UserRoleOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  optionalScopes: <T = FragmentableArray<ActionScope>>(args?: {
-    where?: ActionScopeWhereInput;
-    orderBy?: ActionScopeOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  tags: <T = FragmentableArray<Tag>>(args?: {
-    where?: TagWhereInput;
-    orderBy?: TagOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  actionsHistory: <T = FragmentableArray<UserActionInstance>>(args?: {
-    where?: UserActionInstanceWhereInput;
-    orderBy?: UserActionInstanceOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  isDeleted: () => Promise<Boolean>;
-}
-
-export interface UserSubscription
-  extends Promise<AsyncIterator<User>>,
+export interface AuthProviderConnectionPromise
+  extends Promise<AuthProviderConnection>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<UUID>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  isOwnUser: () => Promise<AsyncIterator<Boolean>>;
-  ownUser: <T = OwnUserSubscription>() => T;
-  primaryAuthProvider: <T = AuthProviderUserSubscription>() => T;
-  authProviders: <
-    T = Promise<AsyncIterator<AuthProviderUserSubscription>>
-  >(args?: {
-    where?: AuthProviderUserWhereInput;
-    orderBy?: AuthProviderUserOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  roles: <T = Promise<AsyncIterator<UserRoleSubscription>>>(args?: {
-    where?: UserRoleWhereInput;
-    orderBy?: UserRoleOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  optionalScopes: <T = Promise<AsyncIterator<ActionScopeSubscription>>>(args?: {
-    where?: ActionScopeWhereInput;
-    orderBy?: ActionScopeOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  tags: <T = Promise<AsyncIterator<TagSubscription>>>(args?: {
-    where?: TagWhereInput;
-    orderBy?: TagOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  actionsHistory: <
-    T = Promise<AsyncIterator<UserActionInstanceSubscription>>
-  >(args?: {
-    where?: UserActionInstanceWhereInput;
-    orderBy?: UserActionInstanceOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  isDeleted: () => Promise<AsyncIterator<Boolean>>;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<AuthProviderEdge>>() => T;
+  aggregate: <T = AggregateAuthProviderPromise>() => T;
 }
 
-export interface UserNullablePromise
-  extends Promise<User | null>,
+export interface AuthProviderConnectionSubscription
+  extends Promise<AsyncIterator<AuthProviderConnection>>,
     Fragmentable {
-  id: () => Promise<UUID>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  createdAt: () => Promise<DateTimeOutput>;
-  isOwnUser: () => Promise<Boolean>;
-  ownUser: <T = OwnUserPromise>() => T;
-  primaryAuthProvider: <T = AuthProviderUserPromise>() => T;
-  authProviders: <T = FragmentableArray<AuthProviderUser>>(args?: {
-    where?: AuthProviderUserWhereInput;
-    orderBy?: AuthProviderUserOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  roles: <T = FragmentableArray<UserRole>>(args?: {
-    where?: UserRoleWhereInput;
-    orderBy?: UserRoleOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  optionalScopes: <T = FragmentableArray<ActionScope>>(args?: {
-    where?: ActionScopeWhereInput;
-    orderBy?: ActionScopeOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  tags: <T = FragmentableArray<Tag>>(args?: {
-    where?: TagWhereInput;
-    orderBy?: TagOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  actionsHistory: <T = FragmentableArray<UserActionInstance>>(args?: {
-    where?: UserActionInstanceWhereInput;
-    orderBy?: UserActionInstanceOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  isDeleted: () => Promise<Boolean>;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<AuthProviderEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateAuthProviderSubscription>() => T;
 }
 
-export interface OwnUser {
-  id: UUID;
-  username: String;
-  password: String;
-  firstName: String;
-  middleName?: String;
-  lastName: String;
-  email: String;
-  phone?: String;
-  address?: String;
-  coordinates?: String;
-  pic?: String;
-  otherDetails?: String;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
+export interface AuthProviderEdge {
+  node: AuthProvider;
+  cursor: String;
 }
 
-export interface OwnUserPromise extends Promise<OwnUser>, Fragmentable {
-  id: () => Promise<UUID>;
-  username: () => Promise<String>;
-  password: () => Promise<String>;
-  firstName: () => Promise<String>;
-  middleName: () => Promise<String>;
-  lastName: () => Promise<String>;
-  email: () => Promise<String>;
-  phone: () => Promise<String>;
-  address: () => Promise<String>;
-  coordinates: () => Promise<String>;
-  pic: () => Promise<String>;
-  otherDetails: () => Promise<String>;
-  user: <T = UserPromise>() => T;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  tags: <T = FragmentableArray<Tag>>(args?: {
-    where?: TagWhereInput;
-    orderBy?: TagOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface OwnUserSubscription
-  extends Promise<AsyncIterator<OwnUser>>,
+export interface AuthProviderEdgePromise
+  extends Promise<AuthProviderEdge>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<UUID>>;
-  username: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
-  firstName: () => Promise<AsyncIterator<String>>;
-  middleName: () => Promise<AsyncIterator<String>>;
-  lastName: () => Promise<AsyncIterator<String>>;
-  email: () => Promise<AsyncIterator<String>>;
-  phone: () => Promise<AsyncIterator<String>>;
-  address: () => Promise<AsyncIterator<String>>;
-  coordinates: () => Promise<AsyncIterator<String>>;
-  pic: () => Promise<AsyncIterator<String>>;
-  otherDetails: () => Promise<AsyncIterator<String>>;
-  user: <T = UserSubscription>() => T;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  tags: <T = Promise<AsyncIterator<TagSubscription>>>(args?: {
-    where?: TagWhereInput;
-    orderBy?: TagOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  node: <T = AuthProviderPromise>() => T;
+  cursor: () => Promise<String>;
 }
 
-export interface OwnUserNullablePromise
-  extends Promise<OwnUser | null>,
+export interface AuthProviderEdgeSubscription
+  extends Promise<AsyncIterator<AuthProviderEdge>>,
     Fragmentable {
-  id: () => Promise<UUID>;
-  username: () => Promise<String>;
-  password: () => Promise<String>;
-  firstName: () => Promise<String>;
-  middleName: () => Promise<String>;
-  lastName: () => Promise<String>;
-  email: () => Promise<String>;
-  phone: () => Promise<String>;
-  address: () => Promise<String>;
-  coordinates: () => Promise<String>;
-  pic: () => Promise<String>;
-  otherDetails: () => Promise<String>;
-  user: <T = UserPromise>() => T;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  tags: <T = FragmentableArray<Tag>>(args?: {
-    where?: TagWhereInput;
-    orderBy?: TagOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  node: <T = AuthProviderSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateAuthProvider {
+  count: Int;
+}
+
+export interface AggregateAuthProviderPromise
+  extends Promise<AggregateAuthProvider>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateAuthProviderSubscription
+  extends Promise<AsyncIterator<AggregateAuthProvider>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface AuthProviderUser {
@@ -6071,18 +6227,228 @@ export interface AuthProviderUserNullablePromise
   }) => T;
 }
 
-export interface AuthProvider {
-  id: ID_Output;
-  name: String;
+export interface User {
+  id: UUID;
+  updatedAt: DateTimeOutput;
   createdAt: DateTimeOutput;
+  isOwnUser: Boolean;
+  isDeleted: Boolean;
+  encodedId: String;
+  displayName: String;
 }
 
-export interface AuthProviderPromise
-  extends Promise<AuthProvider>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
+export interface UserPromise extends Promise<User>, Fragmentable {
+  id: () => Promise<UUID>;
+  updatedAt: () => Promise<DateTimeOutput>;
   createdAt: () => Promise<DateTimeOutput>;
+  isOwnUser: () => Promise<Boolean>;
+  ownUser: <T = OwnUserPromise>() => T;
+  primaryAuthProvider: <T = AuthProviderUserPromise>() => T;
+  authProviders: <T = FragmentableArray<AuthProviderUser>>(args?: {
+    where?: AuthProviderUserWhereInput;
+    orderBy?: AuthProviderUserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  roles: <T = FragmentableArray<UserRole>>(args?: {
+    where?: UserRoleWhereInput;
+    orderBy?: UserRoleOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  optionalScopes: <T = FragmentableArray<ActionScope>>(args?: {
+    where?: ActionScopeWhereInput;
+    orderBy?: ActionScopeOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  tags: <T = FragmentableArray<Tag>>(args?: {
+    where?: TagWhereInput;
+    orderBy?: TagOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  actionsHistory: <T = FragmentableArray<UserActionInstance>>(args?: {
+    where?: UserActionInstanceWhereInput;
+    orderBy?: UserActionInstanceOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  isDeleted: () => Promise<Boolean>;
+  encodedId: () => Promise<String>;
+  displayName: () => Promise<String>;
+}
+
+export interface UserSubscription
+  extends Promise<AsyncIterator<User>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<UUID>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  isOwnUser: () => Promise<AsyncIterator<Boolean>>;
+  ownUser: <T = OwnUserSubscription>() => T;
+  primaryAuthProvider: <T = AuthProviderUserSubscription>() => T;
+  authProviders: <
+    T = Promise<AsyncIterator<AuthProviderUserSubscription>>
+  >(args?: {
+    where?: AuthProviderUserWhereInput;
+    orderBy?: AuthProviderUserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  roles: <T = Promise<AsyncIterator<UserRoleSubscription>>>(args?: {
+    where?: UserRoleWhereInput;
+    orderBy?: UserRoleOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  optionalScopes: <T = Promise<AsyncIterator<ActionScopeSubscription>>>(args?: {
+    where?: ActionScopeWhereInput;
+    orderBy?: ActionScopeOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  tags: <T = Promise<AsyncIterator<TagSubscription>>>(args?: {
+    where?: TagWhereInput;
+    orderBy?: TagOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  actionsHistory: <
+    T = Promise<AsyncIterator<UserActionInstanceSubscription>>
+  >(args?: {
+    where?: UserActionInstanceWhereInput;
+    orderBy?: UserActionInstanceOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  isDeleted: () => Promise<AsyncIterator<Boolean>>;
+  encodedId: () => Promise<AsyncIterator<String>>;
+  displayName: () => Promise<AsyncIterator<String>>;
+}
+
+export interface UserNullablePromise
+  extends Promise<User | null>,
+    Fragmentable {
+  id: () => Promise<UUID>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  createdAt: () => Promise<DateTimeOutput>;
+  isOwnUser: () => Promise<Boolean>;
+  ownUser: <T = OwnUserPromise>() => T;
+  primaryAuthProvider: <T = AuthProviderUserPromise>() => T;
+  authProviders: <T = FragmentableArray<AuthProviderUser>>(args?: {
+    where?: AuthProviderUserWhereInput;
+    orderBy?: AuthProviderUserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  roles: <T = FragmentableArray<UserRole>>(args?: {
+    where?: UserRoleWhereInput;
+    orderBy?: UserRoleOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  optionalScopes: <T = FragmentableArray<ActionScope>>(args?: {
+    where?: ActionScopeWhereInput;
+    orderBy?: ActionScopeOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  tags: <T = FragmentableArray<Tag>>(args?: {
+    where?: TagWhereInput;
+    orderBy?: TagOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  actionsHistory: <T = FragmentableArray<UserActionInstance>>(args?: {
+    where?: UserActionInstanceWhereInput;
+    orderBy?: UserActionInstanceOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  isDeleted: () => Promise<Boolean>;
+  encodedId: () => Promise<String>;
+  displayName: () => Promise<String>;
+}
+
+export interface OwnUser {
+  id: UUID;
+  username: String;
+  password: String;
+  firstName: String;
+  middleName?: String;
+  lastName: String;
+  email: String;
+  phone?: String;
+  address?: String;
+  coordinates?: String;
+  pic?: String;
+  otherDetails?: String;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+}
+
+export interface OwnUserPromise extends Promise<OwnUser>, Fragmentable {
+  id: () => Promise<UUID>;
+  username: () => Promise<String>;
+  password: () => Promise<String>;
+  firstName: () => Promise<String>;
+  middleName: () => Promise<String>;
+  lastName: () => Promise<String>;
+  email: () => Promise<String>;
+  phone: () => Promise<String>;
+  address: () => Promise<String>;
+  coordinates: () => Promise<String>;
+  pic: () => Promise<String>;
+  otherDetails: () => Promise<String>;
+  user: <T = UserPromise>() => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
   tags: <T = FragmentableArray<Tag>>(args?: {
     where?: TagWhereInput;
     orderBy?: TagOrderByInput;
@@ -6094,12 +6460,24 @@ export interface AuthProviderPromise
   }) => T;
 }
 
-export interface AuthProviderSubscription
-  extends Promise<AsyncIterator<AuthProvider>>,
+export interface OwnUserSubscription
+  extends Promise<AsyncIterator<OwnUser>>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
+  id: () => Promise<AsyncIterator<UUID>>;
+  username: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  firstName: () => Promise<AsyncIterator<String>>;
+  middleName: () => Promise<AsyncIterator<String>>;
+  lastName: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  phone: () => Promise<AsyncIterator<String>>;
+  address: () => Promise<AsyncIterator<String>>;
+  coordinates: () => Promise<AsyncIterator<String>>;
+  pic: () => Promise<AsyncIterator<String>>;
+  otherDetails: () => Promise<AsyncIterator<String>>;
+  user: <T = UserSubscription>() => T;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   tags: <T = Promise<AsyncIterator<TagSubscription>>>(args?: {
     where?: TagWhereInput;
     orderBy?: TagOrderByInput;
@@ -6111,12 +6489,24 @@ export interface AuthProviderSubscription
   }) => T;
 }
 
-export interface AuthProviderNullablePromise
-  extends Promise<AuthProvider | null>,
+export interface OwnUserNullablePromise
+  extends Promise<OwnUser | null>,
     Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
+  id: () => Promise<UUID>;
+  username: () => Promise<String>;
+  password: () => Promise<String>;
+  firstName: () => Promise<String>;
+  middleName: () => Promise<String>;
+  lastName: () => Promise<String>;
+  email: () => Promise<String>;
+  phone: () => Promise<String>;
+  address: () => Promise<String>;
+  coordinates: () => Promise<String>;
+  pic: () => Promise<String>;
+  otherDetails: () => Promise<String>;
+  user: <T = UserPromise>() => T;
   createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
   tags: <T = FragmentableArray<Tag>>(args?: {
     where?: TagWhereInput;
     orderBy?: TagOrderByInput;
@@ -6214,139 +6604,63 @@ export interface UserRoleNullablePromise
   }) => T;
 }
 
-export interface ActionScopeConnection {
-  pageInfo: PageInfo;
-  edges: ActionScopeEdge[];
+export interface UserActionInstance {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
 }
 
-export interface ActionScopeConnectionPromise
-  extends Promise<ActionScopeConnection>,
+export interface UserActionInstancePromise
+  extends Promise<UserActionInstance>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<ActionScopeEdge>>() => T;
-  aggregate: <T = AggregateActionScopePromise>() => T;
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  tags: <T = FragmentableArray<Tag>>(args?: {
+    where?: TagWhereInput;
+    orderBy?: TagOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  user: <T = UserPromise>() => T;
+  actionScope: <T = ActionScopePromise>() => T;
 }
 
-export interface ActionScopeConnectionSubscription
-  extends Promise<AsyncIterator<ActionScopeConnection>>,
+export interface UserActionInstanceSubscription
+  extends Promise<AsyncIterator<UserActionInstance>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<ActionScopeEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateActionScopeSubscription>() => T;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  tags: <T = Promise<AsyncIterator<TagSubscription>>>(args?: {
+    where?: TagWhereInput;
+    orderBy?: TagOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  user: <T = UserSubscription>() => T;
+  actionScope: <T = ActionScopeSubscription>() => T;
 }
 
-export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
-}
-
-export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
+export interface UserActionInstanceNullablePromise
+  extends Promise<UserActionInstance | null>,
     Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface ActionScopeEdge {
-  node: ActionScope;
-  cursor: String;
-}
-
-export interface ActionScopeEdgePromise
-  extends Promise<ActionScopeEdge>,
-    Fragmentable {
-  node: <T = ActionScopePromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface ActionScopeEdgeSubscription
-  extends Promise<AsyncIterator<ActionScopeEdge>>,
-    Fragmentable {
-  node: <T = ActionScopeSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateActionScope {
-  count: Int;
-}
-
-export interface AggregateActionScopePromise
-  extends Promise<AggregateActionScope>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateActionScopeSubscription
-  extends Promise<AsyncIterator<AggregateActionScope>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface AuthProviderConnection {
-  pageInfo: PageInfo;
-  edges: AuthProviderEdge[];
-}
-
-export interface AuthProviderConnectionPromise
-  extends Promise<AuthProviderConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<AuthProviderEdge>>() => T;
-  aggregate: <T = AggregateAuthProviderPromise>() => T;
-}
-
-export interface AuthProviderConnectionSubscription
-  extends Promise<AsyncIterator<AuthProviderConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<AuthProviderEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateAuthProviderSubscription>() => T;
-}
-
-export interface AuthProviderEdge {
-  node: AuthProvider;
-  cursor: String;
-}
-
-export interface AuthProviderEdgePromise
-  extends Promise<AuthProviderEdge>,
-    Fragmentable {
-  node: <T = AuthProviderPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface AuthProviderEdgeSubscription
-  extends Promise<AsyncIterator<AuthProviderEdge>>,
-    Fragmentable {
-  node: <T = AuthProviderSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateAuthProvider {
-  count: Int;
-}
-
-export interface AggregateAuthProviderPromise
-  extends Promise<AggregateAuthProvider>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateAuthProviderSubscription
-  extends Promise<AsyncIterator<AggregateAuthProvider>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  tags: <T = FragmentableArray<Tag>>(args?: {
+    where?: TagWhereInput;
+    orderBy?: TagOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  user: <T = UserPromise>() => T;
+  actionScope: <T = ActionScopePromise>() => T;
 }
 
 export interface AuthProviderUserConnection {
@@ -6403,6 +6717,59 @@ export interface AggregateAuthProviderUserSubscription
   extends Promise<AsyncIterator<AggregateAuthProviderUser>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface GuestActionInstance {
+  id: UUID;
+  createdAt: DateTimeOutput;
+  firstName: String;
+  middleName?: String;
+  lastName: String;
+  phone: String;
+  email: String;
+  address: String;
+}
+
+export interface GuestActionInstancePromise
+  extends Promise<GuestActionInstance>,
+    Fragmentable {
+  id: () => Promise<UUID>;
+  createdAt: () => Promise<DateTimeOutput>;
+  firstName: () => Promise<String>;
+  middleName: () => Promise<String>;
+  lastName: () => Promise<String>;
+  phone: () => Promise<String>;
+  email: () => Promise<String>;
+  address: () => Promise<String>;
+  action: <T = ActionScopePromise>() => T;
+}
+
+export interface GuestActionInstanceSubscription
+  extends Promise<AsyncIterator<GuestActionInstance>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<UUID>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  firstName: () => Promise<AsyncIterator<String>>;
+  middleName: () => Promise<AsyncIterator<String>>;
+  lastName: () => Promise<AsyncIterator<String>>;
+  phone: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  address: () => Promise<AsyncIterator<String>>;
+  action: <T = ActionScopeSubscription>() => T;
+}
+
+export interface GuestActionInstanceNullablePromise
+  extends Promise<GuestActionInstance | null>,
+    Fragmentable {
+  id: () => Promise<UUID>;
+  createdAt: () => Promise<DateTimeOutput>;
+  firstName: () => Promise<String>;
+  middleName: () => Promise<String>;
+  lastName: () => Promise<String>;
+  phone: () => Promise<String>;
+  email: () => Promise<String>;
+  address: () => Promise<String>;
+  action: <T = ActionScopePromise>() => T;
 }
 
 export interface GuestActionInstanceConnection {
@@ -6470,6 +6837,8 @@ export interface Info {
   title: String;
   description: String;
   descriptionSmall: String;
+  encodedId: String;
+  displayName: String;
 }
 
 export interface InfoPromise extends Promise<Info>, Fragmentable {
@@ -6508,7 +6877,18 @@ export interface InfoPromise extends Promise<Info>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
+  intercations: <T = FragmentableArray<Interaction>>(args?: {
+    where?: InteractionWhereInput;
+    orderBy?: InteractionOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   resourcePrimary: <T = ResourcePromise>() => T;
+  encodedId: () => Promise<String>;
+  displayName: () => Promise<String>;
 }
 
 export interface InfoSubscription
@@ -6549,7 +6929,18 @@ export interface InfoSubscription
     first?: Int;
     last?: Int;
   }) => T;
+  intercations: <T = Promise<AsyncIterator<InteractionSubscription>>>(args?: {
+    where?: InteractionWhereInput;
+    orderBy?: InteractionOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   resourcePrimary: <T = ResourceSubscription>() => T;
+  encodedId: () => Promise<AsyncIterator<String>>;
+  displayName: () => Promise<AsyncIterator<String>>;
 }
 
 export interface InfoNullablePromise
@@ -6590,7 +6981,18 @@ export interface InfoNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
+  intercations: <T = FragmentableArray<Interaction>>(args?: {
+    where?: InteractionWhereInput;
+    orderBy?: InteractionOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
   resourcePrimary: <T = ResourcePromise>() => T;
+  encodedId: () => Promise<String>;
+  displayName: () => Promise<String>;
 }
 
 export interface Remote {
@@ -6601,6 +7003,8 @@ export interface Remote {
   link?: String;
   query?: String;
   queryResolution?: String;
+  encodedId: String;
+  displayName: String;
 }
 
 export interface RemotePromise extends Promise<Remote>, Fragmentable {
@@ -6620,6 +7024,8 @@ export interface RemotePromise extends Promise<Remote>, Fragmentable {
   link: () => Promise<String>;
   query: () => Promise<String>;
   queryResolution: () => Promise<String>;
+  encodedId: () => Promise<String>;
+  displayName: () => Promise<String>;
 }
 
 export interface RemoteSubscription
@@ -6641,6 +7047,8 @@ export interface RemoteSubscription
   link: () => Promise<AsyncIterator<String>>;
   query: () => Promise<AsyncIterator<String>>;
   queryResolution: () => Promise<AsyncIterator<String>>;
+  encodedId: () => Promise<AsyncIterator<String>>;
+  displayName: () => Promise<AsyncIterator<String>>;
 }
 
 export interface RemoteNullablePromise
@@ -6662,6 +7070,8 @@ export interface RemoteNullablePromise
   link: () => Promise<String>;
   query: () => Promise<String>;
   queryResolution: () => Promise<String>;
+  encodedId: () => Promise<String>;
+  displayName: () => Promise<String>;
 }
 
 export interface InfoType {
@@ -6724,6 +7134,8 @@ export interface Resource {
   updatedAt: DateTimeOutput;
   createdAt: DateTimeOutput;
   link?: String;
+  encodedId: String;
+  displayName: String;
 }
 
 export interface ResourcePromise extends Promise<Resource>, Fragmentable {
@@ -6743,6 +7155,8 @@ export interface ResourcePromise extends Promise<Resource>, Fragmentable {
   media: <T = MediaPromise>() => T;
   remote: <T = RemotePromise>() => T;
   link: () => Promise<String>;
+  encodedId: () => Promise<String>;
+  displayName: () => Promise<String>;
 }
 
 export interface ResourceSubscription
@@ -6764,6 +7178,8 @@ export interface ResourceSubscription
   media: <T = MediaSubscription>() => T;
   remote: <T = RemoteSubscription>() => T;
   link: () => Promise<AsyncIterator<String>>;
+  encodedId: () => Promise<AsyncIterator<String>>;
+  displayName: () => Promise<AsyncIterator<String>>;
 }
 
 export interface ResourceNullablePromise
@@ -6785,12 +7201,16 @@ export interface ResourceNullablePromise
   media: <T = MediaPromise>() => T;
   remote: <T = RemotePromise>() => T;
   link: () => Promise<String>;
+  encodedId: () => Promise<String>;
+  displayName: () => Promise<String>;
 }
 
 export interface Interaction {
   id: ID_Output;
   updatedAt: DateTimeOutput;
   createdAt: DateTimeOutput;
+  encodedId: String;
+  displayName: String;
 }
 
 export interface InteractionPromise extends Promise<Interaction>, Fragmentable {
@@ -6810,6 +7230,8 @@ export interface InteractionPromise extends Promise<Interaction>, Fragmentable {
   remote: <T = RemotePromise>() => T;
   publicUser: <T = UserPromise>() => T;
   publicEntity: <T = PublicEntityPromise>() => T;
+  encodedId: () => Promise<String>;
+  displayName: () => Promise<String>;
 }
 
 export interface InteractionSubscription
@@ -6831,6 +7253,8 @@ export interface InteractionSubscription
   remote: <T = RemoteSubscription>() => T;
   publicUser: <T = UserSubscription>() => T;
   publicEntity: <T = PublicEntitySubscription>() => T;
+  encodedId: () => Promise<AsyncIterator<String>>;
+  displayName: () => Promise<AsyncIterator<String>>;
 }
 
 export interface InteractionNullablePromise
@@ -6852,12 +7276,15 @@ export interface InteractionNullablePromise
   remote: <T = RemotePromise>() => T;
   publicUser: <T = UserPromise>() => T;
   publicEntity: <T = PublicEntityPromise>() => T;
+  encodedId: () => Promise<String>;
+  displayName: () => Promise<String>;
 }
 
 export interface InteractionType {
   id: ID_Output;
   createdAt: DateTimeOutput;
-  name: String;
+  encodedId: String;
+  displayName: String;
 }
 
 export interface InteractionTypePromise
@@ -6874,7 +7301,8 @@ export interface InteractionTypePromise
     first?: Int;
     last?: Int;
   }) => T;
-  name: () => Promise<String>;
+  encodedId: () => Promise<String>;
+  displayName: () => Promise<String>;
 }
 
 export interface InteractionTypeSubscription
@@ -6891,7 +7319,8 @@ export interface InteractionTypeSubscription
     first?: Int;
     last?: Int;
   }) => T;
-  name: () => Promise<AsyncIterator<String>>;
+  encodedId: () => Promise<AsyncIterator<String>>;
+  displayName: () => Promise<AsyncIterator<String>>;
 }
 
 export interface InteractionTypeNullablePromise
@@ -6908,13 +7337,16 @@ export interface InteractionTypeNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
-  name: () => Promise<String>;
+  encodedId: () => Promise<String>;
+  displayName: () => Promise<String>;
 }
 
 export interface PublicEntity {
   id: ID_Output;
   updatedAt: DateTimeOutput;
   createdAt: DateTimeOutput;
+  encodedId: String;
+  displayName: String;
 }
 
 export interface PublicEntityPromise
@@ -6934,6 +7366,8 @@ export interface PublicEntityPromise
   }) => T;
   entityType: <T = PublicEntityTypePromise>() => T;
   remote: <T = RemotePromise>() => T;
+  encodedId: () => Promise<String>;
+  displayName: () => Promise<String>;
 }
 
 export interface PublicEntitySubscription
@@ -6953,6 +7387,8 @@ export interface PublicEntitySubscription
   }) => T;
   entityType: <T = PublicEntityTypeSubscription>() => T;
   remote: <T = RemoteSubscription>() => T;
+  encodedId: () => Promise<AsyncIterator<String>>;
+  displayName: () => Promise<AsyncIterator<String>>;
 }
 
 export interface PublicEntityNullablePromise
@@ -6972,12 +7408,15 @@ export interface PublicEntityNullablePromise
   }) => T;
   entityType: <T = PublicEntityTypePromise>() => T;
   remote: <T = RemotePromise>() => T;
+  encodedId: () => Promise<String>;
+  displayName: () => Promise<String>;
 }
 
 export interface PublicEntityType {
   id: ID_Output;
   createdAt: DateTimeOutput;
-  name: String;
+  encodedId: String;
+  displayName: String;
 }
 
 export interface PublicEntityTypePromise
@@ -6994,7 +7433,8 @@ export interface PublicEntityTypePromise
     first?: Int;
     last?: Int;
   }) => T;
-  name: () => Promise<String>;
+  encodedId: () => Promise<String>;
+  displayName: () => Promise<String>;
 }
 
 export interface PublicEntityTypeSubscription
@@ -7011,7 +7451,8 @@ export interface PublicEntityTypeSubscription
     first?: Int;
     last?: Int;
   }) => T;
-  name: () => Promise<AsyncIterator<String>>;
+  encodedId: () => Promise<AsyncIterator<String>>;
+  displayName: () => Promise<AsyncIterator<String>>;
 }
 
 export interface PublicEntityTypeNullablePromise
@@ -7028,7 +7469,8 @@ export interface PublicEntityTypeNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
-  name: () => Promise<String>;
+  encodedId: () => Promise<String>;
+  displayName: () => Promise<String>;
 }
 
 export interface Media {
@@ -7038,6 +7480,8 @@ export interface Media {
   title: String;
   description: String;
   descriptionSmall: String;
+  encodedId: String;
+  displayName: String;
 }
 
 export interface MediaPromise extends Promise<Media>, Fragmentable {
@@ -7057,6 +7501,8 @@ export interface MediaPromise extends Promise<Media>, Fragmentable {
   description: () => Promise<String>;
   descriptionSmall: () => Promise<String>;
   remote: <T = RemotePromise>() => T;
+  encodedId: () => Promise<String>;
+  displayName: () => Promise<String>;
 }
 
 export interface MediaSubscription
@@ -7078,6 +7524,8 @@ export interface MediaSubscription
   description: () => Promise<AsyncIterator<String>>;
   descriptionSmall: () => Promise<AsyncIterator<String>>;
   remote: <T = RemoteSubscription>() => T;
+  encodedId: () => Promise<AsyncIterator<String>>;
+  displayName: () => Promise<AsyncIterator<String>>;
 }
 
 export interface MediaNullablePromise
@@ -7099,6 +7547,8 @@ export interface MediaNullablePromise
   description: () => Promise<String>;
   descriptionSmall: () => Promise<String>;
   remote: <T = RemotePromise>() => T;
+  encodedId: () => Promise<String>;
+  displayName: () => Promise<String>;
 }
 
 export interface InfoConnection {
@@ -7218,6 +7668,8 @@ export interface Initiative {
   name: String;
   description: String;
   descriptionSmall: String;
+  encodedId: String;
+  displayName: String;
 }
 
 export interface InitiativePromise extends Promise<Initiative>, Fragmentable {
@@ -7265,6 +7717,8 @@ export interface InitiativePromise extends Promise<Initiative>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
+  encodedId: () => Promise<String>;
+  displayName: () => Promise<String>;
 }
 
 export interface InitiativeSubscription
@@ -7316,6 +7770,8 @@ export interface InitiativeSubscription
     first?: Int;
     last?: Int;
   }) => T;
+  encodedId: () => Promise<AsyncIterator<String>>;
+  displayName: () => Promise<AsyncIterator<String>>;
 }
 
 export interface InitiativeNullablePromise
@@ -7365,6 +7821,8 @@ export interface InitiativeNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
+  encodedId: () => Promise<String>;
+  displayName: () => Promise<String>;
 }
 
 export interface InitiativeConnection {
@@ -8132,6 +8590,7 @@ export interface ActionScopePreviousValues {
   id: ID_Output;
   createdAt: DateTimeOutput;
   name: String;
+  encodedId: String;
 }
 
 export interface ActionScopePreviousValuesPromise
@@ -8140,6 +8599,7 @@ export interface ActionScopePreviousValuesPromise
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
   name: () => Promise<String>;
+  encodedId: () => Promise<String>;
 }
 
 export interface ActionScopePreviousValuesSubscription
@@ -8148,6 +8608,7 @@ export interface ActionScopePreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   name: () => Promise<AsyncIterator<String>>;
+  encodedId: () => Promise<AsyncIterator<String>>;
 }
 
 export interface AuthProviderSubscriptionPayload {
@@ -8179,6 +8640,7 @@ export interface AuthProviderPreviousValues {
   id: ID_Output;
   name: String;
   createdAt: DateTimeOutput;
+  encodedId: String;
 }
 
 export interface AuthProviderPreviousValuesPromise
@@ -8187,6 +8649,7 @@ export interface AuthProviderPreviousValuesPromise
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
+  encodedId: () => Promise<String>;
 }
 
 export interface AuthProviderPreviousValuesSubscription
@@ -8195,6 +8658,7 @@ export interface AuthProviderPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  encodedId: () => Promise<AsyncIterator<String>>;
 }
 
 export interface AuthProviderUserSubscriptionPayload {
@@ -8377,6 +8841,8 @@ export interface InfoPreviousValues {
   title: String;
   description: String;
   descriptionSmall: String;
+  encodedId: String;
+  displayName: String;
 }
 
 export interface InfoPreviousValuesPromise
@@ -8388,6 +8854,8 @@ export interface InfoPreviousValuesPromise
   title: () => Promise<String>;
   description: () => Promise<String>;
   descriptionSmall: () => Promise<String>;
+  encodedId: () => Promise<String>;
+  displayName: () => Promise<String>;
 }
 
 export interface InfoPreviousValuesSubscription
@@ -8399,6 +8867,8 @@ export interface InfoPreviousValuesSubscription
   title: () => Promise<AsyncIterator<String>>;
   description: () => Promise<AsyncIterator<String>>;
   descriptionSmall: () => Promise<AsyncIterator<String>>;
+  encodedId: () => Promise<AsyncIterator<String>>;
+  displayName: () => Promise<AsyncIterator<String>>;
 }
 
 export interface InfoTypeSubscriptionPayload {
@@ -8480,6 +8950,8 @@ export interface InitiativePreviousValues {
   name: String;
   description: String;
   descriptionSmall: String;
+  encodedId: String;
+  displayName: String;
 }
 
 export interface InitiativePreviousValuesPromise
@@ -8491,6 +8963,8 @@ export interface InitiativePreviousValuesPromise
   name: () => Promise<String>;
   description: () => Promise<String>;
   descriptionSmall: () => Promise<String>;
+  encodedId: () => Promise<String>;
+  displayName: () => Promise<String>;
 }
 
 export interface InitiativePreviousValuesSubscription
@@ -8502,6 +8976,8 @@ export interface InitiativePreviousValuesSubscription
   name: () => Promise<AsyncIterator<String>>;
   description: () => Promise<AsyncIterator<String>>;
   descriptionSmall: () => Promise<AsyncIterator<String>>;
+  encodedId: () => Promise<AsyncIterator<String>>;
+  displayName: () => Promise<AsyncIterator<String>>;
 }
 
 export interface InteractionSubscriptionPayload {
@@ -8533,6 +9009,8 @@ export interface InteractionPreviousValues {
   id: ID_Output;
   updatedAt: DateTimeOutput;
   createdAt: DateTimeOutput;
+  encodedId: String;
+  displayName: String;
 }
 
 export interface InteractionPreviousValuesPromise
@@ -8541,6 +9019,8 @@ export interface InteractionPreviousValuesPromise
   id: () => Promise<ID_Output>;
   updatedAt: () => Promise<DateTimeOutput>;
   createdAt: () => Promise<DateTimeOutput>;
+  encodedId: () => Promise<String>;
+  displayName: () => Promise<String>;
 }
 
 export interface InteractionPreviousValuesSubscription
@@ -8549,6 +9029,8 @@ export interface InteractionPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  encodedId: () => Promise<AsyncIterator<String>>;
+  displayName: () => Promise<AsyncIterator<String>>;
 }
 
 export interface InteractionTypeSubscriptionPayload {
@@ -8579,7 +9061,8 @@ export interface InteractionTypeSubscriptionPayloadSubscription
 export interface InteractionTypePreviousValues {
   id: ID_Output;
   createdAt: DateTimeOutput;
-  name: String;
+  encodedId: String;
+  displayName: String;
 }
 
 export interface InteractionTypePreviousValuesPromise
@@ -8587,7 +9070,8 @@ export interface InteractionTypePreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
-  name: () => Promise<String>;
+  encodedId: () => Promise<String>;
+  displayName: () => Promise<String>;
 }
 
 export interface InteractionTypePreviousValuesSubscription
@@ -8595,7 +9079,8 @@ export interface InteractionTypePreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  name: () => Promise<AsyncIterator<String>>;
+  encodedId: () => Promise<AsyncIterator<String>>;
+  displayName: () => Promise<AsyncIterator<String>>;
 }
 
 export interface MediaSubscriptionPayload {
@@ -8630,6 +9115,8 @@ export interface MediaPreviousValues {
   title: String;
   description: String;
   descriptionSmall: String;
+  encodedId: String;
+  displayName: String;
 }
 
 export interface MediaPreviousValuesPromise
@@ -8641,6 +9128,8 @@ export interface MediaPreviousValuesPromise
   title: () => Promise<String>;
   description: () => Promise<String>;
   descriptionSmall: () => Promise<String>;
+  encodedId: () => Promise<String>;
+  displayName: () => Promise<String>;
 }
 
 export interface MediaPreviousValuesSubscription
@@ -8652,6 +9141,8 @@ export interface MediaPreviousValuesSubscription
   title: () => Promise<AsyncIterator<String>>;
   description: () => Promise<AsyncIterator<String>>;
   descriptionSmall: () => Promise<AsyncIterator<String>>;
+  encodedId: () => Promise<AsyncIterator<String>>;
+  displayName: () => Promise<AsyncIterator<String>>;
 }
 
 export interface OwnUserSubscriptionPayload {
@@ -8763,6 +9254,8 @@ export interface PublicEntityPreviousValues {
   id: ID_Output;
   updatedAt: DateTimeOutput;
   createdAt: DateTimeOutput;
+  encodedId: String;
+  displayName: String;
 }
 
 export interface PublicEntityPreviousValuesPromise
@@ -8771,6 +9264,8 @@ export interface PublicEntityPreviousValuesPromise
   id: () => Promise<ID_Output>;
   updatedAt: () => Promise<DateTimeOutput>;
   createdAt: () => Promise<DateTimeOutput>;
+  encodedId: () => Promise<String>;
+  displayName: () => Promise<String>;
 }
 
 export interface PublicEntityPreviousValuesSubscription
@@ -8779,6 +9274,8 @@ export interface PublicEntityPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  encodedId: () => Promise<AsyncIterator<String>>;
+  displayName: () => Promise<AsyncIterator<String>>;
 }
 
 export interface PublicEntityTypeSubscriptionPayload {
@@ -8809,7 +9306,8 @@ export interface PublicEntityTypeSubscriptionPayloadSubscription
 export interface PublicEntityTypePreviousValues {
   id: ID_Output;
   createdAt: DateTimeOutput;
-  name: String;
+  encodedId: String;
+  displayName: String;
 }
 
 export interface PublicEntityTypePreviousValuesPromise
@@ -8817,7 +9315,8 @@ export interface PublicEntityTypePreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
-  name: () => Promise<String>;
+  encodedId: () => Promise<String>;
+  displayName: () => Promise<String>;
 }
 
 export interface PublicEntityTypePreviousValuesSubscription
@@ -8825,7 +9324,8 @@ export interface PublicEntityTypePreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  name: () => Promise<AsyncIterator<String>>;
+  encodedId: () => Promise<AsyncIterator<String>>;
+  displayName: () => Promise<AsyncIterator<String>>;
 }
 
 export interface RemoteSubscriptionPayload {
@@ -8861,6 +9361,8 @@ export interface RemotePreviousValues {
   link?: String;
   query?: String;
   queryResolution?: String;
+  encodedId: String;
+  displayName: String;
 }
 
 export interface RemotePreviousValuesPromise
@@ -8873,6 +9375,8 @@ export interface RemotePreviousValuesPromise
   link: () => Promise<String>;
   query: () => Promise<String>;
   queryResolution: () => Promise<String>;
+  encodedId: () => Promise<String>;
+  displayName: () => Promise<String>;
 }
 
 export interface RemotePreviousValuesSubscription
@@ -8885,6 +9389,8 @@ export interface RemotePreviousValuesSubscription
   link: () => Promise<AsyncIterator<String>>;
   query: () => Promise<AsyncIterator<String>>;
   queryResolution: () => Promise<AsyncIterator<String>>;
+  encodedId: () => Promise<AsyncIterator<String>>;
+  displayName: () => Promise<AsyncIterator<String>>;
 }
 
 export interface ResourceSubscriptionPayload {
@@ -8917,6 +9423,8 @@ export interface ResourcePreviousValues {
   updatedAt: DateTimeOutput;
   createdAt: DateTimeOutput;
   link?: String;
+  encodedId: String;
+  displayName: String;
 }
 
 export interface ResourcePreviousValuesPromise
@@ -8926,6 +9434,8 @@ export interface ResourcePreviousValuesPromise
   updatedAt: () => Promise<DateTimeOutput>;
   createdAt: () => Promise<DateTimeOutput>;
   link: () => Promise<String>;
+  encodedId: () => Promise<String>;
+  displayName: () => Promise<String>;
 }
 
 export interface ResourcePreviousValuesSubscription
@@ -8935,6 +9445,8 @@ export interface ResourcePreviousValuesSubscription
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   link: () => Promise<AsyncIterator<String>>;
+  encodedId: () => Promise<AsyncIterator<String>>;
+  displayName: () => Promise<AsyncIterator<String>>;
 }
 
 export interface TagSubscriptionPayload {
@@ -8966,6 +9478,7 @@ export interface TagPreviousValues {
   id: ID_Output;
   name: String;
   createdAt: DateTimeOutput;
+  encodedId: String;
 }
 
 export interface TagPreviousValuesPromise
@@ -8974,6 +9487,7 @@ export interface TagPreviousValuesPromise
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
+  encodedId: () => Promise<String>;
 }
 
 export interface TagPreviousValuesSubscription
@@ -8982,6 +9496,7 @@ export interface TagPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  encodedId: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UserSubscriptionPayload {
@@ -9015,6 +9530,8 @@ export interface UserPreviousValues {
   createdAt: DateTimeOutput;
   isOwnUser: Boolean;
   isDeleted: Boolean;
+  encodedId: String;
+  displayName: String;
 }
 
 export interface UserPreviousValuesPromise
@@ -9025,6 +9542,8 @@ export interface UserPreviousValuesPromise
   createdAt: () => Promise<DateTimeOutput>;
   isOwnUser: () => Promise<Boolean>;
   isDeleted: () => Promise<Boolean>;
+  encodedId: () => Promise<String>;
+  displayName: () => Promise<String>;
 }
 
 export interface UserPreviousValuesSubscription
@@ -9035,6 +9554,8 @@ export interface UserPreviousValuesSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   isOwnUser: () => Promise<AsyncIterator<Boolean>>;
   isDeleted: () => Promise<AsyncIterator<Boolean>>;
+  encodedId: () => Promise<AsyncIterator<String>>;
+  displayName: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UserActionInstanceSubscriptionPayload {
@@ -9157,12 +9678,12 @@ The `Int` scalar type represents non-fractional signed whole numeric values. Int
 */
 export type Int = number;
 
-export type UUID = string;
-
 /*
 The `Boolean` scalar type represents `true` or `false`.
 */
 export type Boolean = boolean;
+
+export type UUID = string;
 
 export type Long = string;
 
@@ -9220,15 +9741,11 @@ export const models: Model[] = [
     embedded: false
   },
   {
-    name: "InfoType",
-    embedded: false
-  },
-  {
     name: "Info",
     embedded: false
   },
   {
-    name: "InteractionType",
+    name: "InfoType",
     embedded: false
   },
   {
@@ -9236,11 +9753,15 @@ export const models: Model[] = [
     embedded: false
   },
   {
-    name: "PublicEntityType",
+    name: "InteractionType",
     embedded: false
   },
   {
     name: "PublicEntity",
+    embedded: false
+  },
+  {
+    name: "PublicEntityType",
     embedded: false
   },
   {

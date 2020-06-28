@@ -1,9 +1,12 @@
+""" A tag denotes certain quality about a record """
 type Tag {
   id: ID! @id
   name: String!
   createdAt: DateTime! @createdAt
+  encodedId: String!
 }
 
+""" A user can be internal user or external user. As part of phase 1 se will keep only internal/own user """
 type User {
   id: UUID! @id
   updatedAt: DateTime! @updatedAt
@@ -17,8 +20,11 @@ type User {
   tags: [Tag]!
   actionsHistory: [UserActionInstance] @relation(name: "UserActionHistory", onDelete: CASCADE)
   isDeleted: Boolean!
+  encodedId: String!
+  displayName: String! @unique
 }
 
+""" An internal user """
 type OwnUser {
   id: UUID! @id
   username: String!
@@ -38,6 +44,7 @@ type OwnUser {
   tags: [Tag]!
 }
 
+""" Any external user will be using one/many authProviders. An internal user can use one optionally """
 type AuthProviderUser {
   id: UUID! @id
   authProvider: AuthProvider!
@@ -60,6 +67,7 @@ type AuthProviderUser {
   tags: [Tag]!
 }
 
+""" This is extension of actionScopes. A role can encapsulate several action scopes which would allow a user to perform several tasks on DSS """
 type UserRole {
   id: ID! @id
   createdAt: DateTime! @createdAt
@@ -69,22 +77,25 @@ type UserRole {
   actionScopes: [ActionScope!]!
 }
 
+""" This is usually very less prone to change. Because it is a list of supported auth providers like google, facebook, etc. """
 type AuthProvider {
   id: ID! @id
   name: String!
   createdAt: DateTime! @createdAt
   tags: [Tag]!
+  encodedId: String!
 }
 
+""" An action scope defines what is the permission scope. Ideally only name matters here """
 type ActionScope {
   id: ID! @id
   createdAt: DateTime! @createdAt
   tags: [Tag]!
   name: String!
-  guestActions: [GuestActionInstance!] @relation(name: "GuestActionInstance")
-  userActions: [UserActionInstance!] @relation(name: "UserPerformedAction")
+  encodedId: String!
 }
 
+""" A table useful for analytics regarding actions performed by a guest user """
 type GuestActionInstance {
   id: UUID! @id
   createdAt: DateTime! @createdAt
@@ -97,6 +108,7 @@ type GuestActionInstance {
   action: ActionScope! @relation(name: "GuestPerformedAction")
 }
 
+""" A table useful for analytics regarding action performed by a User of DSS """
 type UserActionInstance {
   id: ID! @id
   createdAt: DateTime! @createdAt
@@ -105,6 +117,7 @@ type UserActionInstance {
   actionScope: ActionScope! @relation(name: "UserPerformedAction")
 }
 
+""" A remote resource is atomically defined by this table. A remote can be a link, a query, rpc, etc. """
 type Remote {
   id: ID! @id
   updatedAt: DateTime! @updatedAt
@@ -114,8 +127,11 @@ type Remote {
   link: String
   query: String
   queryResolution: String
+  encodedId: String!
+  displayName: String! @unique
 }
 
+""" This denotes any kind of media """
 type Media {
   id: ID! @id
   updatedAt: DateTime! @updatedAt
@@ -125,8 +141,11 @@ type Media {
   description: String!
   descriptionSmall: String!
   remote: Remote!
+  encodedId: String!
+  displayName: String! @unique
 }
 
+""" A resource is abstraction over media, interaction, remote, link, etc. One can think like `class Resource extends Media, Interaction, etc. {}` """
 type Resource {
   id: ID! @id
   updatedAt: DateTime! @updatedAt
@@ -136,15 +155,11 @@ type Resource {
   media: Media
   remote: Remote
   link: String
+  encodedId: String!
+  displayName: String! @unique
 }
 
-type InfoType {
-  id: ID! @id
-  createdAt: DateTime! @createdAt
-  name: String @unique
-  tags: [Tag]!
-}
-
+""" An Info is basically anything that denotes a user facing entity. Like article, blog, video, etc. """
 type Info {
   id: ID! @id
   updatedAt: DateTime! @updatedAt
@@ -157,16 +172,21 @@ type Info {
   remotes: [Remote] @relation(name: "InfoRemotes")
   infoType: InfoType!
   resources: [Resource] @relation(name: "InfoResources")
+  intercations: [Interaction] @relation(name: "InfoInteractions")
   resourcePrimary: Resource @relation(name: "InfoResourcePrimary")
+  encodedId: String!
+  displayName: String! @unique
 }
 
-type InteractionType {
+""" Type of Info - article, blog, video, gallery, etc. """
+type InfoType {
   id: ID! @id
   createdAt: DateTime! @createdAt
+  name: String @unique
   tags: [Tag]!
-  name: String! @unique
 }
 
+""" If an Info is public facing entity from DSS, then Interaction is for DSS from public. It could be a comment on an Info """
 type Interaction {
   id: ID! @id
   updatedAt: DateTime! @updatedAt
@@ -176,15 +196,20 @@ type Interaction {
   remote: Remote
   publicUser: User
   publicEntity: PublicEntity
+  encodedId: String!
+  displayName: String! @unique
 }
 
-type PublicEntityType {
+""" Type of Interaction - comment, emoji, fbcomment, tweet """
+type InteractionType {
   id: ID! @id
   createdAt: DateTime! @createdAt
   tags: [Tag]!
-  name: String! @unique
+  encodedId: String!
+  displayName: String! @unique
 }
 
+""" NO USE NOW """
 type PublicEntity {
   id: ID! @id
   updatedAt: DateTime! @updatedAt
@@ -192,14 +217,26 @@ type PublicEntity {
   tags: [Tag]!
   entityType: PublicEntityType!
   remote: Remote!
+  encodedId: String!
+  displayName: String! @unique
 }
 
+""" NO USE NOW """
+type PublicEntityType {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  tags: [Tag]!
+  encodedId: String!
+  displayName: String! @unique
+}
+
+""" The core of business in DSS are Initiatives """
 type Initiative {
   id: ID! @id
   updatedAt: DateTime! @updatedAt
   createdAt: DateTime! @createdAt
   tags: [Tag]!
-  name: String!
+  name: String! @unique
   infoPrimary: Info!
   description: String!
   descriptionSmall: String!
@@ -207,4 +244,6 @@ type Initiative {
   mediaPrimary: Media @relation(name: "InitiativeMediaPrimary")
   resources: [Resource!] @relation(name: "InitiativeResources")
   childInitiatives: [Initiative!] @relation(name: "ChildInitiatives")
+  encodedId: String!
+  displayName: String! @unique
 }

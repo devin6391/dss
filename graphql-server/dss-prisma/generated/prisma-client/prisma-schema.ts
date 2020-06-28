@@ -7,8 +7,7 @@ export const typeDefs = /* GraphQL */ `type ActionScope {
   createdAt: DateTime!
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
   name: String!
-  guestActions(where: GuestActionInstanceWhereInput, orderBy: GuestActionInstanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [GuestActionInstance!]
-  userActions(where: UserActionInstanceWhereInput, orderBy: UserActionInstanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserActionInstance!]
+  encodedId: String!
 }
 
 type ActionScopeConnection {
@@ -21,8 +20,7 @@ input ActionScopeCreateInput {
   id: ID
   tags: TagCreateManyInput
   name: String!
-  guestActions: GuestActionInstanceCreateManyWithoutActionInput
-  userActions: UserActionInstanceCreateManyWithoutActionScopeInput
+  encodedId: String!
 }
 
 input ActionScopeCreateManyInput {
@@ -30,28 +28,9 @@ input ActionScopeCreateManyInput {
   connect: [ActionScopeWhereUniqueInput!]
 }
 
-input ActionScopeCreateOneWithoutGuestActionsInput {
-  create: ActionScopeCreateWithoutGuestActionsInput
+input ActionScopeCreateOneInput {
+  create: ActionScopeCreateInput
   connect: ActionScopeWhereUniqueInput
-}
-
-input ActionScopeCreateOneWithoutUserActionsInput {
-  create: ActionScopeCreateWithoutUserActionsInput
-  connect: ActionScopeWhereUniqueInput
-}
-
-input ActionScopeCreateWithoutGuestActionsInput {
-  id: ID
-  tags: TagCreateManyInput
-  name: String!
-  userActions: UserActionInstanceCreateManyWithoutActionScopeInput
-}
-
-input ActionScopeCreateWithoutUserActionsInput {
-  id: ID
-  tags: TagCreateManyInput
-  name: String!
-  guestActions: GuestActionInstanceCreateManyWithoutActionInput
 }
 
 type ActionScopeEdge {
@@ -66,12 +45,15 @@ enum ActionScopeOrderByInput {
   createdAt_DESC
   name_ASC
   name_DESC
+  encodedId_ASC
+  encodedId_DESC
 }
 
 type ActionScopePreviousValues {
   id: ID!
   createdAt: DateTime!
   name: String!
+  encodedId: String!
 }
 
 input ActionScopeScalarWhereInput {
@@ -111,6 +93,20 @@ input ActionScopeScalarWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  encodedId: String
+  encodedId_not: String
+  encodedId_in: [String!]
+  encodedId_not_in: [String!]
+  encodedId_lt: String
+  encodedId_lte: String
+  encodedId_gt: String
+  encodedId_gte: String
+  encodedId_contains: String
+  encodedId_not_contains: String
+  encodedId_starts_with: String
+  encodedId_not_starts_with: String
+  encodedId_ends_with: String
+  encodedId_not_ends_with: String
   AND: [ActionScopeScalarWhereInput!]
   OR: [ActionScopeScalarWhereInput!]
   NOT: [ActionScopeScalarWhereInput!]
@@ -137,19 +133,18 @@ input ActionScopeSubscriptionWhereInput {
 input ActionScopeUpdateDataInput {
   tags: TagUpdateManyInput
   name: String
-  guestActions: GuestActionInstanceUpdateManyWithoutActionInput
-  userActions: UserActionInstanceUpdateManyWithoutActionScopeInput
+  encodedId: String
 }
 
 input ActionScopeUpdateInput {
   tags: TagUpdateManyInput
   name: String
-  guestActions: GuestActionInstanceUpdateManyWithoutActionInput
-  userActions: UserActionInstanceUpdateManyWithoutActionScopeInput
+  encodedId: String
 }
 
 input ActionScopeUpdateManyDataInput {
   name: String
+  encodedId: String
 }
 
 input ActionScopeUpdateManyInput {
@@ -166,6 +161,7 @@ input ActionScopeUpdateManyInput {
 
 input ActionScopeUpdateManyMutationInput {
   name: String
+  encodedId: String
 }
 
 input ActionScopeUpdateManyWithWhereNestedInput {
@@ -173,30 +169,11 @@ input ActionScopeUpdateManyWithWhereNestedInput {
   data: ActionScopeUpdateManyDataInput!
 }
 
-input ActionScopeUpdateOneRequiredWithoutGuestActionsInput {
-  create: ActionScopeCreateWithoutGuestActionsInput
-  update: ActionScopeUpdateWithoutGuestActionsDataInput
-  upsert: ActionScopeUpsertWithoutGuestActionsInput
+input ActionScopeUpdateOneRequiredInput {
+  create: ActionScopeCreateInput
+  update: ActionScopeUpdateDataInput
+  upsert: ActionScopeUpsertNestedInput
   connect: ActionScopeWhereUniqueInput
-}
-
-input ActionScopeUpdateOneRequiredWithoutUserActionsInput {
-  create: ActionScopeCreateWithoutUserActionsInput
-  update: ActionScopeUpdateWithoutUserActionsDataInput
-  upsert: ActionScopeUpsertWithoutUserActionsInput
-  connect: ActionScopeWhereUniqueInput
-}
-
-input ActionScopeUpdateWithoutGuestActionsDataInput {
-  tags: TagUpdateManyInput
-  name: String
-  userActions: UserActionInstanceUpdateManyWithoutActionScopeInput
-}
-
-input ActionScopeUpdateWithoutUserActionsDataInput {
-  tags: TagUpdateManyInput
-  name: String
-  guestActions: GuestActionInstanceUpdateManyWithoutActionInput
 }
 
 input ActionScopeUpdateWithWhereUniqueNestedInput {
@@ -204,14 +181,9 @@ input ActionScopeUpdateWithWhereUniqueNestedInput {
   data: ActionScopeUpdateDataInput!
 }
 
-input ActionScopeUpsertWithoutGuestActionsInput {
-  update: ActionScopeUpdateWithoutGuestActionsDataInput!
-  create: ActionScopeCreateWithoutGuestActionsInput!
-}
-
-input ActionScopeUpsertWithoutUserActionsInput {
-  update: ActionScopeUpdateWithoutUserActionsDataInput!
-  create: ActionScopeCreateWithoutUserActionsInput!
+input ActionScopeUpsertNestedInput {
+  update: ActionScopeUpdateDataInput!
+  create: ActionScopeCreateInput!
 }
 
 input ActionScopeUpsertWithWhereUniqueNestedInput {
@@ -260,12 +232,20 @@ input ActionScopeWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
-  guestActions_every: GuestActionInstanceWhereInput
-  guestActions_some: GuestActionInstanceWhereInput
-  guestActions_none: GuestActionInstanceWhereInput
-  userActions_every: UserActionInstanceWhereInput
-  userActions_some: UserActionInstanceWhereInput
-  userActions_none: UserActionInstanceWhereInput
+  encodedId: String
+  encodedId_not: String
+  encodedId_in: [String!]
+  encodedId_not_in: [String!]
+  encodedId_lt: String
+  encodedId_lte: String
+  encodedId_gt: String
+  encodedId_gte: String
+  encodedId_contains: String
+  encodedId_not_contains: String
+  encodedId_starts_with: String
+  encodedId_not_starts_with: String
+  encodedId_ends_with: String
+  encodedId_not_ends_with: String
   AND: [ActionScopeWhereInput!]
   OR: [ActionScopeWhereInput!]
   NOT: [ActionScopeWhereInput!]
@@ -356,6 +336,7 @@ type AuthProvider {
   name: String!
   createdAt: DateTime!
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
+  encodedId: String!
 }
 
 type AuthProviderConnection {
@@ -368,6 +349,7 @@ input AuthProviderCreateInput {
   id: ID
   name: String!
   tags: TagCreateManyInput
+  encodedId: String!
 }
 
 input AuthProviderCreateOneInput {
@@ -387,12 +369,15 @@ enum AuthProviderOrderByInput {
   name_DESC
   createdAt_ASC
   createdAt_DESC
+  encodedId_ASC
+  encodedId_DESC
 }
 
 type AuthProviderPreviousValues {
   id: ID!
   name: String!
   createdAt: DateTime!
+  encodedId: String!
 }
 
 type AuthProviderSubscriptionPayload {
@@ -416,15 +401,18 @@ input AuthProviderSubscriptionWhereInput {
 input AuthProviderUpdateDataInput {
   name: String
   tags: TagUpdateManyInput
+  encodedId: String
 }
 
 input AuthProviderUpdateInput {
   name: String
   tags: TagUpdateManyInput
+  encodedId: String
 }
 
 input AuthProviderUpdateManyMutationInput {
   name: String
+  encodedId: String
 }
 
 input AuthProviderUpdateOneRequiredInput {
@@ -1196,6 +1184,20 @@ input AuthProviderWhereInput {
   tags_every: TagWhereInput
   tags_some: TagWhereInput
   tags_none: TagWhereInput
+  encodedId: String
+  encodedId_not: String
+  encodedId_in: [String!]
+  encodedId_not_in: [String!]
+  encodedId_lt: String
+  encodedId_lte: String
+  encodedId_gt: String
+  encodedId_gte: String
+  encodedId_contains: String
+  encodedId_not_contains: String
+  encodedId_starts_with: String
+  encodedId_not_starts_with: String
+  encodedId_ends_with: String
+  encodedId_not_ends_with: String
   AND: [AuthProviderWhereInput!]
   OR: [AuthProviderWhereInput!]
   NOT: [AuthProviderWhereInput!]
@@ -1237,22 +1239,7 @@ input GuestActionInstanceCreateInput {
   phone: String!
   email: String!
   address: String!
-  action: ActionScopeCreateOneWithoutGuestActionsInput!
-}
-
-input GuestActionInstanceCreateManyWithoutActionInput {
-  create: [GuestActionInstanceCreateWithoutActionInput!]
-  connect: [GuestActionInstanceWhereUniqueInput!]
-}
-
-input GuestActionInstanceCreateWithoutActionInput {
-  id: UUID
-  firstName: String!
-  middleName: String
-  lastName: String!
-  phone: String!
-  email: String!
-  address: String!
+  action: ActionScopeCreateOneInput!
 }
 
 type GuestActionInstanceEdge {
@@ -1290,118 +1277,6 @@ type GuestActionInstancePreviousValues {
   address: String!
 }
 
-input GuestActionInstanceScalarWhereInput {
-  id: UUID
-  id_not: UUID
-  id_in: [UUID!]
-  id_not_in: [UUID!]
-  id_lt: UUID
-  id_lte: UUID
-  id_gt: UUID
-  id_gte: UUID
-  id_contains: UUID
-  id_not_contains: UUID
-  id_starts_with: UUID
-  id_not_starts_with: UUID
-  id_ends_with: UUID
-  id_not_ends_with: UUID
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  firstName: String
-  firstName_not: String
-  firstName_in: [String!]
-  firstName_not_in: [String!]
-  firstName_lt: String
-  firstName_lte: String
-  firstName_gt: String
-  firstName_gte: String
-  firstName_contains: String
-  firstName_not_contains: String
-  firstName_starts_with: String
-  firstName_not_starts_with: String
-  firstName_ends_with: String
-  firstName_not_ends_with: String
-  middleName: String
-  middleName_not: String
-  middleName_in: [String!]
-  middleName_not_in: [String!]
-  middleName_lt: String
-  middleName_lte: String
-  middleName_gt: String
-  middleName_gte: String
-  middleName_contains: String
-  middleName_not_contains: String
-  middleName_starts_with: String
-  middleName_not_starts_with: String
-  middleName_ends_with: String
-  middleName_not_ends_with: String
-  lastName: String
-  lastName_not: String
-  lastName_in: [String!]
-  lastName_not_in: [String!]
-  lastName_lt: String
-  lastName_lte: String
-  lastName_gt: String
-  lastName_gte: String
-  lastName_contains: String
-  lastName_not_contains: String
-  lastName_starts_with: String
-  lastName_not_starts_with: String
-  lastName_ends_with: String
-  lastName_not_ends_with: String
-  phone: String
-  phone_not: String
-  phone_in: [String!]
-  phone_not_in: [String!]
-  phone_lt: String
-  phone_lte: String
-  phone_gt: String
-  phone_gte: String
-  phone_contains: String
-  phone_not_contains: String
-  phone_starts_with: String
-  phone_not_starts_with: String
-  phone_ends_with: String
-  phone_not_ends_with: String
-  email: String
-  email_not: String
-  email_in: [String!]
-  email_not_in: [String!]
-  email_lt: String
-  email_lte: String
-  email_gt: String
-  email_gte: String
-  email_contains: String
-  email_not_contains: String
-  email_starts_with: String
-  email_not_starts_with: String
-  email_ends_with: String
-  email_not_ends_with: String
-  address: String
-  address_not: String
-  address_in: [String!]
-  address_not_in: [String!]
-  address_lt: String
-  address_lte: String
-  address_gt: String
-  address_gte: String
-  address_contains: String
-  address_not_contains: String
-  address_starts_with: String
-  address_not_starts_with: String
-  address_ends_with: String
-  address_not_ends_with: String
-  AND: [GuestActionInstanceScalarWhereInput!]
-  OR: [GuestActionInstanceScalarWhereInput!]
-  NOT: [GuestActionInstanceScalarWhereInput!]
-}
-
 type GuestActionInstanceSubscriptionPayload {
   mutation: MutationType!
   node: GuestActionInstance
@@ -1427,16 +1302,7 @@ input GuestActionInstanceUpdateInput {
   phone: String
   email: String
   address: String
-  action: ActionScopeUpdateOneRequiredWithoutGuestActionsInput
-}
-
-input GuestActionInstanceUpdateManyDataInput {
-  firstName: String
-  middleName: String
-  lastName: String
-  phone: String
-  email: String
-  address: String
+  action: ActionScopeUpdateOneRequiredInput
 }
 
 input GuestActionInstanceUpdateManyMutationInput {
@@ -1446,43 +1312,6 @@ input GuestActionInstanceUpdateManyMutationInput {
   phone: String
   email: String
   address: String
-}
-
-input GuestActionInstanceUpdateManyWithoutActionInput {
-  create: [GuestActionInstanceCreateWithoutActionInput!]
-  delete: [GuestActionInstanceWhereUniqueInput!]
-  connect: [GuestActionInstanceWhereUniqueInput!]
-  set: [GuestActionInstanceWhereUniqueInput!]
-  disconnect: [GuestActionInstanceWhereUniqueInput!]
-  update: [GuestActionInstanceUpdateWithWhereUniqueWithoutActionInput!]
-  upsert: [GuestActionInstanceUpsertWithWhereUniqueWithoutActionInput!]
-  deleteMany: [GuestActionInstanceScalarWhereInput!]
-  updateMany: [GuestActionInstanceUpdateManyWithWhereNestedInput!]
-}
-
-input GuestActionInstanceUpdateManyWithWhereNestedInput {
-  where: GuestActionInstanceScalarWhereInput!
-  data: GuestActionInstanceUpdateManyDataInput!
-}
-
-input GuestActionInstanceUpdateWithoutActionDataInput {
-  firstName: String
-  middleName: String
-  lastName: String
-  phone: String
-  email: String
-  address: String
-}
-
-input GuestActionInstanceUpdateWithWhereUniqueWithoutActionInput {
-  where: GuestActionInstanceWhereUniqueInput!
-  data: GuestActionInstanceUpdateWithoutActionDataInput!
-}
-
-input GuestActionInstanceUpsertWithWhereUniqueWithoutActionInput {
-  where: GuestActionInstanceWhereUniqueInput!
-  update: GuestActionInstanceUpdateWithoutActionDataInput!
-  create: GuestActionInstanceCreateWithoutActionInput!
 }
 
 input GuestActionInstanceWhereInput {
@@ -1614,7 +1443,10 @@ type Info {
   remotes(where: RemoteWhereInput, orderBy: RemoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Remote!]
   infoType: InfoType!
   resources(where: ResourceWhereInput, orderBy: ResourceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Resource!]
+  intercations(where: InteractionWhereInput, orderBy: InteractionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Interaction!]
   resourcePrimary: Resource
+  encodedId: String!
+  displayName: String!
 }
 
 type InfoConnection {
@@ -1633,7 +1465,10 @@ input InfoCreateInput {
   remotes: RemoteCreateManyInput
   infoType: InfoTypeCreateOneInput!
   resources: ResourceCreateManyInput
+  intercations: InteractionCreateManyInput
   resourcePrimary: ResourceCreateOneInput
+  encodedId: String!
+  displayName: String!
 }
 
 input InfoCreateOneInput {
@@ -1659,6 +1494,10 @@ enum InfoOrderByInput {
   description_DESC
   descriptionSmall_ASC
   descriptionSmall_DESC
+  encodedId_ASC
+  encodedId_DESC
+  displayName_ASC
+  displayName_DESC
 }
 
 type InfoPreviousValues {
@@ -1668,6 +1507,8 @@ type InfoPreviousValues {
   title: String!
   description: String!
   descriptionSmall: String!
+  encodedId: String!
+  displayName: String!
 }
 
 type InfoSubscriptionPayload {
@@ -1835,7 +1676,10 @@ input InfoUpdateDataInput {
   remotes: RemoteUpdateManyInput
   infoType: InfoTypeUpdateOneRequiredInput
   resources: ResourceUpdateManyInput
+  intercations: InteractionUpdateManyInput
   resourcePrimary: ResourceUpdateOneInput
+  encodedId: String
+  displayName: String
 }
 
 input InfoUpdateInput {
@@ -1847,13 +1691,18 @@ input InfoUpdateInput {
   remotes: RemoteUpdateManyInput
   infoType: InfoTypeUpdateOneRequiredInput
   resources: ResourceUpdateManyInput
+  intercations: InteractionUpdateManyInput
   resourcePrimary: ResourceUpdateOneInput
+  encodedId: String
+  displayName: String
 }
 
 input InfoUpdateManyMutationInput {
   title: String
   description: String
   descriptionSmall: String
+  encodedId: String
+  displayName: String
 }
 
 input InfoUpdateOneRequiredInput {
@@ -1952,7 +1801,38 @@ input InfoWhereInput {
   resources_every: ResourceWhereInput
   resources_some: ResourceWhereInput
   resources_none: ResourceWhereInput
+  intercations_every: InteractionWhereInput
+  intercations_some: InteractionWhereInput
+  intercations_none: InteractionWhereInput
   resourcePrimary: ResourceWhereInput
+  encodedId: String
+  encodedId_not: String
+  encodedId_in: [String!]
+  encodedId_not_in: [String!]
+  encodedId_lt: String
+  encodedId_lte: String
+  encodedId_gt: String
+  encodedId_gte: String
+  encodedId_contains: String
+  encodedId_not_contains: String
+  encodedId_starts_with: String
+  encodedId_not_starts_with: String
+  encodedId_ends_with: String
+  encodedId_not_ends_with: String
+  displayName: String
+  displayName_not: String
+  displayName_in: [String!]
+  displayName_not_in: [String!]
+  displayName_lt: String
+  displayName_lte: String
+  displayName_gt: String
+  displayName_gte: String
+  displayName_contains: String
+  displayName_not_contains: String
+  displayName_starts_with: String
+  displayName_not_starts_with: String
+  displayName_ends_with: String
+  displayName_not_ends_with: String
   AND: [InfoWhereInput!]
   OR: [InfoWhereInput!]
   NOT: [InfoWhereInput!]
@@ -1960,6 +1840,7 @@ input InfoWhereInput {
 
 input InfoWhereUniqueInput {
   id: ID
+  displayName: String
 }
 
 type Initiative {
@@ -1975,6 +1856,8 @@ type Initiative {
   mediaPrimary: Media
   resources(where: ResourceWhereInput, orderBy: ResourceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Resource!]
   childInitiatives(where: InitiativeWhereInput, orderBy: InitiativeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Initiative!]
+  encodedId: String!
+  displayName: String!
 }
 
 type InitiativeConnection {
@@ -1994,6 +1877,8 @@ input InitiativeCreateInput {
   mediaPrimary: MediaCreateOneInput
   resources: ResourceCreateManyInput
   childInitiatives: InitiativeCreateManyWithoutChildInitiativesInput
+  encodedId: String!
+  displayName: String!
 }
 
 input InitiativeCreateManyWithoutChildInitiativesInput {
@@ -2011,6 +1896,8 @@ input InitiativeCreateWithoutChildInitiativesInput {
   media: MediaCreateManyInput
   mediaPrimary: MediaCreateOneInput
   resources: ResourceCreateManyInput
+  encodedId: String!
+  displayName: String!
 }
 
 type InitiativeEdge {
@@ -2031,6 +1918,10 @@ enum InitiativeOrderByInput {
   description_DESC
   descriptionSmall_ASC
   descriptionSmall_DESC
+  encodedId_ASC
+  encodedId_DESC
+  displayName_ASC
+  displayName_DESC
 }
 
 type InitiativePreviousValues {
@@ -2040,6 +1931,8 @@ type InitiativePreviousValues {
   name: String!
   description: String!
   descriptionSmall: String!
+  encodedId: String!
+  displayName: String!
 }
 
 input InitiativeScalarWhereInput {
@@ -2115,6 +2008,34 @@ input InitiativeScalarWhereInput {
   descriptionSmall_not_starts_with: String
   descriptionSmall_ends_with: String
   descriptionSmall_not_ends_with: String
+  encodedId: String
+  encodedId_not: String
+  encodedId_in: [String!]
+  encodedId_not_in: [String!]
+  encodedId_lt: String
+  encodedId_lte: String
+  encodedId_gt: String
+  encodedId_gte: String
+  encodedId_contains: String
+  encodedId_not_contains: String
+  encodedId_starts_with: String
+  encodedId_not_starts_with: String
+  encodedId_ends_with: String
+  encodedId_not_ends_with: String
+  displayName: String
+  displayName_not: String
+  displayName_in: [String!]
+  displayName_not_in: [String!]
+  displayName_lt: String
+  displayName_lte: String
+  displayName_gt: String
+  displayName_gte: String
+  displayName_contains: String
+  displayName_not_contains: String
+  displayName_starts_with: String
+  displayName_not_starts_with: String
+  displayName_ends_with: String
+  displayName_not_ends_with: String
   AND: [InitiativeScalarWhereInput!]
   OR: [InitiativeScalarWhereInput!]
   NOT: [InitiativeScalarWhereInput!]
@@ -2148,18 +2069,24 @@ input InitiativeUpdateInput {
   mediaPrimary: MediaUpdateOneInput
   resources: ResourceUpdateManyInput
   childInitiatives: InitiativeUpdateManyWithoutChildInitiativesInput
+  encodedId: String
+  displayName: String
 }
 
 input InitiativeUpdateManyDataInput {
   name: String
   description: String
   descriptionSmall: String
+  encodedId: String
+  displayName: String
 }
 
 input InitiativeUpdateManyMutationInput {
   name: String
   description: String
   descriptionSmall: String
+  encodedId: String
+  displayName: String
 }
 
 input InitiativeUpdateManyWithoutChildInitiativesInput {
@@ -2188,6 +2115,8 @@ input InitiativeUpdateWithoutChildInitiativesDataInput {
   media: MediaUpdateManyInput
   mediaPrimary: MediaUpdateOneInput
   resources: ResourceUpdateManyInput
+  encodedId: String
+  displayName: String
 }
 
 input InitiativeUpdateWithWhereUniqueWithoutChildInitiativesInput {
@@ -2288,6 +2217,34 @@ input InitiativeWhereInput {
   childInitiatives_every: InitiativeWhereInput
   childInitiatives_some: InitiativeWhereInput
   childInitiatives_none: InitiativeWhereInput
+  encodedId: String
+  encodedId_not: String
+  encodedId_in: [String!]
+  encodedId_not_in: [String!]
+  encodedId_lt: String
+  encodedId_lte: String
+  encodedId_gt: String
+  encodedId_gte: String
+  encodedId_contains: String
+  encodedId_not_contains: String
+  encodedId_starts_with: String
+  encodedId_not_starts_with: String
+  encodedId_ends_with: String
+  encodedId_not_ends_with: String
+  displayName: String
+  displayName_not: String
+  displayName_in: [String!]
+  displayName_not_in: [String!]
+  displayName_lt: String
+  displayName_lte: String
+  displayName_gt: String
+  displayName_gte: String
+  displayName_contains: String
+  displayName_not_contains: String
+  displayName_starts_with: String
+  displayName_not_starts_with: String
+  displayName_ends_with: String
+  displayName_not_ends_with: String
   AND: [InitiativeWhereInput!]
   OR: [InitiativeWhereInput!]
   NOT: [InitiativeWhereInput!]
@@ -2295,6 +2252,8 @@ input InitiativeWhereInput {
 
 input InitiativeWhereUniqueInput {
   id: ID
+  name: String
+  displayName: String
 }
 
 type Interaction {
@@ -2306,6 +2265,8 @@ type Interaction {
   remote: Remote
   publicUser: User
   publicEntity: PublicEntity
+  encodedId: String!
+  displayName: String!
 }
 
 type InteractionConnection {
@@ -2321,6 +2282,13 @@ input InteractionCreateInput {
   remote: RemoteCreateOneInput
   publicUser: UserCreateOneInput
   publicEntity: PublicEntityCreateOneInput
+  encodedId: String!
+  displayName: String!
+}
+
+input InteractionCreateManyInput {
+  create: [InteractionCreateInput!]
+  connect: [InteractionWhereUniqueInput!]
 }
 
 input InteractionCreateOneInput {
@@ -2340,12 +2308,82 @@ enum InteractionOrderByInput {
   updatedAt_DESC
   createdAt_ASC
   createdAt_DESC
+  encodedId_ASC
+  encodedId_DESC
+  displayName_ASC
+  displayName_DESC
 }
 
 type InteractionPreviousValues {
   id: ID!
   updatedAt: DateTime!
   createdAt: DateTime!
+  encodedId: String!
+  displayName: String!
+}
+
+input InteractionScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  encodedId: String
+  encodedId_not: String
+  encodedId_in: [String!]
+  encodedId_not_in: [String!]
+  encodedId_lt: String
+  encodedId_lte: String
+  encodedId_gt: String
+  encodedId_gte: String
+  encodedId_contains: String
+  encodedId_not_contains: String
+  encodedId_starts_with: String
+  encodedId_not_starts_with: String
+  encodedId_ends_with: String
+  encodedId_not_ends_with: String
+  displayName: String
+  displayName_not: String
+  displayName_in: [String!]
+  displayName_not_in: [String!]
+  displayName_lt: String
+  displayName_lte: String
+  displayName_gt: String
+  displayName_gte: String
+  displayName_contains: String
+  displayName_not_contains: String
+  displayName_starts_with: String
+  displayName_not_starts_with: String
+  displayName_ends_with: String
+  displayName_not_ends_with: String
+  AND: [InteractionScalarWhereInput!]
+  OR: [InteractionScalarWhereInput!]
+  NOT: [InteractionScalarWhereInput!]
 }
 
 type InteractionSubscriptionPayload {
@@ -2370,7 +2408,8 @@ type InteractionType {
   id: ID!
   createdAt: DateTime!
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
-  name: String!
+  encodedId: String!
+  displayName: String!
 }
 
 type InteractionTypeConnection {
@@ -2382,7 +2421,8 @@ type InteractionTypeConnection {
 input InteractionTypeCreateInput {
   id: ID
   tags: TagCreateManyInput
-  name: String!
+  encodedId: String!
+  displayName: String!
 }
 
 input InteractionTypeCreateOneInput {
@@ -2400,14 +2440,17 @@ enum InteractionTypeOrderByInput {
   id_DESC
   createdAt_ASC
   createdAt_DESC
-  name_ASC
-  name_DESC
+  encodedId_ASC
+  encodedId_DESC
+  displayName_ASC
+  displayName_DESC
 }
 
 type InteractionTypePreviousValues {
   id: ID!
   createdAt: DateTime!
-  name: String!
+  encodedId: String!
+  displayName: String!
 }
 
 type InteractionTypeSubscriptionPayload {
@@ -2430,16 +2473,19 @@ input InteractionTypeSubscriptionWhereInput {
 
 input InteractionTypeUpdateDataInput {
   tags: TagUpdateManyInput
-  name: String
+  encodedId: String
+  displayName: String
 }
 
 input InteractionTypeUpdateInput {
   tags: TagUpdateManyInput
-  name: String
+  encodedId: String
+  displayName: String
 }
 
 input InteractionTypeUpdateManyMutationInput {
-  name: String
+  encodedId: String
+  displayName: String
 }
 
 input InteractionTypeUpdateOneRequiredInput {
@@ -2480,20 +2526,34 @@ input InteractionTypeWhereInput {
   tags_every: TagWhereInput
   tags_some: TagWhereInput
   tags_none: TagWhereInput
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
+  encodedId: String
+  encodedId_not: String
+  encodedId_in: [String!]
+  encodedId_not_in: [String!]
+  encodedId_lt: String
+  encodedId_lte: String
+  encodedId_gt: String
+  encodedId_gte: String
+  encodedId_contains: String
+  encodedId_not_contains: String
+  encodedId_starts_with: String
+  encodedId_not_starts_with: String
+  encodedId_ends_with: String
+  encodedId_not_ends_with: String
+  displayName: String
+  displayName_not: String
+  displayName_in: [String!]
+  displayName_not_in: [String!]
+  displayName_lt: String
+  displayName_lte: String
+  displayName_gt: String
+  displayName_gte: String
+  displayName_contains: String
+  displayName_not_contains: String
+  displayName_starts_with: String
+  displayName_not_starts_with: String
+  displayName_ends_with: String
+  displayName_not_ends_with: String
   AND: [InteractionTypeWhereInput!]
   OR: [InteractionTypeWhereInput!]
   NOT: [InteractionTypeWhereInput!]
@@ -2501,7 +2561,7 @@ input InteractionTypeWhereInput {
 
 input InteractionTypeWhereUniqueInput {
   id: ID
-  name: String
+  displayName: String
 }
 
 input InteractionUpdateDataInput {
@@ -2510,6 +2570,8 @@ input InteractionUpdateDataInput {
   remote: RemoteUpdateOneInput
   publicUser: UserUpdateOneInput
   publicEntity: PublicEntityUpdateOneInput
+  encodedId: String
+  displayName: String
 }
 
 input InteractionUpdateInput {
@@ -2518,6 +2580,35 @@ input InteractionUpdateInput {
   remote: RemoteUpdateOneInput
   publicUser: UserUpdateOneInput
   publicEntity: PublicEntityUpdateOneInput
+  encodedId: String
+  displayName: String
+}
+
+input InteractionUpdateManyDataInput {
+  encodedId: String
+  displayName: String
+}
+
+input InteractionUpdateManyInput {
+  create: [InteractionCreateInput!]
+  update: [InteractionUpdateWithWhereUniqueNestedInput!]
+  upsert: [InteractionUpsertWithWhereUniqueNestedInput!]
+  delete: [InteractionWhereUniqueInput!]
+  connect: [InteractionWhereUniqueInput!]
+  set: [InteractionWhereUniqueInput!]
+  disconnect: [InteractionWhereUniqueInput!]
+  deleteMany: [InteractionScalarWhereInput!]
+  updateMany: [InteractionUpdateManyWithWhereNestedInput!]
+}
+
+input InteractionUpdateManyMutationInput {
+  encodedId: String
+  displayName: String
+}
+
+input InteractionUpdateManyWithWhereNestedInput {
+  where: InteractionScalarWhereInput!
+  data: InteractionUpdateManyDataInput!
 }
 
 input InteractionUpdateOneInput {
@@ -2529,7 +2620,18 @@ input InteractionUpdateOneInput {
   connect: InteractionWhereUniqueInput
 }
 
+input InteractionUpdateWithWhereUniqueNestedInput {
+  where: InteractionWhereUniqueInput!
+  data: InteractionUpdateDataInput!
+}
+
 input InteractionUpsertNestedInput {
+  update: InteractionUpdateDataInput!
+  create: InteractionCreateInput!
+}
+
+input InteractionUpsertWithWhereUniqueNestedInput {
+  where: InteractionWhereUniqueInput!
   update: InteractionUpdateDataInput!
   create: InteractionCreateInput!
 }
@@ -2572,6 +2674,34 @@ input InteractionWhereInput {
   remote: RemoteWhereInput
   publicUser: UserWhereInput
   publicEntity: PublicEntityWhereInput
+  encodedId: String
+  encodedId_not: String
+  encodedId_in: [String!]
+  encodedId_not_in: [String!]
+  encodedId_lt: String
+  encodedId_lte: String
+  encodedId_gt: String
+  encodedId_gte: String
+  encodedId_contains: String
+  encodedId_not_contains: String
+  encodedId_starts_with: String
+  encodedId_not_starts_with: String
+  encodedId_ends_with: String
+  encodedId_not_ends_with: String
+  displayName: String
+  displayName_not: String
+  displayName_in: [String!]
+  displayName_not_in: [String!]
+  displayName_lt: String
+  displayName_lte: String
+  displayName_gt: String
+  displayName_gte: String
+  displayName_contains: String
+  displayName_not_contains: String
+  displayName_starts_with: String
+  displayName_not_starts_with: String
+  displayName_ends_with: String
+  displayName_not_ends_with: String
   AND: [InteractionWhereInput!]
   OR: [InteractionWhereInput!]
   NOT: [InteractionWhereInput!]
@@ -2579,6 +2709,7 @@ input InteractionWhereInput {
 
 input InteractionWhereUniqueInput {
   id: ID
+  displayName: String
 }
 
 scalar Long
@@ -2592,6 +2723,8 @@ type Media {
   description: String!
   descriptionSmall: String!
   remote: Remote!
+  encodedId: String!
+  displayName: String!
 }
 
 type MediaConnection {
@@ -2607,6 +2740,8 @@ input MediaCreateInput {
   description: String!
   descriptionSmall: String!
   remote: RemoteCreateOneInput!
+  encodedId: String!
+  displayName: String!
 }
 
 input MediaCreateManyInput {
@@ -2637,6 +2772,10 @@ enum MediaOrderByInput {
   description_DESC
   descriptionSmall_ASC
   descriptionSmall_DESC
+  encodedId_ASC
+  encodedId_DESC
+  displayName_ASC
+  displayName_DESC
 }
 
 type MediaPreviousValues {
@@ -2646,6 +2785,8 @@ type MediaPreviousValues {
   title: String!
   description: String!
   descriptionSmall: String!
+  encodedId: String!
+  displayName: String!
 }
 
 input MediaScalarWhereInput {
@@ -2721,6 +2862,34 @@ input MediaScalarWhereInput {
   descriptionSmall_not_starts_with: String
   descriptionSmall_ends_with: String
   descriptionSmall_not_ends_with: String
+  encodedId: String
+  encodedId_not: String
+  encodedId_in: [String!]
+  encodedId_not_in: [String!]
+  encodedId_lt: String
+  encodedId_lte: String
+  encodedId_gt: String
+  encodedId_gte: String
+  encodedId_contains: String
+  encodedId_not_contains: String
+  encodedId_starts_with: String
+  encodedId_not_starts_with: String
+  encodedId_ends_with: String
+  encodedId_not_ends_with: String
+  displayName: String
+  displayName_not: String
+  displayName_in: [String!]
+  displayName_not_in: [String!]
+  displayName_lt: String
+  displayName_lte: String
+  displayName_gt: String
+  displayName_gte: String
+  displayName_contains: String
+  displayName_not_contains: String
+  displayName_starts_with: String
+  displayName_not_starts_with: String
+  displayName_ends_with: String
+  displayName_not_ends_with: String
   AND: [MediaScalarWhereInput!]
   OR: [MediaScalarWhereInput!]
   NOT: [MediaScalarWhereInput!]
@@ -2750,6 +2919,8 @@ input MediaUpdateDataInput {
   description: String
   descriptionSmall: String
   remote: RemoteUpdateOneRequiredInput
+  encodedId: String
+  displayName: String
 }
 
 input MediaUpdateInput {
@@ -2758,12 +2929,16 @@ input MediaUpdateInput {
   description: String
   descriptionSmall: String
   remote: RemoteUpdateOneRequiredInput
+  encodedId: String
+  displayName: String
 }
 
 input MediaUpdateManyDataInput {
   title: String
   description: String
   descriptionSmall: String
+  encodedId: String
+  displayName: String
 }
 
 input MediaUpdateManyInput {
@@ -2782,6 +2957,8 @@ input MediaUpdateManyMutationInput {
   title: String
   description: String
   descriptionSmall: String
+  encodedId: String
+  displayName: String
 }
 
 input MediaUpdateManyWithWhereNestedInput {
@@ -2891,6 +3068,34 @@ input MediaWhereInput {
   descriptionSmall_ends_with: String
   descriptionSmall_not_ends_with: String
   remote: RemoteWhereInput
+  encodedId: String
+  encodedId_not: String
+  encodedId_in: [String!]
+  encodedId_not_in: [String!]
+  encodedId_lt: String
+  encodedId_lte: String
+  encodedId_gt: String
+  encodedId_gte: String
+  encodedId_contains: String
+  encodedId_not_contains: String
+  encodedId_starts_with: String
+  encodedId_not_starts_with: String
+  encodedId_ends_with: String
+  encodedId_not_ends_with: String
+  displayName: String
+  displayName_not: String
+  displayName_in: [String!]
+  displayName_not_in: [String!]
+  displayName_lt: String
+  displayName_lte: String
+  displayName_gt: String
+  displayName_gte: String
+  displayName_contains: String
+  displayName_not_contains: String
+  displayName_starts_with: String
+  displayName_not_starts_with: String
+  displayName_ends_with: String
+  displayName_not_ends_with: String
   AND: [MediaWhereInput!]
   OR: [MediaWhereInput!]
   NOT: [MediaWhereInput!]
@@ -2898,6 +3103,7 @@ input MediaWhereInput {
 
 input MediaWhereUniqueInput {
   id: ID
+  displayName: String
 }
 
 type Mutation {
@@ -2945,6 +3151,7 @@ type Mutation {
   deleteManyInitiatives(where: InitiativeWhereInput): BatchPayload!
   createInteraction(data: InteractionCreateInput!): Interaction!
   updateInteraction(data: InteractionUpdateInput!, where: InteractionWhereUniqueInput!): Interaction
+  updateManyInteractions(data: InteractionUpdateManyMutationInput!, where: InteractionWhereInput): BatchPayload!
   upsertInteraction(where: InteractionWhereUniqueInput!, create: InteractionCreateInput!, update: InteractionUpdateInput!): Interaction!
   deleteInteraction(where: InteractionWhereUniqueInput!): Interaction
   deleteManyInteractions(where: InteractionWhereInput): BatchPayload!
@@ -2968,6 +3175,7 @@ type Mutation {
   deleteManyOwnUsers(where: OwnUserWhereInput): BatchPayload!
   createPublicEntity(data: PublicEntityCreateInput!): PublicEntity!
   updatePublicEntity(data: PublicEntityUpdateInput!, where: PublicEntityWhereUniqueInput!): PublicEntity
+  updateManyPublicEntities(data: PublicEntityUpdateManyMutationInput!, where: PublicEntityWhereInput): BatchPayload!
   upsertPublicEntity(where: PublicEntityWhereUniqueInput!, create: PublicEntityCreateInput!, update: PublicEntityUpdateInput!): PublicEntity!
   deletePublicEntity(where: PublicEntityWhereUniqueInput!): PublicEntity
   deleteManyPublicEntities(where: PublicEntityWhereInput): BatchPayload!
@@ -3429,6 +3637,8 @@ type PublicEntity {
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
   entityType: PublicEntityType!
   remote: Remote!
+  encodedId: String!
+  displayName: String!
 }
 
 type PublicEntityConnection {
@@ -3442,6 +3652,8 @@ input PublicEntityCreateInput {
   tags: TagCreateManyInput
   entityType: PublicEntityTypeCreateOneInput!
   remote: RemoteCreateOneInput!
+  encodedId: String!
+  displayName: String!
 }
 
 input PublicEntityCreateOneInput {
@@ -3461,12 +3673,18 @@ enum PublicEntityOrderByInput {
   updatedAt_DESC
   createdAt_ASC
   createdAt_DESC
+  encodedId_ASC
+  encodedId_DESC
+  displayName_ASC
+  displayName_DESC
 }
 
 type PublicEntityPreviousValues {
   id: ID!
   updatedAt: DateTime!
   createdAt: DateTime!
+  encodedId: String!
+  displayName: String!
 }
 
 type PublicEntitySubscriptionPayload {
@@ -3491,7 +3709,8 @@ type PublicEntityType {
   id: ID!
   createdAt: DateTime!
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
-  name: String!
+  encodedId: String!
+  displayName: String!
 }
 
 type PublicEntityTypeConnection {
@@ -3503,7 +3722,8 @@ type PublicEntityTypeConnection {
 input PublicEntityTypeCreateInput {
   id: ID
   tags: TagCreateManyInput
-  name: String!
+  encodedId: String!
+  displayName: String!
 }
 
 input PublicEntityTypeCreateOneInput {
@@ -3521,14 +3741,17 @@ enum PublicEntityTypeOrderByInput {
   id_DESC
   createdAt_ASC
   createdAt_DESC
-  name_ASC
-  name_DESC
+  encodedId_ASC
+  encodedId_DESC
+  displayName_ASC
+  displayName_DESC
 }
 
 type PublicEntityTypePreviousValues {
   id: ID!
   createdAt: DateTime!
-  name: String!
+  encodedId: String!
+  displayName: String!
 }
 
 type PublicEntityTypeSubscriptionPayload {
@@ -3551,16 +3774,19 @@ input PublicEntityTypeSubscriptionWhereInput {
 
 input PublicEntityTypeUpdateDataInput {
   tags: TagUpdateManyInput
-  name: String
+  encodedId: String
+  displayName: String
 }
 
 input PublicEntityTypeUpdateInput {
   tags: TagUpdateManyInput
-  name: String
+  encodedId: String
+  displayName: String
 }
 
 input PublicEntityTypeUpdateManyMutationInput {
-  name: String
+  encodedId: String
+  displayName: String
 }
 
 input PublicEntityTypeUpdateOneRequiredInput {
@@ -3601,20 +3827,34 @@ input PublicEntityTypeWhereInput {
   tags_every: TagWhereInput
   tags_some: TagWhereInput
   tags_none: TagWhereInput
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
+  encodedId: String
+  encodedId_not: String
+  encodedId_in: [String!]
+  encodedId_not_in: [String!]
+  encodedId_lt: String
+  encodedId_lte: String
+  encodedId_gt: String
+  encodedId_gte: String
+  encodedId_contains: String
+  encodedId_not_contains: String
+  encodedId_starts_with: String
+  encodedId_not_starts_with: String
+  encodedId_ends_with: String
+  encodedId_not_ends_with: String
+  displayName: String
+  displayName_not: String
+  displayName_in: [String!]
+  displayName_not_in: [String!]
+  displayName_lt: String
+  displayName_lte: String
+  displayName_gt: String
+  displayName_gte: String
+  displayName_contains: String
+  displayName_not_contains: String
+  displayName_starts_with: String
+  displayName_not_starts_with: String
+  displayName_ends_with: String
+  displayName_not_ends_with: String
   AND: [PublicEntityTypeWhereInput!]
   OR: [PublicEntityTypeWhereInput!]
   NOT: [PublicEntityTypeWhereInput!]
@@ -3622,19 +3862,28 @@ input PublicEntityTypeWhereInput {
 
 input PublicEntityTypeWhereUniqueInput {
   id: ID
-  name: String
+  displayName: String
 }
 
 input PublicEntityUpdateDataInput {
   tags: TagUpdateManyInput
   entityType: PublicEntityTypeUpdateOneRequiredInput
   remote: RemoteUpdateOneRequiredInput
+  encodedId: String
+  displayName: String
 }
 
 input PublicEntityUpdateInput {
   tags: TagUpdateManyInput
   entityType: PublicEntityTypeUpdateOneRequiredInput
   remote: RemoteUpdateOneRequiredInput
+  encodedId: String
+  displayName: String
+}
+
+input PublicEntityUpdateManyMutationInput {
+  encodedId: String
+  displayName: String
 }
 
 input PublicEntityUpdateOneInput {
@@ -3687,6 +3936,34 @@ input PublicEntityWhereInput {
   tags_none: TagWhereInput
   entityType: PublicEntityTypeWhereInput
   remote: RemoteWhereInput
+  encodedId: String
+  encodedId_not: String
+  encodedId_in: [String!]
+  encodedId_not_in: [String!]
+  encodedId_lt: String
+  encodedId_lte: String
+  encodedId_gt: String
+  encodedId_gte: String
+  encodedId_contains: String
+  encodedId_not_contains: String
+  encodedId_starts_with: String
+  encodedId_not_starts_with: String
+  encodedId_ends_with: String
+  encodedId_not_ends_with: String
+  displayName: String
+  displayName_not: String
+  displayName_in: [String!]
+  displayName_not_in: [String!]
+  displayName_lt: String
+  displayName_lte: String
+  displayName_gt: String
+  displayName_gte: String
+  displayName_contains: String
+  displayName_not_contains: String
+  displayName_starts_with: String
+  displayName_not_starts_with: String
+  displayName_ends_with: String
+  displayName_not_ends_with: String
   AND: [PublicEntityWhereInput!]
   OR: [PublicEntityWhereInput!]
   NOT: [PublicEntityWhereInput!]
@@ -3694,6 +3971,7 @@ input PublicEntityWhereInput {
 
 input PublicEntityWhereUniqueInput {
   id: ID
+  displayName: String
 }
 
 type Query {
@@ -3766,6 +4044,8 @@ type Remote {
   link: String
   query: String
   queryResolution: String
+  encodedId: String!
+  displayName: String!
 }
 
 type RemoteConnection {
@@ -3781,6 +4061,8 @@ input RemoteCreateInput {
   link: String
   query: String
   queryResolution: String
+  encodedId: String!
+  displayName: String!
 }
 
 input RemoteCreateManyInput {
@@ -3813,6 +4095,10 @@ enum RemoteOrderByInput {
   query_DESC
   queryResolution_ASC
   queryResolution_DESC
+  encodedId_ASC
+  encodedId_DESC
+  displayName_ASC
+  displayName_DESC
 }
 
 type RemotePreviousValues {
@@ -3823,6 +4109,8 @@ type RemotePreviousValues {
   link: String
   query: String
   queryResolution: String
+  encodedId: String!
+  displayName: String!
 }
 
 input RemoteScalarWhereInput {
@@ -3912,6 +4200,34 @@ input RemoteScalarWhereInput {
   queryResolution_not_starts_with: String
   queryResolution_ends_with: String
   queryResolution_not_ends_with: String
+  encodedId: String
+  encodedId_not: String
+  encodedId_in: [String!]
+  encodedId_not_in: [String!]
+  encodedId_lt: String
+  encodedId_lte: String
+  encodedId_gt: String
+  encodedId_gte: String
+  encodedId_contains: String
+  encodedId_not_contains: String
+  encodedId_starts_with: String
+  encodedId_not_starts_with: String
+  encodedId_ends_with: String
+  encodedId_not_ends_with: String
+  displayName: String
+  displayName_not: String
+  displayName_in: [String!]
+  displayName_not_in: [String!]
+  displayName_lt: String
+  displayName_lte: String
+  displayName_gt: String
+  displayName_gte: String
+  displayName_contains: String
+  displayName_not_contains: String
+  displayName_starts_with: String
+  displayName_not_starts_with: String
+  displayName_ends_with: String
+  displayName_not_ends_with: String
   AND: [RemoteScalarWhereInput!]
   OR: [RemoteScalarWhereInput!]
   NOT: [RemoteScalarWhereInput!]
@@ -3941,6 +4257,8 @@ input RemoteUpdateDataInput {
   link: String
   query: String
   queryResolution: String
+  encodedId: String
+  displayName: String
 }
 
 input RemoteUpdateInput {
@@ -3949,6 +4267,8 @@ input RemoteUpdateInput {
   link: String
   query: String
   queryResolution: String
+  encodedId: String
+  displayName: String
 }
 
 input RemoteUpdateManyDataInput {
@@ -3956,6 +4276,8 @@ input RemoteUpdateManyDataInput {
   link: String
   query: String
   queryResolution: String
+  encodedId: String
+  displayName: String
 }
 
 input RemoteUpdateManyInput {
@@ -3975,6 +4297,8 @@ input RemoteUpdateManyMutationInput {
   link: String
   query: String
   queryResolution: String
+  encodedId: String
+  displayName: String
 }
 
 input RemoteUpdateManyWithWhereNestedInput {
@@ -4104,6 +4428,34 @@ input RemoteWhereInput {
   queryResolution_not_starts_with: String
   queryResolution_ends_with: String
   queryResolution_not_ends_with: String
+  encodedId: String
+  encodedId_not: String
+  encodedId_in: [String!]
+  encodedId_not_in: [String!]
+  encodedId_lt: String
+  encodedId_lte: String
+  encodedId_gt: String
+  encodedId_gte: String
+  encodedId_contains: String
+  encodedId_not_contains: String
+  encodedId_starts_with: String
+  encodedId_not_starts_with: String
+  encodedId_ends_with: String
+  encodedId_not_ends_with: String
+  displayName: String
+  displayName_not: String
+  displayName_in: [String!]
+  displayName_not_in: [String!]
+  displayName_lt: String
+  displayName_lte: String
+  displayName_gt: String
+  displayName_gte: String
+  displayName_contains: String
+  displayName_not_contains: String
+  displayName_starts_with: String
+  displayName_not_starts_with: String
+  displayName_ends_with: String
+  displayName_not_ends_with: String
   AND: [RemoteWhereInput!]
   OR: [RemoteWhereInput!]
   NOT: [RemoteWhereInput!]
@@ -4111,6 +4463,7 @@ input RemoteWhereInput {
 
 input RemoteWhereUniqueInput {
   id: ID
+  displayName: String
 }
 
 type Resource {
@@ -4122,6 +4475,8 @@ type Resource {
   media: Media
   remote: Remote
   link: String
+  encodedId: String!
+  displayName: String!
 }
 
 type ResourceConnection {
@@ -4137,6 +4492,8 @@ input ResourceCreateInput {
   media: MediaCreateOneInput
   remote: RemoteCreateOneInput
   link: String
+  encodedId: String!
+  displayName: String!
 }
 
 input ResourceCreateManyInput {
@@ -4163,6 +4520,10 @@ enum ResourceOrderByInput {
   createdAt_DESC
   link_ASC
   link_DESC
+  encodedId_ASC
+  encodedId_DESC
+  displayName_ASC
+  displayName_DESC
 }
 
 type ResourcePreviousValues {
@@ -4170,6 +4531,8 @@ type ResourcePreviousValues {
   updatedAt: DateTime!
   createdAt: DateTime!
   link: String
+  encodedId: String!
+  displayName: String!
 }
 
 input ResourceScalarWhereInput {
@@ -4217,6 +4580,34 @@ input ResourceScalarWhereInput {
   link_not_starts_with: String
   link_ends_with: String
   link_not_ends_with: String
+  encodedId: String
+  encodedId_not: String
+  encodedId_in: [String!]
+  encodedId_not_in: [String!]
+  encodedId_lt: String
+  encodedId_lte: String
+  encodedId_gt: String
+  encodedId_gte: String
+  encodedId_contains: String
+  encodedId_not_contains: String
+  encodedId_starts_with: String
+  encodedId_not_starts_with: String
+  encodedId_ends_with: String
+  encodedId_not_ends_with: String
+  displayName: String
+  displayName_not: String
+  displayName_in: [String!]
+  displayName_not_in: [String!]
+  displayName_lt: String
+  displayName_lte: String
+  displayName_gt: String
+  displayName_gte: String
+  displayName_contains: String
+  displayName_not_contains: String
+  displayName_starts_with: String
+  displayName_not_starts_with: String
+  displayName_ends_with: String
+  displayName_not_ends_with: String
   AND: [ResourceScalarWhereInput!]
   OR: [ResourceScalarWhereInput!]
   NOT: [ResourceScalarWhereInput!]
@@ -4246,6 +4637,8 @@ input ResourceUpdateDataInput {
   media: MediaUpdateOneInput
   remote: RemoteUpdateOneInput
   link: String
+  encodedId: String
+  displayName: String
 }
 
 input ResourceUpdateInput {
@@ -4254,10 +4647,14 @@ input ResourceUpdateInput {
   media: MediaUpdateOneInput
   remote: RemoteUpdateOneInput
   link: String
+  encodedId: String
+  displayName: String
 }
 
 input ResourceUpdateManyDataInput {
   link: String
+  encodedId: String
+  displayName: String
 }
 
 input ResourceUpdateManyInput {
@@ -4274,6 +4671,8 @@ input ResourceUpdateManyInput {
 
 input ResourceUpdateManyMutationInput {
   link: String
+  encodedId: String
+  displayName: String
 }
 
 input ResourceUpdateManyWithWhereNestedInput {
@@ -4357,6 +4756,34 @@ input ResourceWhereInput {
   link_not_starts_with: String
   link_ends_with: String
   link_not_ends_with: String
+  encodedId: String
+  encodedId_not: String
+  encodedId_in: [String!]
+  encodedId_not_in: [String!]
+  encodedId_lt: String
+  encodedId_lte: String
+  encodedId_gt: String
+  encodedId_gte: String
+  encodedId_contains: String
+  encodedId_not_contains: String
+  encodedId_starts_with: String
+  encodedId_not_starts_with: String
+  encodedId_ends_with: String
+  encodedId_not_ends_with: String
+  displayName: String
+  displayName_not: String
+  displayName_in: [String!]
+  displayName_not_in: [String!]
+  displayName_lt: String
+  displayName_lte: String
+  displayName_gt: String
+  displayName_gte: String
+  displayName_contains: String
+  displayName_not_contains: String
+  displayName_starts_with: String
+  displayName_not_starts_with: String
+  displayName_ends_with: String
+  displayName_not_ends_with: String
   AND: [ResourceWhereInput!]
   OR: [ResourceWhereInput!]
   NOT: [ResourceWhereInput!]
@@ -4364,6 +4791,7 @@ input ResourceWhereInput {
 
 input ResourceWhereUniqueInput {
   id: ID
+  displayName: String
 }
 
 type Subscription {
@@ -4392,6 +4820,7 @@ type Tag {
   id: ID!
   name: String!
   createdAt: DateTime!
+  encodedId: String!
 }
 
 type TagConnection {
@@ -4403,6 +4832,7 @@ type TagConnection {
 input TagCreateInput {
   id: ID
   name: String!
+  encodedId: String!
 }
 
 input TagCreateManyInput {
@@ -4422,12 +4852,15 @@ enum TagOrderByInput {
   name_DESC
   createdAt_ASC
   createdAt_DESC
+  encodedId_ASC
+  encodedId_DESC
 }
 
 type TagPreviousValues {
   id: ID!
   name: String!
   createdAt: DateTime!
+  encodedId: String!
 }
 
 input TagScalarWhereInput {
@@ -4467,6 +4900,20 @@ input TagScalarWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
+  encodedId: String
+  encodedId_not: String
+  encodedId_in: [String!]
+  encodedId_not_in: [String!]
+  encodedId_lt: String
+  encodedId_lte: String
+  encodedId_gt: String
+  encodedId_gte: String
+  encodedId_contains: String
+  encodedId_not_contains: String
+  encodedId_starts_with: String
+  encodedId_not_starts_with: String
+  encodedId_ends_with: String
+  encodedId_not_ends_with: String
   AND: [TagScalarWhereInput!]
   OR: [TagScalarWhereInput!]
   NOT: [TagScalarWhereInput!]
@@ -4492,14 +4939,17 @@ input TagSubscriptionWhereInput {
 
 input TagUpdateDataInput {
   name: String
+  encodedId: String
 }
 
 input TagUpdateInput {
   name: String
+  encodedId: String
 }
 
 input TagUpdateManyDataInput {
   name: String
+  encodedId: String
 }
 
 input TagUpdateManyInput {
@@ -4516,6 +4966,7 @@ input TagUpdateManyInput {
 
 input TagUpdateManyMutationInput {
   name: String
+  encodedId: String
 }
 
 input TagUpdateManyWithWhereNestedInput {
@@ -4571,6 +5022,20 @@ input TagWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
+  encodedId: String
+  encodedId_not: String
+  encodedId_in: [String!]
+  encodedId_not_in: [String!]
+  encodedId_lt: String
+  encodedId_lte: String
+  encodedId_gt: String
+  encodedId_gte: String
+  encodedId_contains: String
+  encodedId_not_contains: String
+  encodedId_starts_with: String
+  encodedId_not_starts_with: String
+  encodedId_ends_with: String
+  encodedId_not_ends_with: String
   AND: [TagWhereInput!]
   OR: [TagWhereInput!]
   NOT: [TagWhereInput!]
@@ -4593,6 +5058,8 @@ type User {
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
   actionsHistory(where: UserActionInstanceWhereInput, orderBy: UserActionInstanceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserActionInstance!]
   isDeleted: Boolean!
+  encodedId: String!
+  displayName: String!
 }
 
 type UserActionInstance {
@@ -4613,12 +5080,7 @@ input UserActionInstanceCreateInput {
   id: ID
   tags: TagCreateManyInput
   user: UserCreateOneWithoutActionsHistoryInput!
-  actionScope: ActionScopeCreateOneWithoutUserActionsInput!
-}
-
-input UserActionInstanceCreateManyWithoutActionScopeInput {
-  create: [UserActionInstanceCreateWithoutActionScopeInput!]
-  connect: [UserActionInstanceWhereUniqueInput!]
+  actionScope: ActionScopeCreateOneInput!
 }
 
 input UserActionInstanceCreateManyWithoutUserInput {
@@ -4626,16 +5088,10 @@ input UserActionInstanceCreateManyWithoutUserInput {
   connect: [UserActionInstanceWhereUniqueInput!]
 }
 
-input UserActionInstanceCreateWithoutActionScopeInput {
-  id: ID
-  tags: TagCreateManyInput
-  user: UserCreateOneWithoutActionsHistoryInput!
-}
-
 input UserActionInstanceCreateWithoutUserInput {
   id: ID
   tags: TagCreateManyInput
-  actionScope: ActionScopeCreateOneWithoutUserActionsInput!
+  actionScope: ActionScopeCreateOneInput!
 }
 
 type UserActionInstanceEdge {
@@ -4704,18 +5160,7 @@ input UserActionInstanceSubscriptionWhereInput {
 input UserActionInstanceUpdateInput {
   tags: TagUpdateManyInput
   user: UserUpdateOneRequiredWithoutActionsHistoryInput
-  actionScope: ActionScopeUpdateOneRequiredWithoutUserActionsInput
-}
-
-input UserActionInstanceUpdateManyWithoutActionScopeInput {
-  create: [UserActionInstanceCreateWithoutActionScopeInput!]
-  delete: [UserActionInstanceWhereUniqueInput!]
-  connect: [UserActionInstanceWhereUniqueInput!]
-  set: [UserActionInstanceWhereUniqueInput!]
-  disconnect: [UserActionInstanceWhereUniqueInput!]
-  update: [UserActionInstanceUpdateWithWhereUniqueWithoutActionScopeInput!]
-  upsert: [UserActionInstanceUpsertWithWhereUniqueWithoutActionScopeInput!]
-  deleteMany: [UserActionInstanceScalarWhereInput!]
+  actionScope: ActionScopeUpdateOneRequiredInput
 }
 
 input UserActionInstanceUpdateManyWithoutUserInput {
@@ -4729,30 +5174,14 @@ input UserActionInstanceUpdateManyWithoutUserInput {
   deleteMany: [UserActionInstanceScalarWhereInput!]
 }
 
-input UserActionInstanceUpdateWithoutActionScopeDataInput {
-  tags: TagUpdateManyInput
-  user: UserUpdateOneRequiredWithoutActionsHistoryInput
-}
-
 input UserActionInstanceUpdateWithoutUserDataInput {
   tags: TagUpdateManyInput
-  actionScope: ActionScopeUpdateOneRequiredWithoutUserActionsInput
-}
-
-input UserActionInstanceUpdateWithWhereUniqueWithoutActionScopeInput {
-  where: UserActionInstanceWhereUniqueInput!
-  data: UserActionInstanceUpdateWithoutActionScopeDataInput!
+  actionScope: ActionScopeUpdateOneRequiredInput
 }
 
 input UserActionInstanceUpdateWithWhereUniqueWithoutUserInput {
   where: UserActionInstanceWhereUniqueInput!
   data: UserActionInstanceUpdateWithoutUserDataInput!
-}
-
-input UserActionInstanceUpsertWithWhereUniqueWithoutActionScopeInput {
-  where: UserActionInstanceWhereUniqueInput!
-  update: UserActionInstanceUpdateWithoutActionScopeDataInput!
-  create: UserActionInstanceCreateWithoutActionScopeInput!
 }
 
 input UserActionInstanceUpsertWithWhereUniqueWithoutUserInput {
@@ -4815,6 +5244,8 @@ input UserCreateInput {
   tags: TagCreateManyInput
   actionsHistory: UserActionInstanceCreateManyWithoutUserInput
   isDeleted: Boolean!
+  encodedId: String!
+  displayName: String!
 }
 
 input UserCreateOneInput {
@@ -4847,6 +5278,8 @@ input UserCreateWithoutActionsHistoryInput {
   optionalScopes: ActionScopeCreateManyInput
   tags: TagCreateManyInput
   isDeleted: Boolean!
+  encodedId: String!
+  displayName: String!
 }
 
 input UserCreateWithoutAuthProvidersInput {
@@ -4859,6 +5292,8 @@ input UserCreateWithoutAuthProvidersInput {
   tags: TagCreateManyInput
   actionsHistory: UserActionInstanceCreateManyWithoutUserInput
   isDeleted: Boolean!
+  encodedId: String!
+  displayName: String!
 }
 
 input UserCreateWithoutOwnUserInput {
@@ -4871,6 +5306,8 @@ input UserCreateWithoutOwnUserInput {
   tags: TagCreateManyInput
   actionsHistory: UserActionInstanceCreateManyWithoutUserInput
   isDeleted: Boolean!
+  encodedId: String!
+  displayName: String!
 }
 
 type UserEdge {
@@ -4889,6 +5326,10 @@ enum UserOrderByInput {
   isOwnUser_DESC
   isDeleted_ASC
   isDeleted_DESC
+  encodedId_ASC
+  encodedId_DESC
+  displayName_ASC
+  displayName_DESC
 }
 
 type UserPreviousValues {
@@ -4897,6 +5338,8 @@ type UserPreviousValues {
   createdAt: DateTime!
   isOwnUser: Boolean!
   isDeleted: Boolean!
+  encodedId: String!
+  displayName: String!
 }
 
 type UserRole {
@@ -5153,6 +5596,8 @@ input UserUpdateDataInput {
   tags: TagUpdateManyInput
   actionsHistory: UserActionInstanceUpdateManyWithoutUserInput
   isDeleted: Boolean
+  encodedId: String
+  displayName: String
 }
 
 input UserUpdateInput {
@@ -5165,11 +5610,15 @@ input UserUpdateInput {
   tags: TagUpdateManyInput
   actionsHistory: UserActionInstanceUpdateManyWithoutUserInput
   isDeleted: Boolean
+  encodedId: String
+  displayName: String
 }
 
 input UserUpdateManyMutationInput {
   isOwnUser: Boolean
   isDeleted: Boolean
+  encodedId: String
+  displayName: String
 }
 
 input UserUpdateOneInput {
@@ -5211,6 +5660,8 @@ input UserUpdateWithoutActionsHistoryDataInput {
   optionalScopes: ActionScopeUpdateManyInput
   tags: TagUpdateManyInput
   isDeleted: Boolean
+  encodedId: String
+  displayName: String
 }
 
 input UserUpdateWithoutAuthProvidersDataInput {
@@ -5222,6 +5673,8 @@ input UserUpdateWithoutAuthProvidersDataInput {
   tags: TagUpdateManyInput
   actionsHistory: UserActionInstanceUpdateManyWithoutUserInput
   isDeleted: Boolean
+  encodedId: String
+  displayName: String
 }
 
 input UserUpdateWithoutOwnUserDataInput {
@@ -5233,6 +5686,8 @@ input UserUpdateWithoutOwnUserDataInput {
   tags: TagUpdateManyInput
   actionsHistory: UserActionInstanceUpdateManyWithoutUserInput
   isDeleted: Boolean
+  encodedId: String
+  displayName: String
 }
 
 input UserUpsertNestedInput {
@@ -5307,6 +5762,34 @@ input UserWhereInput {
   actionsHistory_none: UserActionInstanceWhereInput
   isDeleted: Boolean
   isDeleted_not: Boolean
+  encodedId: String
+  encodedId_not: String
+  encodedId_in: [String!]
+  encodedId_not_in: [String!]
+  encodedId_lt: String
+  encodedId_lte: String
+  encodedId_gt: String
+  encodedId_gte: String
+  encodedId_contains: String
+  encodedId_not_contains: String
+  encodedId_starts_with: String
+  encodedId_not_starts_with: String
+  encodedId_ends_with: String
+  encodedId_not_ends_with: String
+  displayName: String
+  displayName_not: String
+  displayName_in: [String!]
+  displayName_not_in: [String!]
+  displayName_lt: String
+  displayName_lte: String
+  displayName_gt: String
+  displayName_gte: String
+  displayName_contains: String
+  displayName_not_contains: String
+  displayName_starts_with: String
+  displayName_not_starts_with: String
+  displayName_ends_with: String
+  displayName_not_ends_with: String
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
@@ -5314,6 +5797,7 @@ input UserWhereInput {
 
 input UserWhereUniqueInput {
   id: UUID
+  displayName: String
 }
 
 scalar UUID
